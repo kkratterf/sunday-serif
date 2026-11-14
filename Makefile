@@ -3,7 +3,7 @@
 PY := .venv/bin/python
 QA := .venv-qa/bin/fontbakery
 
-.PHONY: all venv build variable test npm clean
+.PHONY: all venv build variable effects test npm clean
 
 all: build
 
@@ -25,6 +25,10 @@ build: .venv/.ok
 # Only the two variable fonts and their WOFF2: quick check while editing sources.
 variable: .venv/.ok
 	$(PY) scripts/build.py --only-variable
+
+# Rebuild the Ink Bleed and Worn Print masters from the plain Light Burn masters.
+effects: .venv/.ok
+	$(PY) scripts/effects.py
 
 test: .venv-qa/.ok
 	mkdir -p build/fontbakery
