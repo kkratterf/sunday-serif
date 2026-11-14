@@ -6,9 +6,7 @@ usage: python scripts/build.py [--only-variable]
   fonts/webfonts/  WOFF2 for the web, all at 1000 UPM:
                    SundaySerifText-*.woff2  weight axis only, effects at 0 (~45 KB): body text
                    SundaySerif-*.woff2      all four axes (~1 MB): load only where effects show
-                   SundaySerifBlur-*.woff2
   fonts/ttf/, fonts/otf/  static Regular, Medium, SemiBold and italics (effects at 0)
-  fonts/blur/      Sunday Serif Blur Regular and Italic (COLRv0)
 
 The version comes from the VERSION file: SemVer X.Y.Z becomes font version X.YYZ
 (v0.1.0 -> 0.010, v0.12.3 -> 0.123, v1.0.0 -> 1.000).
@@ -249,21 +247,9 @@ def build_statics(vf_path, italic, raw, rev):
     return out
 
 
-def build_blur(static_ttf, italic, raw, rev):
-    style = "Italic" if italic else "Regular"
-    dst = FONTS / "blur" / f"{PS_FAMILY}Blur-{style}.ttf"
-    dst.parent.mkdir(parents=True, exist_ok=True)
-    subprocess.run([sys.executable, str(ROOT / "scripts" / "blur.py"), str(static_ttf), str(dst),
-                    f"{FAMILY} Blur", f"{PS_FAMILY}Blur", style], check=True)
-    font = TTFont(dst)
-    set_version(font, raw, rev, f"{PS_FAMILY}Blur-{style}")
-    font.save(dst)
-    return dst
-
-
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--only-variable", action="store_true", help="skip statics and Blur (faster)")
+    ap.add_argument("--only-variable", action="store_true", help="skip the statics (faster)")
     args = ap.parse_args()
     raw, rev = version()
     print(f"Sunday Serif {raw} (font version {rev:.3f})")
@@ -277,9 +263,7 @@ def main():
         woff2(vf, web / f"{PS_FAMILY}Text{suffix}-Variable.woff2", pin={"BURN": 0, "INKB": 0, "WORN": 0})
         if args.only_variable:
             continue
-        statics = build_statics(vf, italic, raw, rev)
-        blur = build_blur(statics[0], italic, raw, rev)
-        woff2(blur, web / blur.with_suffix(".woff2").name)
+        build_statics(vf, italic, raw, rev)
     print("done:", ", ".join(sorted(str(p.relative_to(ROOT)) for p in FONTS.rglob("*.*"))))
 
 

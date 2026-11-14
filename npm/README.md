@@ -1,7 +1,8 @@
 # sunday-serif
 
-Webfonts for [Sunday Serif](https://sunday-serif.kkratter.com), an open source variable serif
-with a weight axis (400–600) and three effects: Light Burn (`BURN`), Ink Bleed (`INKB`) and
+**A soft serif for slow days.** Free and open-source, with print effects on variable axes.
+
+Webfonts for [Sunday Serif](https://sunday-serif.kkratter.com): a weight axis (400–600) and three effects: Light Burn (`BURN`), Ink Bleed (`INKB`) and
 Worn Print (`WORN`). Desktop fonts (TTF, OTF) are on the
 [GitHub releases](https://github.com/kkratterf/sunday-serif/releases/latest).
 
@@ -13,7 +14,6 @@ pnpm add sunday-serif
 | --- | --- | --- | --- |
 | `sunday-serif/text.css` | `Sunday Serif` | Weight only, effects at their default. For all text | ~45 KB per style |
 | `sunday-serif/fx.css` | `Sunday Serif FX` | Weight plus the three effect axes. Only where effects show | ~1 MB per style |
-| `sunday-serif/blur.css` | `Sunday Serif Blur` | Colour font with a fixed soft halo | ~200 KB per style |
 
 ## Next.js
 
@@ -41,8 +41,8 @@ body {
 }
 ```
 
-`SundaySerif` is preloaded; `SundaySerifFX` and `SundaySerifBlur` are not, so they only download
-on pages that use them.
+`SundaySerif` is preloaded; `SundaySerifFX` is not, so it only downloads
+on pages that use it.
 
 ## Any bundler
 

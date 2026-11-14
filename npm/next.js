@@ -24,14 +24,3 @@ export const SundaySerifFX = localFont({
   fallback: ["Georgia", "serif"],
   adjustFontFallback: "Times New Roman",
 });
-
-export const SundaySerifBlur = localFont({
-  src: [
-    { path: "./fonts/SundaySerifBlur-Regular.woff2", weight: "400", style: "normal" },
-    { path: "./fonts/SundaySerifBlur-Italic.woff2", weight: "400", style: "italic" },
-  ],
-  variable: "--font-sunday-serif-blur",
-  display: "swap",
-  preload: false,
-  fallback: ["Georgia", "serif"],
-});

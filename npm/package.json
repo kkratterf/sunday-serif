@@ -1,7 +1,7 @@
 {
   "name": "sunday-serif",
   "version": "0.0.0",
-  "description": "Sunday Serif webfonts: a variable serif with weight, Light Burn, Ink Bleed and Worn Print axes, with CSS and next/font helpers.",
+  "description": "A soft serif for slow days. Free and open-source, with print effects on variable axes: webfonts, CSS and next/font helpers.",
   "keywords": ["font", "webfont", "variable-font", "serif", "woff2", "next-font"],
   "homepage": "https://sunday-serif.kkratter.com",
   "repository": {
@@ -18,7 +18,6 @@
   "exports": {
     "./text.css": "./text.css",
     "./fx.css": "./fx.css",
-    "./blur.css": "./blur.css",
     "./next": {
       "types": "./next.d.ts",
       "default": "./next.js"

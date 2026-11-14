@@ -151,7 +151,7 @@ jobs:
         run: |
           name="SundaySerif-$VERSION"
           mkdir -p "dist/$name"
-          cp -R fonts/variable fonts/ttf fonts/otf fonts/webfonts fonts/blur "dist/$name/"
+          cp -R fonts/variable fonts/ttf fonts/otf fonts/webfonts "dist/$name/"
           cp OFL.txt FONTLOG.txt AUTHORS.txt README.md "dist/$name/"
           (cd dist && zip -qr "$name.zip" "$name" && shasum -a 256 "$name.zip" > SHA256SUMS.txt)
           cat dist/SHA256SUMS.txt
