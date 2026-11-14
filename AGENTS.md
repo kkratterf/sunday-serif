@@ -14,7 +14,7 @@ Sunday Serif is an open source (OFL) text serif: "A soft serif for slow days. Fr
 | `scripts/build.py` | The whole build: fontmake → post-processing (names, STAT, version, gasp/prep) → statics (pathops, effects at 0) → WOFF2 (a light text cut with only `wght`, and the full cut) |
 | `npm/`, `scripts/npm_package.py` | The `sunday-serif` npm package (webfonts, `text.css`/`fx.css`, `sunday-serif/next` for next/font). `make npm` assembles it in `build/npm`; never edit `version` in `npm/package.json`, it comes from `VERSION` |
 | `VERSION` | The release version (SemVer). The single source of truth for the font version |
-| `.github/readme/`, `scripts/readme_images.py` | README images. Re-render them (`uv run --with pillow --python .venv/bin/python python scripts/readme_images.py`, needs Chrome) in the PR that changes how the font looks |
+| `.github/readme/`, `scripts/readme_images.py` | README images. Re-render them (`.venv/bin/python scripts/readme_images.py`, needs Chrome; light and dark versions) in the PR that changes how the font looks |
 | `llms.txt` | Plain-text summary for LLMs: keep it in sync with README when names, axes, files or install steps change |
 | `site/` | The website (sunday-serif.kkratter.com), deployed to GitHub Pages by `.github/workflows/pages.yml` |
 | `OFL.txt`, `FONTLOG.txt`, `AUTHORS.txt`, `CONTRIBUTORS.txt` | License and font history, shipped inside every release zip |
