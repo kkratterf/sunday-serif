@@ -70,30 +70,63 @@
     $$("[data-stage], #effects").forEach(function (el) { fxObserver.observe(el); });
   } else { loadFx(); }
 
-  // ---------- Hero: Light Burn follows the pointer ----------
+  // ---------- Hero: each letter is exposed by the pointer ----------
+  // Every letter of the name gets its own Light Burn from its distance to the pointer: the letter
+  // under it burns bright (+50, just below the +55 alternates, so no glyph swaps mid-move), the
+  // ones around it less, and far from the pointer the light goes and the ink spreads (-50).
   var hero = $("[data-hero]");
-  if (hero && !reduceMotion) {
-    var target = 0, value = 0, raf = 0;
+  if (hero && !reduceMotion && window.matchMedia("(hover: hover)").matches) {
+    var NEAR = 50, FAR = -50;
+    hero.setAttribute("aria-label", hero.textContent);
+    var letters = [];
+    (function split(node) {
+      Array.prototype.slice.call(node.childNodes).forEach(function (child) {
+        if (child.nodeType === 3) {
+          var frag = document.createDocumentFragment();
+          Array.from(child.textContent).forEach(function (c) {
+            if (/\s/.test(c)) { frag.appendChild(document.createTextNode(c)); return; }
+            var span = document.createElement("span");
+            span.className = "ch"; span.setAttribute("aria-hidden", "true"); span.textContent = c;
+            frag.appendChild(span);
+            letters.push({ el: span, value: 0, target: 0 });
+          });
+          node.replaceChild(frag, child);
+        } else if (child.nodeType === 1) { split(child); }
+      });
+    })(hero);
+
+    var pointer = null, raf = 0;
     var tick = function () {
-      value += (target - value) * 0.08;
-      hero.style.setProperty("--burn", value.toFixed(1));
-      raf = Math.abs(target - value) > 0.2 ? requestAnimationFrame(tick) : 0;
+      var moving = false;
+      if (pointer) {
+        var size = parseFloat(getComputedStyle(hero).fontSize);
+        letters.forEach(function (l) {
+          var r = l.el.getBoundingClientRect();
+          var d = Math.hypot(pointer.x - (r.left + r.width / 2), pointer.y - (r.top + r.height / 2));
+          // Gaussian falloff, as in React Bits' Variable Proximity: bright on the letter, back to
+          // neutral about one letter height away, fully spread from two.
+          var g = Math.exp(-Math.pow(d / (size * 1.1), 2));
+          l.target = FAR + (NEAR - FAR) * g;
+        });
+      }
+      letters.forEach(function (l) {
+        l.value += (l.target - l.value) * 0.12;
+        if (Math.abs(l.target - l.value) > 0.3) moving = true;
+        l.el.style.setProperty("--b", l.value.toFixed(1));
+      });
+      raf = moving ? requestAnimationFrame(tick) : 0;
     };
-    // The closer the pointer is to the middle of the name, the more exposed it gets (+80, past
-    // the +65 alternates); away from it the light goes and the ink spreads, down to -50.
-    // The box is the text itself (the h1 spans the whole width), measured with a Range.
-    var NEAR = 80, FAR = -50, EDGE = 1.15, OUT = 3;
-    var range = document.createRange();
     window.addEventListener("pointermove", function (e) {
       if (e.pointerType !== "mouse") return;
       loadFx();
-      range.selectNodeContents(hero);
-      var r = range.getBoundingClientRect();
-      // 0 in the middle of the name, 1 on its edge, OUT and beyond far away
-      var d = Math.hypot((e.clientX - (r.left + r.width / 2)) / (r.width / 2), (e.clientY - (r.top + r.height / 2)) / (r.height / 2));
-      target = d <= EDGE ? NEAR * (1 - d / EDGE) : FAR * Math.min(1, (d - EDGE) / (OUT - EDGE));
+      pointer = { x: e.clientX, y: e.clientY };
       if (!raf) raf = requestAnimationFrame(tick);
     }, { passive: true });
+    document.addEventListener("pointerleave", function () {
+      pointer = null;
+      letters.forEach(function (l) { l.target = 0; });
+      if (!raf) raf = requestAnimationFrame(tick);
+    });
   }
 
   // ---------- Segmented controls ----------

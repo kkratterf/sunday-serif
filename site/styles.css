@@ -145,6 +145,7 @@ input[type="range"]::-moz-range-thumb { width: 14px; height: 14px; border-radius
   overflow-wrap: anywhere;
 }
 .hero-title em { font-style: italic; }
+.hero-title .ch { font-variation-settings: "BURN" var(--b, 0), "INKB" 0, "WORN" 0; }
 .hero-foot {
   display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px 40px;
   margin-top: clamp(112px, 17vw, 248px);
