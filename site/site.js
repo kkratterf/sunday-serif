@@ -79,11 +79,17 @@
       hero.style.setProperty("--burn", value.toFixed(1));
       raf = Math.abs(target - value) > 0.2 ? requestAnimationFrame(tick) : 0;
     };
+    // The closer the pointer is to the middle of the name, the more exposed it gets (+80, past
+    // the +65 alternates); far away the light goes and the ink spreads, down to -50.
+    var NEAR = 80, FAR = -50;
     window.addEventListener("pointermove", function (e) {
       if (e.pointerType !== "mouse") return;
-      if (hero.contains(e.target)) loadFx();
-      // Left edge: the ink spreads (-40); right edge: the strokes burn thin (+40).
-      target = ((e.clientX / window.innerWidth) * 2 - 1) * 40;
+      loadFx();
+      var r = hero.getBoundingClientRect();
+      var dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
+      // 0 at the centre, 1 at about the far corner of the screen
+      var d = Math.min(1, Math.hypot(dx, dy) / Math.hypot(window.innerWidth * 0.5, window.innerHeight * 0.6));
+      target = NEAR + (FAR - NEAR) * Math.pow(d, 0.8);
       if (!raf) raf = requestAnimationFrame(tick);
     }, { passive: true });
   }
@@ -104,27 +110,12 @@
   if (tester) {
     var sample = $("[data-sample]", tester);
     var stage = $("[data-stage]", tester);
-    var cssOut = $("[data-css-out]");
     var ctl = function (name) { return $('[data-ctl="' + name + '"]', tester); };
     var out = function (name) { return $('[data-out="' + name + '"]', tester); };
     var state = { wght: 400, italic: false, invert: false, size: 96, burn: 0, inkb: 0, worn: 0 };
     var weightNames = { 400: "Regular", 500: "Medium", 600: "SemiBold" };
+    var EFFECTS = ["burn", "inkb", "worn"];
     var weightLabel = function (w) { return weightNames[w] ? w + " " + weightNames[w] : String(w); };
-
-    function cssText() {
-      var lines = [];
-      var fx = state.burn || state.inkb || state.worn;
-      lines.push(fx ? 'font-family: "Sunday Serif FX", "Sunday Serif", serif; /* the effects build */' : 'font-family: "Sunday Serif", Georgia, serif;');
-      lines.push("font-weight: " + state.wght + ";" + (weightNames[state.wght] ? " /* " + weightNames[state.wght] + " */" : ""));
-      if (state.italic) lines.push("font-style: italic;");
-      lines.push("font-size: " + state.size + "px;");
-      var axes = [];
-      if (state.burn) axes.push('"BURN" ' + state.burn);
-      if (state.inkb) axes.push('"INKB" ' + state.inkb);
-      if (state.worn) axes.push('"WORN" ' + state.worn);
-      if (axes.length) lines.push("font-variation-settings: " + axes.join(", ") + ";");
-      return ".sunday {\n  " + lines.join("\n  ") + "\n}";
-    }
 
     function render() {
       sample.style.fontWeight = String(state.wght);
@@ -137,10 +128,9 @@
       out("burn").textContent = state.burn;
       out("inkb").textContent = state.inkb;
       out("worn").textContent = state.worn;
-      $$("[data-preset]", tester).forEach(function (b) {
-        b.setAttribute("aria-pressed", String(b.dataset.preset === [state.burn, state.inkb, state.worn].join(",")));
-      });
-      if (cssOut) cssOut.textContent = cssText();
+      // One effect at a time: while one is off its base, the other two wait at theirs.
+      var on = EFFECTS.filter(function (n) { return state[n] !== 0; })[0];
+      EFFECTS.forEach(function (n) { ctl(n).closest(".control").classList.toggle("is-off", !!on && on !== n); });
     }
 
     ["italic", "invert"].forEach(function (name) {
@@ -151,15 +141,10 @@
         var v = Number(e.target.value);
         // The weight slider clicks into Regular, Medium and SemiBold when it passes close by.
         if (name === "wght") { [400, 500, 600].forEach(function (s) { if (Math.abs(v - s) <= 6) v = s; }); }
+        if (EFFECTS.indexOf(name) >= 0) {
+          EFFECTS.forEach(function (o) { if (o !== name && state[o] !== 0) { state[o] = 0; ctl(o).value = 0; } });
+        }
         state[name] = v; render();
-      });
-    });
-    $$("[data-preset]", tester).forEach(function (b) {
-      b.addEventListener("click", function () {
-        var v = b.dataset.preset.split(",").map(Number);
-        state.burn = v[0]; state.inkb = v[1]; state.worn = v[2];
-        ctl("burn").value = v[0]; ctl("inkb").value = v[1]; ctl("worn").value = v[2];
-        render();
       });
     });
 
@@ -174,19 +159,6 @@
     render();
   }
 
-  // ---------- Copy buttons ----------
-  $$("[data-copy]").forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      var el = document.getElementById(btn.dataset.copy);
-      if (el) copy(el.textContent, "CSS copied");
-    });
-  });
-
-  // ---------- Effect cards: tap to pause on touch screens ----------
-  $$(".effect").forEach(function (card) {
-    card.addEventListener("click", function () { card.classList.toggle("paused"); });
-  });
-
   // ---------- Glyph browser ----------
   var grid = $("[data-glyph-grid]");
   var groups = window.SUNDAY_GLYPHS || [];
@@ -195,9 +167,7 @@
     var zChar = $("[data-zoom-char]");
     var zName = $("[data-zoom-name]");
     var zCode = $("[data-zoom-code]");
-    var filterBox = $("[data-glyph-filter]");
     var active = null;
-    var total = 0;
     var hex = function (cp) { return "U+" + cp.toString(16).toUpperCase().padStart(4, "0"); };
     // Combining marks are drawn on a no-break space so they show on their own.
     var show = function (cp) { return /Marks/.test(this) ? " " + String.fromCodePoint(cp) : String.fromCodePoint(cp); };
@@ -240,21 +210,10 @@
       copy(String.fromCodePoint(Number(b.dataset.cp)), "Copied " + hex(Number(b.dataset.cp)));
     });
 
-    var names = ["All"].concat(groups.map(function (g) { total += g.glyphs.length; return g.name; }));
-    names.forEach(function (name, i) {
-      var b = document.createElement("button");
-      b.type = "button"; b.textContent = name; b.setAttribute("aria-pressed", String(i === 0));
-      b.addEventListener("click", function () {
-        $$("button", filterBox).forEach(function (o) { o.setAttribute("aria-pressed", String(o === b)); });
-        build(name);
-      });
-      filterBox.appendChild(b);
-    });
     bindSeg($('[data-seg="glyph-style"]'), function (v) {
       grid.classList.toggle("italic", v === "italic");
       zoom.classList.toggle("italic", v === "italic");
     });
-    $$("[data-glyph-count]").forEach(function (el) { el.textContent = total; });
     build("All");
   }
 })();
