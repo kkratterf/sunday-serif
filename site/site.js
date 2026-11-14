@@ -80,16 +80,18 @@
       raf = Math.abs(target - value) > 0.2 ? requestAnimationFrame(tick) : 0;
     };
     // The closer the pointer is to the middle of the name, the more exposed it gets (+80, past
-    // the +65 alternates); far away the light goes and the ink spreads, down to -50.
-    var NEAR = 80, FAR = -50;
+    // the +65 alternates); away from it the light goes and the ink spreads, down to -50.
+    // The box is the text itself (the h1 spans the whole width), measured with a Range.
+    var NEAR = 80, FAR = -50, EDGE = 1.15, OUT = 3;
+    var range = document.createRange();
     window.addEventListener("pointermove", function (e) {
       if (e.pointerType !== "mouse") return;
       loadFx();
-      var r = hero.getBoundingClientRect();
-      var dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
-      // 0 at the centre, 1 at about the far corner of the screen
-      var d = Math.min(1, Math.hypot(dx, dy) / Math.hypot(window.innerWidth * 0.5, window.innerHeight * 0.6));
-      target = NEAR + (FAR - NEAR) * Math.pow(d, 0.8);
+      range.selectNodeContents(hero);
+      var r = range.getBoundingClientRect();
+      // 0 in the middle of the name, 1 on its edge, OUT and beyond far away
+      var d = Math.hypot((e.clientX - (r.left + r.width / 2)) / (r.width / 2), (e.clientY - (r.top + r.height / 2)) / (r.height / 2));
+      target = d <= EDGE ? NEAR * (1 - d / EDGE) : FAR * Math.min(1, (d - EDGE) / (OUT - EDGE));
       if (!raf) raf = requestAnimationFrame(tick);
     }, { passive: true });
   }
