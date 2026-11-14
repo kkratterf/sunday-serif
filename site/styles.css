@@ -46,7 +46,7 @@
 
 /* The print menu: one effect for the whole page, interface included. The values are the effect
    at a strength that still reads in a paragraph. Until the FX font is in, nothing changes. */
-:root[data-print="burn"] { --pb: -70; }
+:root[data-print="burn"] { --pb: 70; }
 :root[data-print="inkb"] { --pi: 100; }
 :root[data-print="worn"] { --pw: 100; }
 :root.fx-ready[data-print] { --serif: "Sunday Serif FX", "Sunday Serif", Georgia, serif; --ui: var(--serif); }
