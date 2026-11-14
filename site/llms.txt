@@ -1,0 +1,23 @@
+# Sunday Serif
+
+> A free, open source serif typeface (SIL Open Font License 1.1) made for Sunday, a slow social network for friends only. Soft serifs, round terminals, a single-storey a.
+
+- Two web builds, each roman + italic variable fonts. Text build "Sunday Serif" (SundaySerifText-Variable.woff2, SundaySerifText-Italic-Variable.woff2, ~45 KB each): wght only. FX build "Sunday Serif FX" (SundaySerif-Variable.woff2, SundaySerif-Italic-Variable.woff2, ~1 MB each): all four axes. Weight axis wght 400-600 with named instances Regular (400), Medium (500) and SemiBold (600).
+- Effect axes (FX build only): BURN "Light Burn" (-100 to 100, default 0: negative spreads the ink, positive thins the strokes), INKB "Ink Bleed" (0 to 100), WORN "Worn Print" (0 to 100).
+- Sunday Serif Blur (SundaySerifBlur-Regular.woff2, SundaySerifBlur-Italic.woff2): a separate static COLRv0 color font, Regular and Italic, recolorable with @font-palette-values (9 palette entries, black with decreasing alpha).
+- Character set: Basic Latin, Latin-1 Supplement, Latin Extended-A (Western and Central European languages).
+- Downloads: one zip per release (SundaySerif-X.Y.Z.zip) with SHA256SUMS.txt. Sources (designspace/UFO) are in the repository.
+
+## CSS
+
+```css
+@font-face { font-family: "Sunday Serif"; src: url("SundaySerifText-Variable.woff2") format("woff2"); font-weight: 400 600; font-style: normal; }
+@font-face { font-family: "Sunday Serif FX"; src: url("SundaySerif-Variable.woff2") format("woff2"); font-weight: 400 600; }
+.title { font-family: "Sunday Serif FX", "Sunday Serif", serif; font-weight: 600; font-variation-settings: "BURN" -15, "INKB" 20, "WORN" 15; }
+```
+
+## Links
+
+- Website and type tester: https://sunday-serif.kkratter.com/
+- Downloads: https://github.com/kkratterf/sunday-serif/releases/latest
+- Source: https://github.com/kkratterf/sunday-serif

@@ -1,0 +1,75 @@
+name: Deploy website
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+      - "sources/**"
+      - "scripts/build.py"
+      - "scripts/blur.py"
+      - "scripts/site-*"
+      - ".github/workflows/pages.yml"
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # The site itself is plain HTML, CSS and JS. Only the fonts are built: `make build`
+      # compiles them from the sources (as in ci.yml), and scripts/site-build.sh copies the web
+      # fonts into site/fonts/ and regenerates site/glyphs.js. Neither is committed.
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Build the fonts
+        run: make build
+
+      - name: Prepare the site
+        run: scripts/site-build.sh
+
+      # The PostHog project key lives in the POSTHOG_KEY repository variable
+      # (Settings → Secrets and variables → Actions → Variables). Without it
+      # the placeholder stays and analytics are off.
+      - name: Insert the PostHog key
+        env:
+          POSTHOG_KEY: ${{ vars.POSTHOG_KEY }}
+        run: |
+          if [ -n "$POSTHOG_KEY" ]; then
+            sed -i "s/__POSTHOG_KEY__/$POSTHOG_KEY/" site/analytics.js
+          else
+            echo "::warning::POSTHOG_KEY is not set: the site deploys without analytics"
+          fi
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./site
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -44,6 +44,15 @@ Two virtualenvs on purpose: `.venv` (build, `requirements.txt`) and `.venv-qa` (
 - New glyphs need: an outline in every master, the same pore structure (or no pores), a Unicode value, kerning groups when they relate to an existing letter, and a `.varAlt01` alternate plus a designspace rule if the base letter has one.
 - Do not commit generated UFO instances, `.glyphs` exports or editor caches.
 
+## The website
+
+`site/` is sunday-serif.kkratter.com: plain HTML, CSS and JS, in English, with no framework and no build step. `.github/workflows/pages.yml` runs `make build`, then `scripts/site-build.sh`, and publishes `site/` to GitHub Pages on every push to `main` that touches the site, the sources or the build, and on every release.
+
+- The site's fonts are never committed (`site/.gitignore`). `scripts/site-build.sh` copies the web fonts from `fonts/webfonts/` into `site/fonts/` and regenerates `site/glyphs.js` from the character map. Preview: `make build && scripts/site-build.sh && python3 -m http.server -d site 8000`.
+- Weight budget: the first paint loads only the text build ("Sunday Serif", `SundaySerifText-*`). The FX build ("Sunday Serif FX") and Blur are loaded by `site.js` when the visitor hovers the hero or reaches the tester or the effects. Keep it that way.
+- If a web font file name changes, update `scripts/site-build.sh`, the `@font-face` rules in `site/styles.css`, the preloads in `site/index.html` and the CSS examples on the page and in `site/llms.txt`.
+- Colours are Sunday's palette (`packages/tokens` in `kkratterf/sunday`). Check light, dark and a 390 px wide phone before opening a `site` PR.
+
 ## Rules for changes
 
 - **CI must be green** (build + fontbakery with zero FAIL) before a PR is ready. Never skip or silence a fontbakery check to get green: if a check is a false alarm, explain why in the PR and exclude it explicitly in the Makefile with a comment.

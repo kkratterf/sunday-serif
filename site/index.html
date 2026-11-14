@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sunday Serif, a soft serif for slow days</title>
+  <meta name="description" content="Sunday Serif is a free, open source serif typeface made for Sunday, the slow social network. Three weights with italics, three print effects on variable axes and a blurred color font. SIL Open Font License.">
+  <link rel="canonical" href="https://sunday-serif.kkratter.com/">
+  <meta name="theme-color" content="#F9F9F7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#191919" media="(prefers-color-scheme: dark)">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Sunday Serif">
+  <meta property="og:description" content="A soft serif for slow days. Free and open source.">
+  <meta property="og:url" content="https://sunday-serif.kkratter.com/">
+  <meta property="og:image" content="https://sunday-serif.kkratter.com/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/SundaySerifText-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/SundaySerifText-Italic-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    // The theme the visitor picked last time, before the first paint.
+    try { var t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+  <script defer src="analytics.js"></script>
+  <script defer src="glyphs.js"></script>
+  <script defer src="site.js"></script>
+</head>
+<body>
+  <a class="skip" href="#tester">Skip to the type tester</a>
+
+  <header class="top">
+    <div class="wrap top-in">
+      <a class="brand" href="#" aria-label="Sunday Serif, home">Sunday Serif</a>
+      <nav class="nav" aria-label="Sections">
+        <a href="#tester">Try</a>
+        <a href="#effects">Effects</a>
+        <a href="#glyphs">Glyphs</a>
+        <a href="#use">Use</a>
+      </nav>
+      <div class="top-right">
+        <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch light or dark">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 3a9 9 0 1 0 0 18V3z"/><circle cx="12" cy="12" r="8.25" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+        </button>
+        <a class="btn btn-ink btn-sm" href="#download">Download</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero: the name, large. Light Burn follows the pointer across the page. -->
+    <section class="hero wrap" aria-labelledby="hero-title">
+      <h1 id="hero-title" class="hero-title" data-hero>Sunday <em>Serif</em></h1>
+      <div class="hero-foot">
+        <p class="lede">A soft serif for slow days. Made for <a href="https://github.com/kkratterf/sunday">Sunday</a>, the social network for friends only, and free for everyone else.</p>
+        <div class="hero-actions">
+          <a class="btn btn-ink" href="#download">Download, it's free</a>
+          <a class="btn btn-ghost" href="https://github.com/kkratterf/sunday-serif">GitHub</a>
+        </div>
+      </div>
+      <ul class="facts" aria-label="At a glance">
+        <li><strong>400–600</strong> weight</li>
+        <li><strong>3</strong> print effects</li>
+                <li><strong>1</strong> blur</li>
+        <li><strong data-glyph-count>360</strong> characters</li>
+        <li><strong>OFL</strong> open source</li>
+      </ul>
+    </section>
+
+    <!-- Type tester -->
+    <section id="tester" class="section wrap" aria-labelledby="tester-title">
+      <div class="section-head">
+        <h2 id="tester-title">Try it</h2>
+        <p class="muted">Type anything. Every control is live and the CSS below follows along.</p>
+      </div>
+
+      <div class="tester" data-tester>
+        <div class="controls" role="group" aria-label="Type tester controls">
+          <div class="control" data-weight-control>
+            <label class="label" for="ctl-wght">Weight <output data-out="wght">400</output></label>
+            <input id="ctl-wght" type="range" min="400" max="600" value="400" data-ctl="wght">
+            <div class="ticks" aria-hidden="true"><span>Regular</span><span>Medium</span><span>SemiBold</span></div>
+          </div>
+          <div class="control control-row">
+            <label class="switch"><input type="checkbox" data-ctl="italic"><span>Italic</span></label>
+            <label class="switch"><input type="checkbox" data-ctl="blur"><span>Blur</span></label>
+            <label class="switch"><input type="checkbox" data-ctl="invert"><span>Invert</span></label>
+          </div>
+          <div class="control">
+            <label class="label" for="ctl-size">Size <output data-out="size">96</output></label>
+            <input id="ctl-size" type="range" min="14" max="280" value="96" data-ctl="size">
+          </div>
+          <div class="control" data-axis-control>
+            <label class="label" for="ctl-burn">Light Burn <output data-out="burn">0</output></label>
+            <input id="ctl-burn" type="range" min="-100" max="100" value="0" data-ctl="burn">
+          </div>
+          <div class="control" data-axis-control>
+            <label class="label" for="ctl-inkb">Ink Bleed <output data-out="inkb">0</output></label>
+            <input id="ctl-inkb" type="range" min="0" max="100" value="0" data-ctl="inkb">
+          </div>
+          <div class="control" data-axis-control>
+            <label class="label" for="ctl-worn">Worn Print <output data-out="worn">0</output></label>
+            <input id="ctl-worn" type="range" min="0" max="100" value="0" data-ctl="worn">
+          </div>
+          <div class="control">
+            <span class="label">Presets</span>
+            <div class="chips" data-presets>
+              <button type="button" data-preset="0,0,0">Fresh</button>
+              <button type="button" data-preset="-15,20,15">Sunday paper</button>
+              <button type="button" data-preset="60,0,0">Sunlit</button>
+              <button type="button" data-preset="0,85,0">Wet ink</button>
+              <button type="button" data-preset="-20,10,75">Photocopy</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="stage" data-stage>
+          <div class="sample" contenteditable="true" spellcheck="false" data-sample aria-label="Sample text, editable">Seven photos a week, only for your friends.</div>
+        </div>
+      </div>
+
+      <div class="code-card">
+        <div class="code-head">
+          <span>CSS for this setting</span>
+          <button class="btn btn-ghost btn-sm" type="button" data-copy="css-out">Copy</button>
+        </div>
+        <pre><code id="css-out" data-css-out></code></pre>
+      </div>
+    </section>
+
+    <!-- Effects -->
+    <section id="effects" class="section wrap" aria-labelledby="effects-title">
+      <div class="section-head">
+        <h2 id="effects-title">Three ways to age a page</h2>
+        <p class="muted">The effects are variable axes, so they move smoothly, mix freely and combine freely: any weight, any mix of the three.</p>
+      </div>
+      <div class="effects">
+        <article class="effect">
+          <div class="effect-word fx-burn" aria-hidden="true">Sunday</div>
+          <h3>Light Burn <code>BURN</code> <span class="range">−100 to 100</span></h3>
+          <p class="muted">Too much light or too little. Negative values let the ink spread into soft, heavy shapes; positive ones burn the strokes down to thin hairlines.</p>
+        </article>
+        <article class="effect">
+          <div class="effect-word fx-inkb" aria-hidden="true">Sunday</div>
+          <h3>Ink Bleed <code>INKB</code> <span class="range">0 to 100</span></h3>
+          <p class="muted">Ink soaking into cheap paper: corners round off, counters close up, letters start to touch.</p>
+        </article>
+        <article class="effect">
+          <div class="effect-word fx-worn" aria-hidden="true">Sunday</div>
+          <h3>Worn Print <code>WORN</code> <span class="range">0 to 100</span></h3>
+          <p class="muted">A tired press and a dry roller. Edges break up and the color thins out, like a flyer left in the sun.</p>
+        </article>
+        <article class="effect effect-blur">
+          <div class="effect-word fx-blur" aria-hidden="true">Sunday</div>
+          <h3>Sunday Serif Blur <span class="range">color font</span></h3>
+          <p>Out of focus, on purpose. A separate color font made of soft layers, for big titles over photos.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Specimen -->
+    <section id="specimen" class="section wrap" aria-labelledby="specimen-title">
+      <div class="section-head">
+        <h2 id="specimen-title">The family</h2>
+        <p class="muted">Weight is an axis too: any value from 400 to 600, with Regular, Medium and SemiBold as named stops. Every weight carries the three effect axes.</p>
+      </div>
+      <ul class="styles">
+        <li style="font-weight:400">Regular<span>400</span></li>
+        <li style="font-weight:400;font-style:italic">Italic<span>400</span></li>
+        <li style="font-weight:500">Medium<span>500</span></li>
+        <li style="font-weight:500;font-style:italic">Medium Italic<span>500</span></li>
+        <li style="font-weight:600">SemiBold<span>600</span></li>
+        <li style="font-weight:600;font-style:italic">SemiBold Italic<span>600</span></li>
+      </ul>
+
+      <div class="waterfall" aria-label="Sizes">
+        <p style="font-size:120px">Slow</p>
+        <p style="font-size:72px">Only friends, <em>never</em> strangers</p>
+        <p style="font-size:44px">Seven days, seven photos, one album on Sunday.</p>
+        <p style="font-size:28px">No infinite scroll, no algorithm, no likes to count. Just the people you would call on a Sunday afternoon.</p>
+        <p style="font-size:18px">Sunday Serif started from the shapes of a press photo: round terminals, soft serifs and a single-storey a that looks handwritten at large sizes and stays calm in a paragraph. 0123456789 € $ £ ¥ &amp; @ ? !</p>
+      </div>
+
+      <div class="columns">
+        <div class="col" lang="en">
+          <h3>English</h3>
+          <p>Every Sunday the week closes like a photo album. You see what your friends lived, one picture a day, and then it's done: nothing more to scroll, nothing to catch up on. The rest of the day is yours.</p>
+        </div>
+        <div class="col" lang="it">
+          <h3><em>Italiano</em></h3>
+          <p>Ogni domenica la settimana si chiude come un album di fotografie. Vedi cosa hanno vissuto i tuoi amici, una foto al giorno, e poi è finita: niente da scorrere, niente da recuperare. Il resto della giornata è tuo. Perché, però, così è più bello?</p>
+        </div>
+        <div class="col" lang="fr">
+          <h3>Français · Deutsch · Español</h3>
+          <p>Le dimanche, on ralentit enfin. Sonntags ist die Woche zu Ende, und das ist gut so. El domingo no hay prisa: ¿quién quiere desplazarse sin fin? Żółć, łódź, Čeština, Åland.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Glyphs -->
+    <section id="glyphs" class="section wrap" aria-labelledby="glyphs-title">
+      <div class="section-head">
+        <h2 id="glyphs-title">Glyphs</h2>
+        <p class="muted">Basic Latin, Latin-1 and Latin Extended-A: enough for the languages of Western and Central Europe. Hover or tap a character to see it large, click to copy it.</p>
+      </div>
+      <div class="glyph-tools">
+        <div class="seg seg-sm" role="radiogroup" aria-label="Glyph style" data-seg="glyph-style">
+          <button type="button" role="radio" aria-checked="true" data-value="normal">Roman</button>
+          <button type="button" role="radio" aria-checked="false" data-value="italic">Italic</button>
+        </div>
+        <div class="chips chips-sm" data-glyph-filter></div>
+      </div>
+      <div class="glyph-browser">
+        <div class="glyph-grid" data-glyph-grid role="list"></div>
+        <aside class="glyph-zoom" data-glyph-zoom aria-live="polite">
+          <div class="zoom-char" data-zoom-char>a</div>
+          <div class="zoom-meta"><span data-zoom-name>Latin Small Letter A</span><code data-zoom-code>U+0061</code></div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Use -->
+    <section id="use" class="section wrap" aria-labelledby="use-title">
+      <div class="section-head">
+        <h2 id="use-title">Use it on the web</h2>
+        <p class="muted">Two builds, each a pair of variable files, roman and italic. <strong>Sunday Serif</strong> is the light one for text: every weight in about 45 KB a style. <strong>Sunday Serif FX</strong> adds the three effects and weighs about 1 MB a style, so load it only where effects show.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <h3><span class="n">1</span> Load the fonts</h3>
+          <p class="muted">Put the WOFF2 files from the download next to your CSS, declare them with their weight range and preload the roman text file.</p>
+          <div class="code-card"><div class="code-head"><span>CSS</span><button class="btn btn-ghost btn-sm" type="button" data-copy="code-face">Copy</button></div>
+<pre><code id="code-face">@font-face {
+  font-family: "Sunday Serif";
+  src: url("fonts/SundaySerifText-Variable.woff2") format("woff2");
+  font-weight: 400 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Sunday Serif";
+  src: url("fonts/SundaySerifText-Italic-Variable.woff2") format("woff2");
+  font-weight: 400 600;
+  font-style: italic;
+  font-display: swap;
+}
+/* Only where you use the effects */
+@font-face {
+  font-family: "Sunday Serif FX";
+  src: url("fonts/SundaySerif-Variable.woff2") format("woff2");
+  font-weight: 400 600;
+  font-display: swap;
+}
+
+&lt;!-- in &lt;head&gt; --&gt;
+&lt;link rel="preload" href="fonts/SundaySerifText-Variable.woff2"
+      as="font" type="font/woff2" crossorigin&gt;</code></pre></div>
+        </div>
+        <div class="step">
+          <h3><span class="n">2</span> Set the type</h3>
+          <p class="muted">Any weight from 400 to 600 works, in between too. Bold in your markup maps to SemiBold.</p>
+          <div class="code-card"><div class="code-head"><span>CSS</span><button class="btn btn-ghost btn-sm" type="button" data-copy="code-set">Copy</button></div>
+<pre><code id="code-set">body {
+  font-family: "Sunday Serif", Georgia, serif;
+  font-weight: 400;  /* Regular */
+}
+h2 { font-weight: 500; }  /* Medium */
+h1 { font-weight: 560; }  /* anything between 400 and 600 */
+em { font-style: italic; }</code></pre></div>
+        </div>
+        <div class="step">
+          <h3><span class="n">3</span> Add an effect</h3>
+          <p class="muted">Effects need the FX build. Mix the axes, or drive them with custom properties to animate them. Leave out an axis and it stays at 0, the clean print.</p>
+          <div class="code-card"><div class="code-head"><span>CSS</span><button class="btn btn-ghost btn-sm" type="button" data-copy="code-fx">Copy</button></div>
+<pre><code id="code-fx">.poster {
+  font-family: "Sunday Serif FX", "Sunday Serif", serif;
+  font-variation-settings: "BURN" -15, "INKB" 20, "WORN" 15;
+}
+
+/* Animate one axis with a registered property */
+@property --worn { syntax: "&lt;number&gt;"; inherits: true; initial-value: 0; }
+.fade-in {
+  font-family: "Sunday Serif FX", "Sunday Serif", serif;
+  font-variation-settings: "WORN" var(--worn);
+  transition: --worn 1.2s ease;
+}
+.fade-in:hover { --worn: 80; }</code></pre></div>
+        </div>
+        <div class="step">
+          <h3><span class="n">4</span> Blur, in any color</h3>
+          <p class="muted">Sunday Serif Blur is a color font (COLRv0, every modern browser). Its layers are black by default: recolor them with a palette, keeping each layer's transparency.</p>
+          <div class="code-card"><div class="code-head"><span>CSS</span><button class="btn btn-ghost btn-sm" type="button" data-copy="code-blur">Copy</button></div>
+<pre><code id="code-blur">@font-face {
+  font-family: "Sunday Serif Blur";
+  src: url("fonts/SundaySerifBlur-Regular.woff2") format("woff2");
+  font-display: swap;
+}
+@font-palette-values --paper {
+  font-family: "Sunday Serif Blur";
+  override-colors:
+    0 #ffffff12, 1 #ffffff14, 2 #ffffff17,
+    3 #ffffff1a, 4 #ffffff1f, 5 #ffffff24,
+    6 #ffffff2e, 7 #ffffff40, 8 #ffffff;
+}
+.dreamy {
+  font-family: "Sunday Serif Blur", "Sunday Serif", serif;
+  font-palette: --paper;
+}</code></pre></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Download -->
+    <section id="download" class="section wrap" aria-labelledby="download-title">
+      <div class="download">
+        <div class="download-text">
+          <h2 id="download-title">Free, <em>forever</em></h2>
+          <p>Sunday Serif is released under the <a href="https://openfontlicense.org">SIL Open Font License 1.1</a>. Use it for anything: websites, apps, books, logos, products you sell. Embed it, change it, ship it with your work.</p>
+          <p class="muted">The one thing you can't do is sell the font files on their own. If you change the fonts and share them, give them a different name.</p>
+          <div class="hero-actions">
+            <a class="btn btn-ink" href="https://github.com/kkratterf/sunday-serif/releases/latest">Download the latest release</a>
+            <a class="btn btn-ghost" href="https://github.com/kkratterf/sunday-serif">Source on GitHub</a>
+          </div>
+        </div>
+        <ul class="download-list">
+          <li><strong>OTF</strong><span>Desktop apps: Figma, Keynote, Word, InDesign</span></li>
+          <li><strong>TTF</strong><span>Desktop and apps on Windows, Android, iOS</span></li>
+          <li><strong>Variable</strong><span>Roman and italic with the weight and effect axes, TTF and WOFF2 for the web</span></li>
+          <li><strong>Blur</strong><span>The color font, TTF and WOFF2</span></li>
+          <li><strong>Sources</strong><span>Designspace and UFO in the GitHub repo, to open in Fontra or Glyphs</span></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot wrap">
+    <p>Sunday Serif is made by <a href="https://kkratter.com">Federico Kratter Thaler</a> for <a href="https://github.com/kkratterf/sunday">Sunday</a>.</p>
+    <nav aria-label="Links">
+      <a href="https://github.com/kkratterf/sunday-serif">GitHub</a>
+      <a href="https://github.com/kkratterf/sunday-serif/issues">Report an issue</a>
+      <a href="https://github.com/kkratterf/sunday-serif/blob/main/OFL.txt">License</a>
+      <a href="https://github.com/kkratterf/sunday-serif/blob/main/CHANGELOG.md">Changelog</a>
+    </nav>
+  </footer>
+
+  <div class="toast" data-toast role="status" aria-live="polite"></div>
+</body>
+</html>
