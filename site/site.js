@@ -70,62 +70,29 @@
     $$("[data-stage], #effects").forEach(function (el) { fxObserver.observe(el); });
   } else { loadFx(); }
 
-  // ---------- Hero: each letter is exposed by the pointer ----------
-  // Every letter of the name gets its own Light Burn from its distance to the pointer: the letter
-  // under it burns bright (+50, just below the +55 alternates, so no glyph swaps mid-move), the
-  // ones around it less, and far from the pointer the light goes and the ink spreads (-50).
-  var hero = $("[data-hero]");
-  if (hero && !reduceMotion && window.matchMedia("(hover: hover)").matches) {
-    var NEAR = 50, FAR = -50;
-    hero.setAttribute("aria-label", hero.textContent);
-    var letters = [];
-    (function split(node) {
-      Array.prototype.slice.call(node.childNodes).forEach(function (child) {
-        if (child.nodeType === 3) {
-          var frag = document.createDocumentFragment();
-          Array.from(child.textContent).forEach(function (c) {
-            if (/\s/.test(c)) { frag.appendChild(document.createTextNode(c)); return; }
-            var span = document.createElement("span");
-            span.className = "ch"; span.setAttribute("aria-hidden", "true"); span.textContent = c;
-            frag.appendChild(span);
-            letters.push({ el: span, value: 0, target: 0 });
-          });
-          node.replaceChild(frag, child);
-        } else if (child.nodeType === 1) { split(child); }
-      });
-    })(hero);
-
-    var pointer = null, raf = 0;
-    var tick = function () {
-      var moving = false;
-      if (pointer) {
-        var size = parseFloat(getComputedStyle(hero).fontSize);
-        letters.forEach(function (l) {
-          var r = l.el.getBoundingClientRect();
-          var d = Math.hypot(pointer.x - (r.left + r.width / 2), pointer.y - (r.top + r.height / 2));
-          // Gaussian falloff, as in React Bits' Variable Proximity: bright on the letter, back to
-          // neutral about one letter height away, fully spread from two.
-          var g = Math.exp(-Math.pow(d / (size * 1.1), 2));
-          l.target = FAR + (NEAR - FAR) * g;
-        });
-      }
-      letters.forEach(function (l) {
-        l.value += (l.target - l.value) * 0.12;
-        if (Math.abs(l.target - l.value) > 0.3) moving = true;
-        l.el.style.setProperty("--b", l.value.toFixed(1));
-      });
-      raf = moving ? requestAnimationFrame(tick) : 0;
+  // ---------- Print menu: one effect for the whole page ----------
+  // "Serif" is the clean print. The others set data-print on <html>; the CSS then sets every
+  // text on the page, interface included, in Sunday Serif FX with that effect.
+  var printBtn = $("[data-print-toggle]");
+  var printMenu = $("[data-print-menu]");
+  if (printBtn && printMenu) {
+    var setPrint = function (v) {
+      if (v && v !== "serif") { loadFx(); root.dataset.print = v; } else { delete root.dataset.print; v = "serif"; }
+      $$("input", printMenu).forEach(function (i) { i.checked = i.value === v; });
+      try { if (v === "serif") localStorage.removeItem("print"); else localStorage.setItem("print", v); } catch (e) {}
     };
-    window.addEventListener("pointermove", function (e) {
-      if (e.pointerType !== "mouse") return;
-      loadFx();
-      pointer = { x: e.clientX, y: e.clientY };
-      if (!raf) raf = requestAnimationFrame(tick);
-    }, { passive: true });
-    document.addEventListener("pointerleave", function () {
-      pointer = null;
-      letters.forEach(function (l) { l.target = 0; });
-      if (!raf) raf = requestAnimationFrame(tick);
+    var open = function (on) {
+      printMenu.hidden = !on;
+      printBtn.setAttribute("aria-expanded", String(on));
+      if (on) { var c = $("input:checked", printMenu); if (c) c.focus(); }
+    };
+    setPrint(root.dataset.print || "serif");
+    printBtn.addEventListener("click", function (e) { e.stopPropagation(); open(printMenu.hidden); });
+    printMenu.addEventListener("change", function (e) { setPrint(e.target.value); });
+    printMenu.addEventListener("click", function (e) { e.stopPropagation(); });
+    document.addEventListener("click", function () { if (!printMenu.hidden) open(false); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !printMenu.hidden) { open(false); printBtn.focus(); }
     });
   }
 

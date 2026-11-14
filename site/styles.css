@@ -44,6 +44,14 @@
 
 .fx-ready { --fx: "Sunday Serif FX", "Sunday Serif", Georgia, serif; }
 
+/* The print menu: one effect for the whole page, interface included. The values are the effect
+   at a strength that still reads in a paragraph. Until the FX font is in, nothing changes. */
+:root[data-print="burn"] { --pb: -70; }
+:root[data-print="inkb"] { --pi: 100; }
+:root[data-print="worn"] { --pw: 100; }
+:root.fx-ready[data-print] { --serif: "Sunday Serif FX", "Sunday Serif", Georgia, serif; --ui: var(--serif); }
+:root.fx-ready[data-print] body { font-variation-settings: "BURN" var(--pb, 0), "INKB" var(--pi, 0), "WORN" var(--pw, 0); }
+
 /* ---------- Base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 80px; }
@@ -91,6 +99,28 @@ p { margin: 0; }
   display: grid; place-items: center; width: 34px; height: 34px; border-radius: 999px;
   border: 1px solid var(--border); background: transparent; color: var(--ink); cursor: pointer;
 }
+.icon-btn:hover, .icon-btn[aria-expanded="true"] { border-color: var(--faint); }
+
+.menu-wrap { position: relative; }
+.menu {
+  position: absolute; top: calc(100% + 8px); right: 0; z-index: 30; min-width: 184px; margin: 0; padding: 6px;
+  border: 1px solid var(--border); border-radius: 14px; background: var(--surface);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 12%); display: grid; gap: 2px;
+}
+.menu[hidden] { display: none; }
+.menu legend { float: left; width: 100%; padding: 8px 10px 6px; font: 500 12px/1 var(--ui); color: var(--faint); }
+.menu label {
+  display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 9px;
+  font: 500 14px/1 var(--ui); color: var(--text); cursor: pointer;
+}
+.menu label:hover { background: var(--raised); color: var(--ink); }
+.menu input {
+  -webkit-appearance: none; appearance: none; width: 16px; height: 16px; margin: 0; flex: none;
+  border: 1.5px solid var(--faint); border-radius: 50%; display: grid; place-items: center; cursor: pointer;
+}
+.menu input:checked { border-color: var(--ink); }
+.menu input:checked::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--ink); }
+.menu input:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 
 .seg { display: inline-flex; padding: 3px; gap: 2px; border-radius: 999px; background: var(--raised); }
 .seg button {
@@ -141,11 +171,10 @@ input[type="range"]::-moz-range-thumb { width: 14px; height: 14px; border-radius
 .hero-title {
   font: 400 clamp(76px, 19vw, 280px)/0.92 var(--fx);
   letter-spacing: -0.035em; margin-left: -0.04em;
-  font-variation-settings: "BURN" var(--burn, 0), "INKB" var(--inkb, 0), "WORN" var(--worn, 0);
+  font-variation-settings: "BURN" var(--burn, var(--pb, 0)), "INKB" var(--inkb, var(--pi, 0)), "WORN" var(--worn, var(--pw, 0));
   overflow-wrap: anywhere;
 }
 .hero-title em { font-style: italic; }
-.hero-title .ch { font-variation-settings: "BURN" var(--b, 0), "INKB" 0, "WORN" 0; }
 .hero-foot {
   display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px 40px;
   margin-top: clamp(112px, 17vw, 248px);

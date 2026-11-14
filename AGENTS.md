@@ -55,7 +55,7 @@ Two virtualenvs on purpose: `.venv` (build, `requirements.txt`) and `.venv-qa` (
 `site/` is sunday-serif.kkratter.com: plain HTML, CSS and JS, in English, with no framework and no build step. `.github/workflows/pages.yml` runs `make build`, then `scripts/site-build.sh`, and publishes `site/` to GitHub Pages on every push to `main` that touches the site, the sources or the build, and on every release.
 
 - The site's fonts are never committed (`site/.gitignore`). `scripts/site-build.sh` copies the web fonts from `fonts/webfonts/` into `site/fonts/` and regenerates `site/glyphs.js` from the character map. Preview: `make build && scripts/site-build.sh && python3 -m http.server -d site 8000`.
-- Weight budget: the first paint loads only the text build ("Sunday Serif", `SundaySerifText-*`). The FX build ("Sunday Serif FX") is loaded by `site.js` when the visitor moves the mouse or reaches the tester or the effects. Keep it that way.
+- Weight budget: the first paint loads only the text build ("Sunday Serif", `SundaySerifText-*`). The FX build ("Sunday Serif FX") is loaded by `site.js` when the visitor reaches the tester or the effects, or picks an effect in the print menu. Keep it that way.
 - If a web font file name changes, update `scripts/site-build.sh`, the `@font-face` rules in `site/styles.css`, the preloads in `site/index.html` and the CSS examples on the page and in `site/llms.txt`.
 - Colours are Sunday's palette (paper `#F9F9F7`, ink `#131313`, text `#383835`, graphite `#191919` in dark), with no colour of its own. Check light, dark and a 390 px wide phone before opening a `site` PR.
 
