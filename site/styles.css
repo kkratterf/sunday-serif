@@ -239,7 +239,6 @@ input[type="range"]::-moz-range-thumb { width: 14px; height: 14px; border-radius
 .columns p { font: 400 18px/1.6 var(--serif); color: var(--text); hyphens: auto; }
 .columns .source { font: 400 15px/1.5 var(--ui); color: var(--muted); }
 .columns .source em { font-family: var(--serif); font-size: 17px; }
-.columns .source span { display: block; margin-top: 16px; font: 400 22px/1.4 var(--serif); color: var(--ink); }
 
 /* ---------- Glyphs ---------- */
 .glyph-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 16px; }
