@@ -83,7 +83,6 @@ Every release has a `SundaySerif-X.Y.Z.zip` with:
 | `variable/` | `SundaySerif[BURN,INKB,WORN,wght].ttf` and `SundaySerif-Italic[...].ttf` | Apps that support variable fonts (Figma, Adobe apps, macOS, browsers). All weights and effects in two files. |
 | `ttf/`, `otf/` | Regular, Medium, SemiBold and their italics | Apps without variable font support. Effects are at their default. |
 | `webfonts/` | WOFF2 at 1000 UPM: `SundaySerifText-*` (weight only, ~45 KB) and `SundaySerif-*` (all axes, ~1 MB) | The web. See below which one to load. |
-| `blur/` | Sunday Serif Blur Regular and Italic (COLRv0) | A fixed soft-focus look, in apps that support colour fonts. |
 
 ## Use it on the web
 
@@ -128,12 +127,6 @@ with their four-letter tags (upper case, quoted).
   font-weight: 400 600;
   font-style: normal;
   font-display: swap;
-}
-@font-face {
-  font-family: "Sunday Serif Blur";
-  src: url("fonts/SundaySerifBlur-Regular.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
 }
 
 body {
@@ -222,8 +215,6 @@ Notes:
 
 - Light Burn swaps in its broken-line letters through the `rvrn` feature, which browsers apply
   automatically. Do not turn off `font-feature-settings` for the text that uses it.
-- Sunday Serif Blur draws its core in the current text colour (`color`) and its halo in a
-  transparent dark grey. It works in recent Safari, Chrome and Firefox.
 
 ## Use it on the desktop and in Figma
 
@@ -265,7 +256,6 @@ The version of the build comes from the [`VERSION`](VERSION) file.
 | `sources/SundaySerif.designspace`, `sources/SundaySerif-Italic.designspace` | The two designspaces, with the axes, the masters and the Light Burn rules |
 | `sources/Roman/`, `sources/Italic/` | The UFO masters: for each weight, 21 Light Burn masters plus the Ink Bleed and Worn Print masters. They open in [Fontra](https://fontra.xyz), Glyphs, RoboFont or FontLab |
 | `scripts/build.py` | The build: variable fonts, statics, WOFF2, and post-processing (names, STAT, version) |
-| `scripts/blur.py` | Makes Sunday Serif Blur from the static fonts |
 | `.github/readme/`, `scripts/readme_images.py` | The README images, rendered from the built fonts with headless Chrome |
 | `llms.txt` | A plain-text summary of the font for AI assistants and agents |
 | `npm/`, `scripts/npm_package.py` | The `sunday-serif` npm package: CSS, next/font helper and README; the script adds the webfonts and the version |

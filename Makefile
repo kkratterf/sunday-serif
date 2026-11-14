@@ -30,7 +30,6 @@ test: .venv-qa/.ok
 	mkdir -p build/fontbakery
 	$(QA) check-universal fonts/variable/*.ttf -l FAIL --succinct --html build/fontbakery/variable.html
 	$(QA) check-universal fonts/ttf/*.ttf -l FAIL --succinct --html build/fontbakery/static.html
-	$(QA) check-universal fonts/blur/*.ttf -l FAIL --succinct --html build/fontbakery/blur.html
 
 # The `sunday-serif` npm package in build/npm (after `make build`).
 npm: .venv/.ok

@@ -14,7 +14,6 @@ pnpm add sunday-serif
 | --- | --- | --- | --- |
 | `sunday-serif/text.css` | `Sunday Serif` | Weight only, effects at their default. For all text | ~45 KB per style |
 | `sunday-serif/fx.css` | `Sunday Serif FX` | Weight plus the three effect axes. Only where effects show | ~1 MB per style |
-| `sunday-serif/blur.css` | `Sunday Serif Blur` | Colour font with a fixed soft halo | ~200 KB per style |
 
 ## Next.js
 
@@ -42,8 +41,8 @@ body {
 }
 ```
 
-`SundaySerif` is preloaded; `SundaySerifFX` and `SundaySerifBlur` are not, so they only download
-on pages that use them.
+`SundaySerif` is preloaded; `SundaySerifFX` is not, so it only downloads
+on pages that use it.
 
 ## Any bundler
 
