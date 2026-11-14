@@ -20,7 +20,7 @@
 ## Files
 
 - Desktop: variable/SundaySerif[BURN,INKB,WORN,wght].ttf and SundaySerif-Italic[BURN,INKB,WORN,wght].ttf; static otf/ and ttf/ for Regular, Medium, SemiBold and italics (effects at 0).
-- Web (WOFF2, 1000 UPM): SundaySerifText-Variable.woff2 and SundaySerifText-Italic-Variable.woff2 (wght only, about 45 KB, for text); SundaySerif-Variable.woff2 and SundaySerif-Italic-Variable.woff2 (all four axes, about 1 MB, only where effects show).
+- Web (WOFF2, 1000 UPM): SundaySerifText-Variable.woff2 and SundaySerifText-Italic-Variable.woff2 (wght only, about 45 KB, for text); SundaySerif-Variable.woff2 and SundaySerif-Italic-Variable.woff2 (all four axes, about 500 KB, only where effects show).
 - Mobile (React Native, Expo): use the static TTFs; React Native cannot set custom variable axes.
 
 ## Use on the web

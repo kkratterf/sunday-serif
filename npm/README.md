@@ -13,7 +13,7 @@ pnpm add sunday-serif
 | Import | Family | What | Size |
 | --- | --- | --- | --- |
 | `sunday-serif/text.css` | `Sunday Serif` | Weight only, effects at their default. For all text | ~45 KB per style |
-| `sunday-serif/fx.css` | `Sunday Serif FX` | Weight plus the three effect axes. Only where effects show | ~1 MB per style |
+| `sunday-serif/fx.css` | `Sunday Serif FX` | Weight plus the three effect axes. Only where effects show | ~500 KB per style |
 
 ## Next.js
 
