@@ -40,6 +40,7 @@
     btn.addEventListener("click", function () {
       var next = currentTheme() === "dark" ? "light" : "dark";
       root.dataset.theme = next;
+      window.dispatchEvent(new Event("themechange"));
       try { localStorage.setItem("theme", next); } catch (e) {}
     });
   });
@@ -116,7 +117,8 @@
       var lines = [];
       if (state.blur) {
         lines.push('font-family: "Sunday Serif Blur", "Sunday Serif", serif;');
-        lines.push("font-palette: " + (state.invert ? "--paper" : "--ink") + "; /* see Blur, in any color */");
+        var palette = getComputedStyle(sample).getPropertyValue("font-palette").trim() || "--ink";
+        lines.push("font-palette: " + palette + "; /* see Blur, in any color */");
       } else {
         var fx = state.burn || state.inkb || state.worn;
         lines.push(fx ? 'font-family: "Sunday Serif FX", "Sunday Serif", serif; /* the effects build */' : 'font-family: "Sunday Serif", Georgia, serif;');
@@ -185,6 +187,9 @@
       document.execCommand("insertText", false, text);
     });
     render();
+    // The Blur palette in the CSS output follows the theme.
+    window.addEventListener("themechange", render);
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", render);
   }
 
   // ---------- Copy buttons ----------

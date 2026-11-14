@@ -288,7 +288,7 @@ em { font-style: italic; }</code></pre></div>
         </div>
         <div class="step">
           <h3><span class="n">4</span> Blur, in any color</h3>
-          <p class="muted">Sunday Serif Blur is a color font (COLRv0, every modern browser). Its layers are black by default: recolor them with a palette, keeping each layer's transparency.</p>
+          <p class="muted">Sunday Serif Blur is a color font (COLRv0, every modern browser). Its sharp core takes the text color; the eight halo layers are black by default: recolor them with a palette, keeping each layer's transparency.</p>
           <div class="code-card"><div class="code-head"><span>CSS</span><button class="btn btn-ghost btn-sm" type="button" data-copy="code-blur">Copy</button></div>
 <pre><code id="code-blur">@font-face {
   font-family: "Sunday Serif Blur";
@@ -300,7 +300,7 @@ em { font-style: italic; }</code></pre></div>
   override-colors:
     0 #ffffff12, 1 #ffffff14, 2 #ffffff17,
     3 #ffffff1a, 4 #ffffff1f, 5 #ffffff24,
-    6 #ffffff2e, 7 #ffffff40, 8 #ffffff;
+    6 #ffffff2e, 7 #ffffff40;
 }
 .dreamy {
   font-family: "Sunday Serif Blur", "Sunday Serif", serif;

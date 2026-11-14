@@ -18,11 +18,11 @@
 /* Blur palettes: the same alpha per layer, in ink or in paper. */
 @font-palette-values --ink {
   font-family: "Sunday Serif Blur";
-  override-colors: 0 #13131312, 1 #13131314, 2 #13131317, 3 #1313131a, 4 #1313131f, 5 #13131324, 6 #1313132e, 7 #13131340, 8 #131313;
+  override-colors: 0 #13131312, 1 #13131314, 2 #13131317, 3 #1313131a, 4 #1313131f, 5 #13131324, 6 #1313132e, 7 #13131340;
 }
 @font-palette-values --paper {
   font-family: "Sunday Serif Blur";
-  override-colors: 0 #f9f9f712, 1 #f9f9f714, 2 #f9f9f717, 3 #f9f9f71a, 4 #f9f9f71f, 5 #f9f9f724, 6 #f9f9f72e, 7 #f9f9f740, 8 #f9f9f7;
+  override-colors: 0 #f9f9f712, 1 #f9f9f714, 2 #f9f9f717, 3 #f9f9f71a, 4 #f9f9f71f, 5 #f9f9f724, 6 #f9f9f72e, 7 #f9f9f740;
 }
 
 /* ---------- Tokens ---------- */
@@ -39,6 +39,9 @@
   --serif: "Sunday Serif", Georgia, "Times New Roman", serif;
   /* Where effects show: the text font until the FX font has loaded (same shapes at 0). */
   --fx: var(--serif);
+  /* Blur palette for text in the ink colour, and for text on an inverted (ink) ground. */
+  --halo: --ink;
+  --halo-inverted: --paper;
   --blur: var(--serif);
   --ui: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
@@ -51,11 +54,13 @@
   :root:not([data-theme="light"]) {
     --bg: #191919; --surface: #202020; --raised: #303030; --text: #E5E4DF; --muted: #9A9890;
     --faint: #706E69; --border: #303030; --ink: #F9F9F7; --on-ink: #191919; color-scheme: dark;
+    --halo: --paper; --halo-inverted: --ink;
   }
 }
 :root[data-theme="dark"] {
   --bg: #191919; --surface: #202020; --raised: #303030; --text: #E5E4DF; --muted: #9A9890;
   --faint: #706E69; --border: #303030; --ink: #F9F9F7; --on-ink: #191919; color-scheme: dark;
+  --halo: --paper; --halo-inverted: --ink;
 }
 
 .fx-ready { --fx: "Sunday Serif FX", "Sunday Serif", Georgia, serif; --blur: "Sunday Serif Blur", var(--serif); }
@@ -215,8 +220,8 @@ input[type="range"]::-moz-range-thumb { width: 14px; height: 14px; border-radius
   font-variation-settings: "BURN" 0, "INKB" 0, "WORN" 0;
   overflow-wrap: anywhere; caret-color: currentColor;
 }
-.sample.blur { font-family: var(--blur); font-palette: --ink; }
-.stage.inverted .sample.blur { font-palette: --paper; }
+.sample.blur { font-family: var(--blur); font-palette: var(--halo); }
+.stage.inverted .sample.blur { font-palette: var(--halo-inverted); }
 @media (max-width: 860px) {
   .tester { grid-template-columns: 1fr; }
   .controls { border-right: 0; border-bottom: 1px solid var(--border); grid-template-columns: 1fr 1fr; }
