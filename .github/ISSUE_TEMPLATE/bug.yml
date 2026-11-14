@@ -1,0 +1,46 @@
+name: "🐛 Bug: qualcosa non va"
+description: A glyph looks wrong, a character is missing or clipped, an app or browser renders the font badly.
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you typed and what went wrong. A screenshot helps a lot.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+  - type: dropdown
+    id: files
+    attributes:
+      label: Which files
+      options:
+        - Variable (TTF)
+        - Static (OTF or TTF)
+        - Webfont (WOFF2)
+        - Sunday Serif Blur
+        - Not sure
+    validations:
+      required: true
+  - type: input
+    id: settings
+    attributes:
+      label: Style and axis values
+      placeholder: "e.g. SemiBold Italic, Light Burn 80, Ink Bleed 0, Worn Print 30"
+  - type: input
+    id: app
+    attributes:
+      label: App or browser, and operating system
+      placeholder: "e.g. Figma 125 on macOS 15, Chrome 140 on Windows 11"
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Sunday Serif version
+      description: From the release you downloaded, or the commit you built.

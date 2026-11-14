@@ -1,0 +1,60 @@
+FONTLOG for Sunday Serif
+------------------------
+
+This file provides detailed information on the Sunday Serif font software.
+This information should be distributed along with the Sunday Serif fonts
+and any derivative works.
+
+
+Basic Font Information
+----------------------
+
+Sunday Serif is a text serif made for Sunday, a slow social network
+(https://github.com/kkratterf/sunday). It comes in roman and italic, with a
+weight axis from Regular (400) to SemiBold (600) and three effect axes:
+
+- Light Burn (BURN, -100 to 100): like a photo exposure. Towards -100 the
+  ink spreads and fills the letters; towards +100 the thin strokes burn
+  away until they break, and some letters switch to broken-line drawings.
+- Ink Bleed (INKB, 0 to 100): ink soaking into paper, fatter and rounder
+  letters with slightly tighter spacing.
+- Worn Print (WORN, 0 to 100): eroded edges and small holes in the ink,
+  like a worn letterpress.
+
+Sunday Serif Blur is a companion colour font (COLRv0): the letter in the
+text colour over a soft, fixed halo.
+
+The outlines are derived from Source Serif 4 by Adobe (SIL Open Font
+License 1.1, Reserved Font Name "Source"), reworked in shape, proportions,
+spacing and character set. The character set covers Basic Latin,
+Latin-1 Supplement and Latin Extended-A.
+
+Sources are UFO masters with two designspace files, built with fontmake.
+See README.md for the build.
+
+
+ChangeLog
+---------
+
+Detailed release notes are on the GitHub Releases page:
+https://github.com/kkratterf/sunday-serif/releases
+
+v0.1.0 (unreleased)
+- First public version: Regular, Medium and SemiBold with italics, the
+  Light Burn, Ink Bleed and Worn Print axes, and Sunday Serif Blur.
+
+
+Acknowledgements
+----------------
+
+If you make modifications be sure to add your name (N), email (E),
+web-address (if you have one) (W) and description (D). This list is in
+alphabetical order.
+
+N: Adobe (Source Serif 4, by Frank Grießhammer)
+W: https://github.com/adobe-fonts/source-serif
+D: Original outlines the design is derived from
+
+N: Federico Kratter Thaler
+W: https://kkratter.com
+D: Design and development of Sunday Serif

@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build and check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Build the fonts
+        run: make build
+
+      # Zero FAIL is required; WARNs are listed in the HTML reports.
+      - name: fontbakery
+        run: make test
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "## Sunday Serif $(cat VERSION) (commit ${GITHUB_SHA::7})"
+            echo
+            echo '```'
+            (cd fonts && find . -type f -exec ls -l {} \; | awk '{print $5, $9}' | sort -k2)
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload the fonts
+        uses: actions/upload-artifact@v4
+        with:
+          name: sunday-serif-fonts
+          path: fonts/
+          retention-days: 14
+
+      - name: Upload the fontbakery reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fontbakery-reports
+          path: build/fontbakery/
+          if-no-files-found: ignore
+          retention-days: 14

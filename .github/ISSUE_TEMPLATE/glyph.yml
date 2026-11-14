@@ -1,0 +1,24 @@
+name: "🔤 Carattere o lingua: manca qualcosa"
+description: Ask for a character, a symbol or a language Sunday Serif does not support yet.
+labels: ["design"]
+body:
+  - type: input
+    id: chars
+    attributes:
+      label: Characters
+      description: Paste them, with their Unicode code points if you know them.
+      placeholder: "e.g. ș ț (U+0219, U+021B)"
+    validations:
+      required: true
+  - type: input
+    id: language
+    attributes:
+      label: Language or use
+      placeholder: "e.g. Romanian, currency symbols, math"
+    validations:
+      required: true
+  - type: textarea
+    id: references
+    attributes:
+      label: References
+      description: How the characters look in fonts you like, or a text sample that uses them.
