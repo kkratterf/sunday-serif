@@ -40,7 +40,6 @@
     btn.addEventListener("click", function () {
       var next = currentTheme() === "dark" ? "light" : "dark";
       root.dataset.theme = next;
-      window.dispatchEvent(new Event("themechange"));
       try { localStorage.setItem("theme", next); } catch (e) {}
     });
   });
@@ -62,7 +61,6 @@
     Promise.all([
       document.fonts.load('400 1em "Sunday Serif FX"'),
       document.fonts.load('italic 400 1em "Sunday Serif FX"'),
-      document.fonts.load('400 1em "Sunday Serif Blur"'),
     ]).then(function () { fxState = 2; root.classList.add("fx-ready"); }, function () { fxState = 0; });
   }
   if ("IntersectionObserver" in window) {
@@ -109,43 +107,31 @@
     var cssOut = $("[data-css-out]");
     var ctl = function (name) { return $('[data-ctl="' + name + '"]', tester); };
     var out = function (name) { return $('[data-out="' + name + '"]', tester); };
-    var state = { wght: 400, italic: false, blur: false, invert: false, size: 96, burn: 0, inkb: 0, worn: 0 };
+    var state = { wght: 400, italic: false, invert: false, size: 96, burn: 0, inkb: 0, worn: 0 };
     var weightNames = { 400: "Regular", 500: "Medium", 600: "SemiBold" };
     var weightLabel = function (w) { return weightNames[w] ? w + " " + weightNames[w] : String(w); };
 
     function cssText() {
       var lines = [];
-      if (state.blur) {
-        lines.push('font-family: "Sunday Serif Blur", "Sunday Serif", serif;');
-        var palette = getComputedStyle(sample).getPropertyValue("font-palette").trim() || "--ink";
-        lines.push("font-palette: " + palette + "; /* see Blur, in any color */");
-      } else {
-        var fx = state.burn || state.inkb || state.worn;
-        lines.push(fx ? 'font-family: "Sunday Serif FX", "Sunday Serif", serif; /* the effects build */' : 'font-family: "Sunday Serif", Georgia, serif;');
-        lines.push("font-weight: " + state.wght + ";" + (weightNames[state.wght] ? " /* " + weightNames[state.wght] + " */" : ""));
-      }
+      var fx = state.burn || state.inkb || state.worn;
+      lines.push(fx ? 'font-family: "Sunday Serif FX", "Sunday Serif", serif; /* the effects build */' : 'font-family: "Sunday Serif", Georgia, serif;');
+      lines.push("font-weight: " + state.wght + ";" + (weightNames[state.wght] ? " /* " + weightNames[state.wght] + " */" : ""));
       if (state.italic) lines.push("font-style: italic;");
       lines.push("font-size: " + state.size + "px;");
-      if (!state.blur) {
-        var axes = [];
-        if (state.burn) axes.push('"BURN" ' + state.burn);
-        if (state.inkb) axes.push('"INKB" ' + state.inkb);
-        if (state.worn) axes.push('"WORN" ' + state.worn);
-        if (axes.length) lines.push("font-variation-settings: " + axes.join(", ") + ";");
-      }
+      var axes = [];
+      if (state.burn) axes.push('"BURN" ' + state.burn);
+      if (state.inkb) axes.push('"INKB" ' + state.inkb);
+      if (state.worn) axes.push('"WORN" ' + state.worn);
+      if (axes.length) lines.push("font-variation-settings: " + axes.join(", ") + ";");
       return ".sunday {\n  " + lines.join("\n  ") + "\n}";
     }
 
     function render() {
-      sample.style.fontWeight = state.blur ? "400" : String(state.wght);
+      sample.style.fontWeight = String(state.wght);
       sample.style.fontStyle = state.italic ? "italic" : "normal";
       sample.style.fontSize = state.size + "px";
       sample.style.fontVariationSettings = '"BURN" ' + state.burn + ', "INKB" ' + state.inkb + ', "WORN" ' + state.worn;
-      sample.classList.toggle("blur", state.blur);
       stage.classList.toggle("inverted", state.invert);
-      // The blur font is static: no weights and no effect axes.
-      $$("[data-axis-control]", tester).forEach(function (c) { c.classList.toggle("is-off", state.blur); });
-      $("[data-weight-control]", tester).classList.toggle("is-off", state.blur);
       out("wght").textContent = weightLabel(state.wght);
       out("size").textContent = state.size;
       out("burn").textContent = state.burn;
@@ -157,8 +143,8 @@
       if (cssOut) cssOut.textContent = cssText();
     }
 
-    ["italic", "blur", "invert"].forEach(function (name) {
-      ctl(name).addEventListener("change", function (e) { state[name] = e.target.checked; if (name === "blur") loadFx(); render(); });
+    ["italic", "invert"].forEach(function (name) {
+      ctl(name).addEventListener("change", function (e) { state[name] = e.target.checked; render(); });
     });
     ["wght", "size", "burn", "inkb", "worn"].forEach(function (name) {
       ctl(name).addEventListener("input", function (e) {
@@ -173,7 +159,6 @@
         var v = b.dataset.preset.split(",").map(Number);
         state.burn = v[0]; state.inkb = v[1]; state.worn = v[2];
         ctl("burn").value = v[0]; ctl("inkb").value = v[1]; ctl("worn").value = v[2];
-        if (state.blur) { state.blur = false; ctl("blur").checked = false; }
         render();
       });
     });
@@ -187,9 +172,6 @@
       document.execCommand("insertText", false, text);
     });
     render();
-    // The Blur palette in the CSS output follows the theme.
-    window.addEventListener("themechange", render);
-    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", render);
   }
 
   // ---------- Copy buttons ----------

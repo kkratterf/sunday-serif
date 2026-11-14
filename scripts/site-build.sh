@@ -13,8 +13,6 @@ files=(
   SundaySerifText-Italic-Variable.woff2
   SundaySerif-Variable.woff2
   SundaySerif-Italic-Variable.woff2
-  SundaySerifBlur-Regular.woff2
-  SundaySerifBlur-Italic.woff2
 )
 
 mkdir -p "$dst"

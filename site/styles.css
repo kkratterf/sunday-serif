@@ -1,6 +1,5 @@
 /* Sunday Serif website. Plain CSS, no build step.
-   The palette is Sunday's (packages/tokens in the sunday repo): off-white paper and ink in light,
-   graphite in dark, no color of its own. The only color is the "Prato" gradient behind the blur. */
+   The palette is Sunday's: off-white paper and ink in light, graphite in dark, no color of its own. */
 
 /* ---------- Fonts ---------- */
 /* The fonts are built in CI (make build) and copied here by scripts/site-build.sh: not committed.
@@ -11,20 +10,6 @@
 @font-face { font-family: "Sunday Serif"; src: url("fonts/SundaySerifText-Italic-Variable.woff2") format("woff2"); font-weight: 400 600; font-style: italic; font-display: swap; }
 @font-face { font-family: "Sunday Serif FX"; src: url("fonts/SundaySerif-Variable.woff2") format("woff2"); font-weight: 400 600; font-style: normal; font-display: swap; }
 @font-face { font-family: "Sunday Serif FX"; src: url("fonts/SundaySerif-Italic-Variable.woff2") format("woff2"); font-weight: 400 600; font-style: italic; font-display: swap; }
-/* The blurred color font (COLRv0): its layers are black with decreasing alpha. */
-@font-face { font-family: "Sunday Serif Blur"; src: url("fonts/SundaySerifBlur-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
-@font-face { font-family: "Sunday Serif Blur"; src: url("fonts/SundaySerifBlur-Italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
-
-/* Blur palettes: the same alpha per layer, in ink or in paper. */
-@font-palette-values --ink {
-  font-family: "Sunday Serif Blur";
-  override-colors: 0 #13131312, 1 #13131314, 2 #13131317, 3 #1313131a, 4 #1313131f, 5 #13131324, 6 #1313132e, 7 #13131340;
-}
-@font-palette-values --paper {
-  font-family: "Sunday Serif Blur";
-  override-colors: 0 #f9f9f712, 1 #f9f9f714, 2 #f9f9f717, 3 #f9f9f71a, 4 #f9f9f71f, 5 #f9f9f724, 6 #f9f9f72e, 7 #f9f9f740;
-}
-
 /* ---------- Tokens ---------- */
 :root {
   --bg: #F9F9F7;
@@ -39,10 +24,6 @@
   --serif: "Sunday Serif", Georgia, "Times New Roman", serif;
   /* Where effects show: the text font until the FX font has loaded (same shapes at 0). */
   --fx: var(--serif);
-  /* Blur palette for text in the ink colour, and for text on an inverted (ink) ground. */
-  --halo: --ink;
-  --halo-inverted: --paper;
-  --blur: var(--serif);
   --ui: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --radius: 20px;
@@ -54,16 +35,14 @@
   :root:not([data-theme="light"]) {
     --bg: #191919; --surface: #202020; --raised: #303030; --text: #E5E4DF; --muted: #9A9890;
     --faint: #706E69; --border: #303030; --ink: #F9F9F7; --on-ink: #191919; color-scheme: dark;
-    --halo: --paper; --halo-inverted: --ink;
   }
 }
 :root[data-theme="dark"] {
   --bg: #191919; --surface: #202020; --raised: #303030; --text: #E5E4DF; --muted: #9A9890;
   --faint: #706E69; --border: #303030; --ink: #F9F9F7; --on-ink: #191919; color-scheme: dark;
-  --halo: --paper; --halo-inverted: --ink;
 }
 
-.fx-ready { --fx: "Sunday Serif FX", "Sunday Serif", Georgia, serif; --blur: "Sunday Serif Blur", var(--serif); }
+.fx-ready { --fx: "Sunday Serif FX", "Sunday Serif", Georgia, serif; }
 
 /* ---------- Base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
@@ -220,8 +199,6 @@ input[type="range"]::-moz-range-thumb { width: 14px; height: 14px; border-radius
   font-variation-settings: "BURN" 0, "INKB" 0, "WORN" 0;
   overflow-wrap: anywhere; caret-color: currentColor;
 }
-.sample.blur { font-family: var(--blur); font-palette: var(--halo); }
-.stage.inverted .sample.blur { font-palette: var(--halo-inverted); }
 @media (max-width: 860px) {
   .tester { grid-template-columns: 1fr; }
   .controls { border-right: 0; border-bottom: 1px solid var(--border); grid-template-columns: 1fr 1fr; }
@@ -235,11 +212,11 @@ input[type="range"]::-moz-range-thumb { width: 14px; height: 14px; border-radius
 .code-card pre { margin: 0; padding: 16px; overflow-x: auto; line-height: 1.6; color: var(--text); font-size: 13px; }
 
 /* ---------- Effects ---------- */
-.effects { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-@media (max-width: 760px) { .effects { grid-template-columns: 1fr; } }
+.effects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 980px) { .effects { grid-template-columns: 1fr; } }
 .effect { border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); padding: 22px; display: grid; gap: 10px; align-content: start; }
 .effect-word {
-  font: 400 clamp(72px, 11vw, 148px)/1 var(--fx); color: var(--ink); letter-spacing: -0.03em;
+  font: 400 clamp(64px, 7.2vw, 104px)/1 var(--fx); color: var(--ink); letter-spacing: -0.03em;
   padding: 18px 0 24px; white-space: nowrap; overflow: hidden;
 }
 .effect h3 { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
@@ -258,23 +235,6 @@ input[type="range"]::-moz-range-thumb { width: 14px; height: 14px; border-radius
   .fx-worn { font-variation-settings: "WORN" 70; }
 }
 
-/* The blur card sits on Sunday's "Prato" gradient (brandGradient in the sunday tokens). */
-.effect-blur {
-  position: relative; isolation: isolate; overflow: hidden; border: 0; color: #fff;
-  background:
-    radial-gradient(38% 38% at 88% 6%, rgb(244 241 230 / 35%), transparent 70%),
-    radial-gradient(34% 34% at 12% 82%, rgb(242 201 76 / 45%), transparent 70%),
-    radial-gradient(30% 30% at 80% 90%, rgb(247 242 216 / 40%), transparent 70%),
-    radial-gradient(36% 36% at 45% 100%, rgb(232 163 60 / 35%), transparent 70%),
-    linear-gradient(180deg, #3D74AB 0%, #40765F 40%, #4A7A3A 70%, #264D24 100%);
-}
-.effect-blur::after {
-  content: ""; position: absolute; inset: 0; z-index: -1; opacity: .35; mix-blend-mode: overlay; pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-.effect-blur h3, .effect-blur .range, .effect-blur p { color: #fff; }
-.effect-blur .range { opacity: .7; }
-.fx-blur { font-family: var(--blur); font-palette: --paper; color: #fff; }
 
 /* ---------- Specimen ---------- */
 .styles { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); border-top: 1px solid var(--border); }

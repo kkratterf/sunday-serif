@@ -4,23 +4,86 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sunday Serif, a soft serif for slow days</title>
-  <meta name="description" content="Sunday Serif is a free, open source serif typeface made for Sunday, the slow social network. Three weights with italics, three print effects on variable axes and a blurred color font. SIL Open Font License.">
+  <meta name="description" content="Sunday Serif is a free, open source serif typeface made for Sunday. Roman and italic, weights 400 to 600 and three print effects on variable axes: Light Burn, Ink Bleed and Worn Print. SIL Open Font License.">
+  <meta name="author" content="Federico Kratter Thaler">
+  <meta name="robots" content="index, follow, max-image-preview:large">
   <link rel="canonical" href="https://sunday-serif.kkratter.com/">
+  <link rel="alternate" hreflang="en" href="https://sunday-serif.kkratter.com/">
+  <link rel="alternate" hreflang="x-default" href="https://sunday-serif.kkratter.com/">
   <meta name="theme-color" content="#F9F9F7" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#191919" media="(prefers-color-scheme: dark)">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Sunday Serif">
-  <meta property="og:description" content="A soft serif for slow days. Free and open source.">
+  <meta property="og:site_name" content="Sunday Serif">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="Sunday Serif, a soft serif for slow days">
+  <meta property="og:description" content="A soft serif for slow days. Free and open-source, with print effects on variable axes.">
   <meta property="og:url" content="https://sunday-serif.kkratter.com/">
   <meta property="og:image" content="https://sunday-serif.kkratter.com/og.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Sunday Serif, set large in roman and italic.">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sunday Serif, a soft serif for slow days">
+  <meta name="twitter:description" content="A soft serif for slow days. Free and open-source, with print effects on variable axes.">
+  <meta name="twitter:image" content="https://sunday-serif.kkratter.com/og.png">
+  <meta name="twitter:image:alt" content="Sunday Serif, set large in roman and italic.">
+  <link rel="icon" href="favicon.ico" sizes="32x32">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="alternate" type="text/plain" href="llms.txt" title="LLM-readable summary">
+  <link rel="alternate" type="text/plain" href="llms-full.txt" title="LLM-readable full reference">
   <link rel="preload" href="fonts/SundaySerifText-Variable.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/SundaySerifText-Italic-Variable.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="styles.css">
   <script>
     // The theme the visitor picked last time, before the first paint.
     try { var t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://sunday-serif.kkratter.com/#website",
+        "url": "https://sunday-serif.kkratter.com/",
+        "name": "Sunday Serif",
+        "description": "A soft serif for slow days. Free and open-source, with print effects on variable axes.",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://kkratter.com/#person" }
+      },
+      {
+        "@type": "Person",
+        "@id": "https://kkratter.com/#person",
+        "name": "Federico Kratter Thaler",
+        "url": "https://kkratter.com",
+        "sameAs": ["https://github.com/kkratterf"]
+      },
+      {
+        "@type": ["CreativeWork", "SoftwareSourceCode"],
+        "@id": "https://sunday-serif.kkratter.com/#typeface",
+        "name": "Sunday Serif",
+        "alternateName": "Sunday Serif Italic",
+        "genre": "Typeface",
+        "description": "A soft serif typeface made for Sunday, roman and italic, with a weight axis (400 to 600) and three print effects as variable axes: Light Burn (BURN), Ink Bleed (INKB) and Worn Print (WORN).",
+        "url": "https://sunday-serif.kkratter.com/",
+        "image": "https://sunday-serif.kkratter.com/og.png",
+        "author": { "@id": "https://kkratter.com/#person" },
+        "creator": { "@id": "https://kkratter.com/#person" },
+        "license": "https://openfontlicense.org/open-font-license-official-text/",
+        "isAccessibleForFree": true,
+        "codeRepository": "https://github.com/kkratterf/sunday-serif",
+        "programmingLanguage": "Python",
+        "encodingFormat": ["font/otf", "font/ttf", "font/woff2"],
+        "keywords": "serif, typeface, variable font, open source font, OFL, italic, font effects",
+        "inLanguage": "en",
+        "isPartOf": { "@id": "https://sunday-serif.kkratter.com/#website" },
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR", "url": "https://github.com/kkratterf/sunday-serif/releases/latest" }
+      }
+    ]
+  }
   </script>
   <script defer src="analytics.js"></script>
   <script defer src="glyphs.js"></script>
@@ -52,7 +115,7 @@
     <section class="hero wrap" aria-labelledby="hero-title">
       <h1 id="hero-title" class="hero-title" data-hero>Sunday <em>Serif</em></h1>
       <div class="hero-foot">
-        <p class="lede">A soft serif for slow days. Made for <a href="https://github.com/kkratterf/sunday">Sunday</a>, the social network for friends only, and free for everyone else.</p>
+        <p class="lede">A soft serif for slow days. Free and open-source, with print effects on variable axes. Made for <a href="https://joinsunday.co">Sunday</a>.</p>
         <div class="hero-actions">
           <a class="btn btn-ink" href="#download">Download, it's free</a>
           <a class="btn btn-ghost" href="https://github.com/kkratterf/sunday-serif">GitHub</a>
@@ -61,7 +124,6 @@
       <ul class="facts" aria-label="At a glance">
         <li><strong>400–600</strong> weight</li>
         <li><strong>3</strong> print effects</li>
-                <li><strong>1</strong> blur</li>
         <li><strong data-glyph-count>360</strong> characters</li>
         <li><strong>OFL</strong> open source</li>
       </ul>
@@ -83,7 +145,6 @@
           </div>
           <div class="control control-row">
             <label class="switch"><input type="checkbox" data-ctl="italic"><span>Italic</span></label>
-            <label class="switch"><input type="checkbox" data-ctl="blur"><span>Blur</span></label>
             <label class="switch"><input type="checkbox" data-ctl="invert"><span>Invert</span></label>
           </div>
           <div class="control">
@@ -132,7 +193,7 @@
     <section id="effects" class="section wrap" aria-labelledby="effects-title">
       <div class="section-head">
         <h2 id="effects-title">Three ways to age a page</h2>
-        <p class="muted">The effects are variable axes, so they move smoothly, mix freely and combine freely: any weight, any mix of the three.</p>
+        <p class="muted">The effects are variable axes, so they move smoothly and combine freely: any weight, any mix of the three.</p>
       </div>
       <div class="effects">
         <article class="effect">
@@ -149,11 +210,6 @@
           <div class="effect-word fx-worn" aria-hidden="true">Sunday</div>
           <h3>Worn Print <code>WORN</code> <span class="range">0 to 100</span></h3>
           <p class="muted">A tired press and a dry roller. Edges break up and the color thins out, like a flyer left in the sun.</p>
-        </article>
-        <article class="effect effect-blur">
-          <div class="effect-word fx-blur" aria-hidden="true">Sunday</div>
-          <h3>Sunday Serif Blur <span class="range">color font</span></h3>
-          <p>Out of focus, on purpose. A separate color font made of soft layers, for big titles over photos.</p>
         </article>
       </div>
     </section>
@@ -174,7 +230,7 @@
       </ul>
 
       <div class="waterfall" aria-label="Sizes">
-        <p style="font-size:120px">Slow</p>
+        <p style="font-size:120px">Sunday</p>
         <p style="font-size:72px">Only friends, <em>never</em> strangers</p>
         <p style="font-size:44px">Seven days, seven photos, one album on Sunday.</p>
         <p style="font-size:28px">No infinite scroll, no algorithm, no likes to count. Just the people you would call on a Sunday afternoon.</p>
@@ -286,27 +342,6 @@ em { font-style: italic; }</code></pre></div>
 }
 .fade-in:hover { --worn: 80; }</code></pre></div>
         </div>
-        <div class="step">
-          <h3><span class="n">4</span> Blur, in any color</h3>
-          <p class="muted">Sunday Serif Blur is a color font (COLRv0, every modern browser). Its sharp core takes the text color; the eight halo layers are black by default: recolor them with a palette, keeping each layer's transparency.</p>
-          <div class="code-card"><div class="code-head"><span>CSS</span><button class="btn btn-ghost btn-sm" type="button" data-copy="code-blur">Copy</button></div>
-<pre><code id="code-blur">@font-face {
-  font-family: "Sunday Serif Blur";
-  src: url("fonts/SundaySerifBlur-Regular.woff2") format("woff2");
-  font-display: swap;
-}
-@font-palette-values --paper {
-  font-family: "Sunday Serif Blur";
-  override-colors:
-    0 #ffffff12, 1 #ffffff14, 2 #ffffff17,
-    3 #ffffff1a, 4 #ffffff1f, 5 #ffffff24,
-    6 #ffffff2e, 7 #ffffff40;
-}
-.dreamy {
-  font-family: "Sunday Serif Blur", "Sunday Serif", serif;
-  font-palette: --paper;
-}</code></pre></div>
-        </div>
       </div>
     </section>
 
@@ -326,7 +361,6 @@ em { font-style: italic; }</code></pre></div>
           <li><strong>OTF</strong><span>Desktop apps: Figma, Keynote, Word, InDesign</span></li>
           <li><strong>TTF</strong><span>Desktop and apps on Windows, Android, iOS</span></li>
           <li><strong>Variable</strong><span>Roman and italic with the weight and effect axes, TTF and WOFF2 for the web</span></li>
-          <li><strong>Blur</strong><span>The color font, TTF and WOFF2</span></li>
           <li><strong>Sources</strong><span>Designspace and UFO in the GitHub repo, to open in Fontra or Glyphs</span></li>
         </ul>
       </div>
@@ -334,12 +368,12 @@ em { font-style: italic; }</code></pre></div>
   </main>
 
   <footer class="foot wrap">
-    <p>Sunday Serif is made by <a href="https://kkratter.com">Federico Kratter Thaler</a> for <a href="https://github.com/kkratterf/sunday">Sunday</a>.</p>
+    <p>Sunday Serif is made by <a href="https://kkratter.com">Federico Kratter Thaler</a> for <a href="https://joinsunday.co">Sunday</a>.</p>
     <nav aria-label="Links">
       <a href="https://github.com/kkratterf/sunday-serif">GitHub</a>
       <a href="https://github.com/kkratterf/sunday-serif/issues">Report an issue</a>
       <a href="https://github.com/kkratterf/sunday-serif/blob/main/OFL.txt">License</a>
-      <a href="https://github.com/kkratterf/sunday-serif/blob/main/CHANGELOG.md">Changelog</a>
+      <a href="https://github.com/kkratterf/sunday-serif/releases">Releases</a>
     </nav>
   </footer>
 
