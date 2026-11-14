@@ -13,7 +13,14 @@ name: Release
 # already be in VERSION.
 #
 # Publishes SundaySerif-<version>.zip and SHA256SUMS.txt, with release notes
-# grouped by PR label (.github/release.yml).
+# grouped by PR label (.github/release.yml), then the `sunday-serif` npm
+# package (webfonts, CSS and the next/font helper).
+#
+# npm uses trusted publishing (OIDC): no token in the secrets. It runs only
+# when the repository variable NPM_PUBLISH is "true", which the maintainer
+# sets after publishing the package once by hand and adding this repository
+# and release.yml as its trusted publisher on npmjs.com. Pre-releases go to
+# the `next` dist-tag.
 #
 # Dry run (dry_run: true): builds and checks everything and uploads the zip
 # and the notes as the "sunday-serif-<version>-dry-run" artifact; creates no
@@ -128,11 +135,23 @@ jobs:
       - name: fontbakery
         run: make test
 
+      - name: Assemble the npm package
+        run: |
+          .venv/bin/python scripts/npm_package.py
+          (cd build/npm && npm pack --dry-run)
+
+      - name: Upload the npm package
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm-package
+          path: build/npm/
+          retention-days: 7
+
       - name: Zip the release
         run: |
           name="SundaySerif-$VERSION"
           mkdir -p "dist/$name"
-          cp -R fonts/variable fonts/ttf fonts/otf fonts/webfonts fonts/blur "dist/$name/"
+          cp -R fonts/variable fonts/ttf fonts/otf fonts/webfonts "dist/$name/"
           cp OFL.txt FONTLOG.txt AUTHORS.txt README.md "dist/$name/"
           (cd dist && zip -qr "$name.zip" "$name" && shasum -a 256 "$name.zip" > SHA256SUMS.txt)
           cat dist/SHA256SUMS.txt
@@ -203,3 +222,37 @@ jobs:
             dist/release-notes.md
           if-no-files-found: warn
           retention-days: 14
+
+  npm:
+    name: Publish to npm
+    needs: [plan, release]
+    if: needs.plan.outputs.dry_run != 'true' && vars.NPM_PUBLISH == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: npm-package
+          path: npm-package
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+
+      # Trusted publishing needs npm 11.5.1 or newer.
+      - name: Update npm
+        run: npm install -g npm@latest
+
+      - name: Publish
+        working-directory: npm-package
+        env:
+          PRERELEASE: ${{ needs.plan.outputs.prerelease }}
+        run: |
+          if [ "$PRERELEASE" = "true" ]; then
+            npm publish --access public --provenance --tag next
+          else
+            npm publish --access public --provenance
+          fi

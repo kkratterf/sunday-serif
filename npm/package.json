@@ -1,0 +1,36 @@
+{
+  "name": "sunday-serif",
+  "version": "0.0.0",
+  "description": "A soft serif for slow days. Free and open-source, with print effects on variable axes: webfonts, CSS and next/font helpers.",
+  "keywords": ["font", "webfont", "variable-font", "serif", "woff2", "next-font"],
+  "homepage": "https://sunday-serif.kkratter.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kkratterf/sunday-serif.git",
+    "directory": "npm"
+  },
+  "bugs": "https://github.com/kkratterf/sunday-serif/issues",
+  "license": "OFL-1.1",
+  "author": "Federico Kratter Thaler",
+  "type": "module",
+  "sideEffects": ["*.css"],
+  "files": ["fonts", "*.css", "next.js", "next.d.ts", "OFL.txt"],
+  "exports": {
+    "./text.css": "./text.css",
+    "./fx.css": "./fx.css",
+    "./next": {
+      "types": "./next.d.ts",
+      "default": "./next.js"
+    },
+    "./fonts/*": "./fonts/*",
+    "./package.json": "./package.json"
+  },
+  "peerDependencies": {
+    "next": ">=13.2"
+  },
+  "peerDependenciesMeta": {
+    "next": {
+      "optional": true
+    }
+  }
+}
