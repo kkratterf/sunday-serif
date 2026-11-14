@@ -117,7 +117,7 @@
     var state = { wght: 400, italic: false, invert: false, size: 96, burn: 0, inkb: 0, worn: 0 };
     var weightNames = { 400: "Regular", 500: "Medium", 600: "SemiBold" };
     var EFFECTS = ["burn", "inkb", "worn"];
-    var weightLabel = function (w) { return weightNames[w] ? w + " " + weightNames[w] : String(w); };
+    var weightLabel = function (w) { return weightNames[w] ? weightNames[w] + " " + w : String(w); };
 
     function render() {
       sample.style.fontWeight = String(state.wght);
