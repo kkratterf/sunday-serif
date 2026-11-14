@@ -1,0 +1,35 @@
+# Sunday Serif
+
+> A soft serif for slow days. Free and open-source (SIL Open Font License 1.1, Reserved Font Name "Sunday Serif"), with print effects on variable axes. Made by Federico Kratter Thaler for Sunday (https://joinsunday.co).
+
+- Website: https://sunday-serif.kkratter.com
+- Source and issues: https://github.com/kkratterf/sunday-serif
+- Downloads (desktop and web fonts): https://github.com/kkratterf/sunday-serif/releases/latest
+- npm: https://www.npmjs.com/package/sunday-serif
+
+## Family
+
+- Families: "Sunday Serif" (roman and italic). Weights Regular 400, Medium 500, SemiBold 600.
+- Variable axes (same in roman and italic):
+  - wght, Weight, 400 to 600, default 400
+  - BURN, Light Burn, -100 to 100, default 0. Towards -100 the ink floods the letters; towards +100 thin strokes burn away and break. Past +55 some letters swap to broken-line drawings through the rvrn feature.
+  - INKB, Ink Bleed, 0 to 100, default 0. Fatter, rounder letters, slightly tighter spacing.
+  - WORN, Worn Print, 0 to 100, default 0. Eroded edges and small holes in the ink.
+- Character set: Basic Latin, Latin-1 Supplement, Latin Extended-A. Features: kern, case, ordn, ccmp, rvrn.
+
+## Files
+
+- Desktop: variable/SundaySerif[BURN,INKB,WORN,wght].ttf and SundaySerif-Italic[BURN,INKB,WORN,wght].ttf; static otf/ and ttf/ for Regular, Medium, SemiBold and italics (effects at 0).
+- Web (WOFF2, 1000 UPM): SundaySerifText-Variable.woff2 and SundaySerifText-Italic-Variable.woff2 (wght only, about 45 KB, for text); SundaySerif-Variable.woff2 and SundaySerif-Italic-Variable.woff2 (all four axes, about 1 MB, only where effects show).
+- Mobile (React Native, Expo): use the static TTFs; React Native cannot set custom variable axes.
+
+## Use on the web
+
+- npm: `pnpm add sunday-serif`, then `import "sunday-serif/text.css"` (family "Sunday Serif") and, only where effects show, `import "sunday-serif/fx.css"` (family "Sunday Serif FX").
+- Next.js: `import { SundaySerif, SundaySerifFX } from "sunday-serif/next"`, put `${SundaySerif.variable} ${SundaySerifFX.variable}` on <html>, then use `var(--font-sunday-serif)` and `var(--font-sunday-serif-fx)`.
+- Weight with `font-weight: 400` to `600`. Effects with `font-variation-settings: "BURN" 0, "INKB" 0, "WORN" 0;` (tags upper case and quoted). Setting font-variation-settings replaces the whole list, so always set all three effects together, e.g. through CSS custom properties.
+
+## Working on the repository
+
+- Rules for contributors and AI agents: https://github.com/kkratterf/sunday-serif/blob/main/AGENTS.md
+- Build: `make` (needs uv), checks: `make test` (fontbakery). Sources are UFO masters with two designspace files in sources/.
