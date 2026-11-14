@@ -50,7 +50,11 @@
 :root[data-print="inkb"] { --pi: 100; }
 :root[data-print="worn"] { --pw: 100; }
 :root.fx-ready[data-print] { --serif: "Sunday Serif FX", "Sunday Serif", Georgia, serif; --ui: var(--serif); }
-:root.fx-ready[data-print] body { font-variation-settings: "BURN" var(--pb, 0), "INKB" var(--pi, 0), "WORN" var(--pw, 0); }
+/* Set on every element: the font shorthand used across the page resets font-variation-settings,
+   so it would not inherit. The tester sample and the effect cards keep their own settings. */
+:root.fx-ready[data-print] body, :root.fx-ready[data-print] body *:not(.sample):not(.effect-word) {
+  font-variation-settings: "BURN" var(--pb, 0), "INKB" var(--pi, 0), "WORN" var(--pw, 0);
+}
 
 /* ---------- Base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
