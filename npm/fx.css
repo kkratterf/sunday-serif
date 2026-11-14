@@ -1,0 +1,16 @@
+/* Sunday Serif FX: weight plus the BURN, INKB and WORN effect axes (~1 MB per style).
+   Browsers download it only for text that uses the "Sunday Serif FX" family. */
+@font-face {
+  font-family: "Sunday Serif FX";
+  src: url("./fonts/SundaySerif-Variable.woff2") format("woff2");
+  font-weight: 400 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Sunday Serif FX";
+  src: url("./fonts/SundaySerif-Italic-Variable.woff2") format("woff2");
+  font-weight: 400 600;
+  font-style: italic;
+  font-display: swap;
+}
