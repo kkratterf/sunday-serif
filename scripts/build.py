@@ -45,7 +45,6 @@ STYLES = [  # (designspace, italic)
     ("SundaySerif.designspace", False),
     ("SundaySerif-Italic.designspace", True),
 ]
-# Light Burn swaps in the broken-line alternates from +55; the statics stay at 0, so no swap.
 
 
 def version():
@@ -163,7 +162,7 @@ def woff2(src, dst, pin=None):
     opts.notdef_outline = True
     sub = subset.Subsetter(opts)
     sub.populate(unicodes=font.getBestCmap().keys())
-    sub.subset(font)  # drops glyphs nothing can reach any more, e.g. the Light Burn alternates
+    sub.subset(font)  # drops glyphs nothing can reach any more
     scale_upem(font, 1000)
     font.flavor = "woff2"
     dst.parent.mkdir(parents=True, exist_ok=True)

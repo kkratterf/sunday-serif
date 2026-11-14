@@ -49,13 +49,13 @@ def banner(chrome, burn, ink, worn, out):
     body = f"""<div class="v" style="--b:{burn};--i:{ink};--w:{worn};height:100%;display:flex;flex-direction:column;justify-content:space-between">
 <div style="font-size:200px;line-height:.92;letter-spacing:-.03em">Sunday<br><i>Serif</i></div>
 <div class="label" style="display:flex;justify-content:space-between;font-size:26px">
-<span>A soft serif for slow days</span><span>Light Burn {burn:+.0f} · Ink Bleed {ink:.0f} · Worn Print {worn:.0f}</span><span>Free &amp; open source</span></div></div>"""
+<span>A soft serif for slow days</span><span>Light Burn {burn:.0f} · Ink Bleed {ink:.0f} · Worn Print {worn:.0f}</span><span>Free &amp; open source</span></div></div>"""
     shoot(chrome, page(body, w, h), out, w, h)
 
 
 def animated_banner(chrome):
     tmp = Path(tempfile.mkdtemp())
-    keys = [(0, 0, 0), (-100, 0, 0), (0, 0, 0), (100, 0, 0), (0, 0, 0), (0, 100, 0), (0, 0, 0), (0, 0, 100), (0, 0, 0)]
+    keys = [(0, 0, 0), (100, 0, 0), (0, 0, 0), (0, 100, 0), (0, 0, 0), (0, 0, 100), (0, 0, 0)]
     steps, n = 10, 0
     for (a, b) in zip(keys, keys[1:]):
         for s in range(steps):
@@ -113,7 +113,7 @@ def main():
         raise SystemExit("Chrome or Chromium not found: pass --chrome PATH")
     OUT.mkdir(parents=True, exist_ok=True)
     weights(chrome)
-    axis(chrome, "Light Burn", "BURN −100…100", "b", [-100, -50, 0, 50, 100], "light-burn.png")
+    axis(chrome, "Light Burn", "BURN 0…100", "b", [0, 25, 50, 75, 100], "light-burn.png")
     axis(chrome, "Ink Bleed", "INKB 0…100", "i", [0, 50, 100], "ink-bleed.png")
     axis(chrome, "Worn Print", "WORN 0…100", "w", [0, 50, 100], "worn-print.png")
     glyphs(chrome)

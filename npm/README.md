@@ -37,7 +37,7 @@ body {
 .headline {
   font-family: var(--font-sunday-serif-fx);
   font-weight: 600;
-  font-variation-settings: "BURN" -40, "INKB" 30, "WORN" 0;
+  font-variation-settings: "BURN" 40, "INKB" 30, "WORN" 0;
 }
 ```
 
@@ -68,7 +68,7 @@ effects together, for example through custom properties:
 | Axis | Tag | Range | Default |
 | --- | --- | --- | --- |
 | Weight | `wght` | 400–600 | 400 |
-| Light Burn | `BURN` | -100–100 | 0 |
+| Light Burn | `BURN` | 0–100 | 0 |
 | Ink Bleed | `INKB` | 0–100 | 0 |
 | Worn Print | `WORN` | 0–100 | 0 |
 

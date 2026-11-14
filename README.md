@@ -20,7 +20,7 @@
 
 **A soft serif for slow days.** Free and open-source, with print effects on variable axes.
 
-Sunday Serif is a text serif in roman and italic, from Regular to SemiBold, with three effects you can dial in like a print run: **Light Burn** burns the thin strokes away or floods the letters with ink, **Ink Bleed** lets the ink soak into the paper, **Worn Print** wears the edges like an old letterpress. They are variable axes, so they combine, and they animate with a line of CSS.
+Sunday Serif is a text serif in roman and italic, from Regular to SemiBold, with three effects you can dial in like a print run: **Light Burn** floods the letters with ink like an overexposed print, **Ink Bleed** lets the ink soak into the paper, **Worn Print** wears the edges like an old letterpress. They are variable axes, so they combine, and they animate with a line of CSS.
 
 **Install** for the web:
 
@@ -34,11 +34,11 @@ or [download the zip](https://github.com/kkratterf/sunday-serif/releases/latest)
 
 ## The effects
 
-<img src=".github/readme/light-burn.png" alt="Sunday afternoon at Light Burn -100, -50, 0, +50 and +100: from letters flooded with ink to thin strokes that break" width="100%">
+<img src=".github/readme/light-burn.png" alt="Sunday afternoon at Light Burn 0, 25, 50, 75 and 100: the ink spreads until the letters fill in" width="100%">
 
-#### 🔥 Light Burn · `BURN` −100 to 100
+#### 🔥 Light Burn · `BURN` 0 to 100
 
-Like a photo exposure. Towards −100 the ink spreads until the letters fill in; towards +100 the thin strokes burn away until they break. Past +55 some letters (c, f, h, o, A, B, K and others) switch to drawings with broken lines.
+Like an overexposed photo: towards 100 the ink spreads until the letters fill in.
 
 <table>
   <tr>
@@ -55,7 +55,7 @@ Like a photo exposure. Towards −100 the ink spreads until the letters fill in;
   </tr>
 </table>
 
-The effects combine freely, Light Burn −100 with Ink Bleed 100 for example, at every weight and in the italic.
+The effects combine freely, Light Burn 100 with Ink Bleed 100 for example, at every weight and in the italic.
 
 ## Weights and italics
 
@@ -64,7 +64,7 @@ The effects combine freely, Light Burn −100 with Ink Bleed 100 for example, at
 | Axis | Tag | Range | Default |
 | --- | --- | --- | --- |
 | Weight | `wght` | 400 to 600 | 400: Regular, 500: Medium, 600: SemiBold, and everything in between |
-| Light Burn | `BURN` | −100 to 100 | 0 |
+| Light Burn | `BURN` | 0 to 100 | 0 |
 | Ink Bleed | `INKB` | 0 to 100 | 0 |
 | Worn Print | `WORN` | 0 to 100 | 0 |
 
@@ -72,7 +72,7 @@ The effects combine freely, Light Burn −100 with Ink Bleed 100 for example, at
 
 <img src=".github/readme/glyphs.png" alt="The character set: Latin capitals and lowercase, figures, accented letters of Latin-1 and Latin Extended-A, punctuation and symbols" width="100%">
 
-Basic Latin, Latin-1 Supplement and Latin Extended-A: the languages of Western, Central and Eastern Europe that use the Latin script. OpenType features: kerning, `case`, `ordn`, `ccmp`, and `rvrn` for Light Burn.
+Basic Latin, Latin-1 Supplement and Latin Extended-A: the languages of Western, Central and Eastern Europe that use the Latin script. OpenType features: kerning, `case`, `ordn`, and `ccmp`.
 
 ## What is in the release
 
@@ -96,10 +96,10 @@ There are two web cuts of each style:
 | File | Axes | Size | Use it for |
 | --- | --- | --- | --- |
 | `SundaySerifText-Variable.woff2`, `SundaySerifText-Italic-Variable.woff2` | `wght` only, effects fixed at 0 | ~45 KB | All text. Preload it. |
-| `SundaySerif-Variable.woff2`, `SundaySerif-Italic-Variable.woff2` | `wght`, `BURN`, `INKB`, `WORN` | ~1 MB | Only the elements that show an effect. |
+| `SundaySerif-Variable.woff2`, `SundaySerif-Italic-Variable.woff2` | `wght`, `BURN`, `INKB`, `WORN` | ~500 KB | Only the elements that show an effect. |
 
-Most of a variable font's weight is the variation data of its axes, and Light Burn alone has 21
-masters: dropping the effects makes the text cut about 20 times lighter. Give the two cuts different
+Most of a variable font's weight is the variation data of its axes, and Light Burn alone has 11
+masters: dropping the effects makes the text cut about 10 times lighter. Give the two cuts different
 family names in CSS: the browser downloads a font file only when some text on the page uses it,
 so the full cut loads only on pages that show an effect.
 
@@ -208,13 +208,8 @@ write all three together:
 From JavaScript, change the same properties:
 
 ```js
-element.style.setProperty("--burn", "-60");
+element.style.setProperty("--burn", "60");
 ```
-
-Notes:
-
-- Light Burn swaps in its broken-line letters through the `rvrn` feature, which browsers apply
-  automatically. Do not turn off `font-feature-settings` for the text that uses it.
 
 ## Use it on the desktop and in Figma
 
@@ -253,8 +248,8 @@ The version of the build comes from the [`VERSION`](VERSION) file.
 
 | Path | What it is |
 | --- | --- |
-| `sources/SundaySerif.designspace`, `sources/SundaySerif-Italic.designspace` | The two designspaces, with the axes, the masters and the Light Burn rules |
-| `sources/Roman/`, `sources/Italic/` | The UFO masters: for each weight, 21 Light Burn masters plus the Ink Bleed and Worn Print masters. They open in [Fontra](https://fontra.xyz), Glyphs, RoboFont or FontLab |
+| `sources/SundaySerif.designspace`, `sources/SundaySerif-Italic.designspace` | The two designspaces, with the axes and the masters |
+| `sources/Roman/`, `sources/Italic/` | The UFO masters: for each weight, 11 Light Burn masters plus the Ink Bleed and Worn Print masters. They open in [Fontra](https://fontra.xyz), Glyphs, RoboFont or FontLab |
 | `scripts/build.py` | The build: variable fonts, statics, WOFF2, and post-processing (names, STAT, version) |
 | `.github/readme/`, `scripts/readme_images.py` | The README images, rendered from the built fonts with headless Chrome |
 | `llms.txt` | A plain-text summary of the font for AI assistants and agents |
