@@ -18,7 +18,7 @@ Every release has a `SundaySerif-X.Y.Z.zip` with:
 | --- | --- | --- |
 | `variable/` | `SundaySerif[BURN,INKB,WORN,wght].ttf` and `SundaySerif-Italic[...].ttf` | Apps that support variable fonts (Figma, Adobe apps, macOS, browsers). All weights and effects in two files. |
 | `ttf/`, `otf/` | Regular, Medium, SemiBold and their italics | Apps without variable font support. Effects are at their default. |
-| `webfonts/` | The two variable fonts and Sunday Serif Blur as WOFF2 | The web. |
+| `webfonts/` | WOFF2 at 1000 UPM: `SundaySerifText-*` (weight only, ~45 KB), `SundaySerif-*` (all axes, ~1 MB), `SundaySerifBlur-*` (~200 KB) | The web. See below which one to load. |
 | `blur/` | Sunday Serif Blur Regular and Italic (COLRv0) | A fixed soft-focus look, in apps that support colour fonts. |
 
 ## Axes
@@ -35,22 +35,41 @@ Sunday Serif Blur is a separate static family: its halo is fixed and does not ha
 
 ## Use it on the web
 
-Load the variable fonts with `@font-face`. The weight works with the normal `font-weight`;
-the effects go through `font-variation-settings` with their four-letter tags (upper case, quoted).
+There are two web cuts of each style:
+
+| File | Axes | Size | Use it for |
+| --- | --- | --- | --- |
+| `SundaySerifText-Variable.woff2`, `SundaySerifText-Italic-Variable.woff2` | `wght` only, effects fixed at 0 | ~45 KB | All text. Preload it. |
+| `SundaySerif-Variable.woff2`, `SundaySerif-Italic-Variable.woff2` | `wght`, `BURN`, `INKB`, `WORN` | ~1 MB | Only the elements that show an effect. |
+
+Most of a variable font's weight is the variation data of its axes, and Light Burn alone has 21
+masters: dropping the effects makes the text cut about 20 times lighter. Give the two cuts different
+family names in CSS: the browser downloads a font file only when some text on the page uses it,
+so the full cut loads only on pages that show an effect.
+
+The weight works with the normal `font-weight`; the effects go through `font-variation-settings`
+with their four-letter tags (upper case, quoted).
 
 ```css
 @font-face {
   font-family: "Sunday Serif";
-  src: url("fonts/SundaySerif-Variable.woff2") format("woff2");
+  src: url("fonts/SundaySerifText-Variable.woff2") format("woff2");
   font-weight: 400 600;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Sunday Serif";
-  src: url("fonts/SundaySerif-Italic-Variable.woff2") format("woff2");
+  src: url("fonts/SundaySerifText-Italic-Variable.woff2") format("woff2");
   font-weight: 400 600;
   font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Sunday Serif FX";
+  src: url("fonts/SundaySerif-Variable.woff2") format("woff2");
+  font-weight: 400 600;
+  font-style: normal;
   font-display: swap;
 }
 @font-face {
@@ -62,15 +81,56 @@ the effects go through `font-variation-settings` with their four-letter tags (up
 
 body {
   font-family: "Sunday Serif", Georgia, serif;
-  font-weight: 400;
 }
 h1 {
   font-weight: 600;
 }
-em {
-  font-style: italic; /* uses the italic file */
+.with-effects {
+  font-family: "Sunday Serif FX", "Sunday Serif", Georgia, serif;
 }
 ```
+
+```html
+<link rel="preload" href="/fonts/SundaySerifText-Variable.woff2" as="font" type="font/woff2" crossorigin>
+```
+
+### Next.js
+
+`next/font/local` self-hosts the files with hashed, cacheable names, preloads them and builds a
+size-matched fallback font so the layout does not jump when the font arrives. It does not subset
+local fonts, which is why the text cut exists.
+
+```ts
+import localFont from "next/font/local";
+
+export const sundaySerif = localFont({
+  src: [
+    { path: "./fonts/SundaySerifText-Variable.woff2", weight: "400 600", style: "normal" },
+    { path: "./fonts/SundaySerifText-Italic-Variable.woff2", weight: "400 600", style: "italic" },
+  ],
+  variable: "--font-sunday-serif",
+  display: "swap",
+  fallback: ["Georgia", "serif"],
+  adjustFontFallback: "Times New Roman",
+});
+
+// Only where effects show: not preloaded, so it costs nothing on pages that do not use it.
+export const sundaySerifFx = localFont({
+  src: [
+    { path: "./fonts/SundaySerif-Variable.woff2", weight: "400 600", style: "normal" },
+    { path: "./fonts/SundaySerif-Italic-Variable.woff2", weight: "400 600", style: "italic" },
+  ],
+  variable: "--font-sunday-serif-fx",
+  display: "swap",
+  preload: false,
+});
+```
+
+Put `${sundaySerif.variable} ${sundaySerifFx.variable}` on `<html>` and use
+`font-family: var(--font-sunday-serif)` and `var(--font-sunday-serif-fx)` in CSS. It works with
+`output: "export"` as well.
+
+### Effects in CSS
 
 `font-variation-settings` replaces the whole list every time it is set, so a rule that sets only
 `"INKB"` resets `"BURN"` and `"WORN"` to their defaults. Keep each effect in a custom property and
@@ -82,7 +142,7 @@ write all three together:
   --ink: 0;
   --worn: 0;
 }
-.sunday-serif {
+.with-effects {
   font-variation-settings: "BURN" var(--burn), "INKB" var(--ink), "WORN" var(--worn);
   transition: font-variation-settings 0.6s ease;
 }
@@ -105,17 +165,27 @@ Notes:
 
 - Light Burn swaps in its broken-line letters through the `rvrn` feature, which browsers apply
   automatically. Do not turn off `font-feature-settings` for the text that uses it.
-- The variable WOFF2 files are about 1.8 MB each, because they carry every weight and effect.
-  If a page only needs the default look, the static files in `ttf/` are much lighter.
 - Sunday Serif Blur draws its core in the current text colour (`color`) and its halo in a
   transparent dark grey. It works in recent Safari, Chrome and Firefox.
 
-## Use it on the desktop
+## Use it on the desktop and in Figma
 
 Install the files from `variable/` if your app supports variable fonts: the weight and effect
 sliders appear in its typography panel (Figma: "Variable font axes"; InDesign and Illustrator:
 the variable font button next to the style menu). Otherwise install `otf/`. Only install one of
 the two, or the app may show duplicate styles.
+
+Figma uses the fonts installed on your computer (in the browser through the Figma font installer).
+Everyone who edits a file needs them installed, unless the team uploads them as shared fonts
+(Organization and Enterprise plans).
+
+## Use it in a mobile app
+
+React Native has no style for custom variable axes, so apps use the static TTF files from `ttf/`
+(Regular, Medium, SemiBold and italics, effects at 0). With Expo, embed them at build time with the
+`expo-font` config plugin and refer to each style by its file name (for example
+`fontFamily: "SundaySerif-Medium"`), which is also its PostScript name, so the same name works on
+iOS and Android.
 
 ## Characters
 
