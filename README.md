@@ -35,6 +35,11 @@ Sunday Serif Blur is a separate static family: its halo is fixed and does not ha
 
 ## Use it on the web
 
+The webfonts are also on npm, with the CSS and a ready-made `next/font` setup:
+`pnpm add sunday-serif`, then `import "sunday-serif/text.css"` or, in Next.js,
+`import { SundaySerif, SundaySerifFX } from "sunday-serif/next"`. See the
+[package README](npm/README.md). To host the files yourself, read on.
+
 There are two web cuts of each style:
 
 | File | Axes | Size | Use it for |
@@ -215,6 +220,7 @@ The version of the build comes from the [`VERSION`](VERSION) file.
 | `sources/Roman/`, `sources/Italic/` | The UFO masters: for each weight, 21 Light Burn masters plus the Ink Bleed and Worn Print masters. They open in [Fontra](https://fontra.xyz), Glyphs, RoboFont or FontLab |
 | `scripts/build.py` | The build: variable fonts, statics, WOFF2, and post-processing (names, STAT, version) |
 | `scripts/blur.py` | Makes Sunday Serif Blur from the static fonts |
+| `npm/`, `scripts/npm_package.py` | The `sunday-serif` npm package: CSS, next/font helper and README; the script adds the webfonts and the version |
 | `site/` | The website, [sunday-serif.kkratter.com](https://sunday-serif.kkratter.com) |
 | `OFL.txt`, `FONTLOG.txt`, `AUTHORS.txt`, `CONTRIBUTORS.txt` | License and font history |
 

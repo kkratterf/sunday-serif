@@ -13,6 +13,7 @@ Sunday Serif is an open source (OFL) text serif made for Sunday, the slow social
 | `sources/Roman/`, `sources/Italic/` | UFO masters, 81 per style: for each weight (Regular, Medium, SemiBold), 21 Light Burn masters (−100…+100, step 10) plus Ink100 and Worn100 masters at Light Burn −100, 0 and +100 |
 | `scripts/build.py` | The whole build: fontmake → post-processing (names, STAT, version, gasp/prep) → statics (pathops, effects at 0) → WOFF2 (a light text cut with only `wght`, and the full cut) → Blur |
 | `scripts/blur.py` | Makes Sunday Serif Blur (COLRv0) from a static TTF |
+| `npm/`, `scripts/npm_package.py` | The `sunday-serif` npm package (webfonts, `text.css`/`fx.css`/`blur.css`, `sunday-serif/next` for next/font). `make npm` assembles it in `build/npm`; never edit `version` in `npm/package.json`, it comes from `VERSION` |
 | `VERSION` | The release version (SemVer). The single source of truth for the font version |
 | `site/` | The website (sunday-serif.kkratter.com), deployed to GitHub Pages by `.github/workflows/pages.yml` |
 | `OFL.txt`, `FONTLOG.txt`, `AUTHORS.txt`, `CONTRIBUTORS.txt` | License and font history, shipped inside every release zip |
@@ -58,7 +59,7 @@ Two virtualenvs on purpose: `.venv` (build, `requirements.txt`) and `.venv-qa` (
 - **CI must be green** (build + fontbakery with zero FAIL) before a PR is ready. Never skip or silence a fontbakery check to get green: if a check is a false alarm, explain why in the PR and exclude it explicitly in the Makefile with a comment.
 - Every visual change ships with a **before/after proof image** in the PR description (the same text at the same size, both versions).
 - Keep the font names stable: family "Sunday Serif" / "Sunday Serif Blur", files and PostScript names `SundaySerif-*`. "Sunday Serif" is a Reserved Font Name: never rename it, and do not reuse it for a derivative.
-- Do not change axis tags, ranges or defaults without a `feat!:` PR: websites and apps depend on them.
+- Do not change axis tags, ranges or defaults, webfont file names, CSS family names or the exports of the npm package without a `feat!:` PR: websites and apps depend on them.
 - Third-party outlines only under the OFL or a compatible licence, credited in `FONTLOG.txt`, `AUTHORS.txt` and the copyright string.
 - Keep PRs small and focused: one issue, one PR. Do not mix a design change with a build change.
 - Match the style of the surrounding code.
@@ -112,7 +113,7 @@ Agent platforms that assign their own branch names (e.g. `claude/...`) are fine;
 
 1. Check that every `P0` issue of the version label is closed and `main` is green.
 2. Open a PR titled `chore(release): vX.Y.Z` that changes only `VERSION` (from `X.Y.Z-dev` to `X.Y.Z`) and adds the release line at the top of the ChangeLog in `FONTLOG.txt`. Label it `skip-changelog`.
-3. Merge it (squash) once CI is green. `release.yml` runs on every push to `main` that touches `VERSION`: if the tag `vX.Y.Z` does not exist yet, it builds the fonts, runs fontbakery, zips them with the licence files, tags, and publishes the GitHub Release with notes grouped by label.
+3. Merge it (squash) once CI is green. `release.yml` runs on every push to `main` that touches `VERSION`: if the tag `vX.Y.Z` does not exist yet, it builds the fonts, runs fontbakery, zips them with the licence files, tags, publishes the GitHub Release with notes grouped by label, then publishes the npm package (trusted publishing, only when the repository variable `NPM_PUBLISH` is `true`).
 4. Check the "Release" run in Actions and the new release page, then tell the maintainer the version is out.
 
 - Between releases `VERSION` holds the next version with a `-dev` suffix (`0.2.0-dev`): the build stamps it, the release workflow ignores it. The bump PR removes the suffix; right after a release, a `chore(release): start vX.Y.Z-dev` PR (label `skip-changelog`) sets the next one.
@@ -125,7 +126,7 @@ Agent sandboxes are refused these actions, so ask the maintainer instead of retr
 
 - start, re-run or cancel workflows (`workflow_dispatch`, re-runs): that is why releases start from a merge;
 - delete branches or tags, force-push;
-- create, edit or delete GitHub Releases;
+- create, edit or delete GitHub Releases, or publish or deprecate npm versions by hand;
 - change repository settings: description, topics, Pages, custom domain, secrets, branch protection.
 
 ## Merging
