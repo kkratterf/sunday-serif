@@ -77,8 +77,8 @@ def banner(t):
 
 def effects(t):
     rows = [
-        ("BURN &nbsp;−100 → +100", "from flooded ink to strokes burnt away",
-         f'<div style="font-size:150px">{ramp("Light Burn", "b", -100, 100)}</div>'),
+        ("BURN &nbsp;0 → 100", "an overexposed print, ink flooding the letters",
+         f'<div style="font-size:150px">{ramp("Light Burn", "b", 0, 100)}</div>'),
         ("INKB &nbsp;0 · 100", "ink spreading into the paper",
          '<div style="font-size:104px;white-space:nowrap;display:flex;justify-content:space-between">'
          '<span class="fx" style="--i:0">Ink Bleed</span><span class="fx" style="--i:100">Ink Bleed</span></div>'),

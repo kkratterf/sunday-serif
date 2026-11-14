@@ -12,15 +12,15 @@
 - Families: "Sunday Serif" (roman and italic). Weights Regular 400, Medium 500, SemiBold 600.
 - Variable axes (same in roman and italic):
   - wght, Weight, 400 to 600, default 400
-  - BURN, Light Burn, -100 to 100, default 0. Towards -100 the ink floods the letters; towards +100 thin strokes burn away and break. Past +55 some letters swap to broken-line drawings through the rvrn feature.
+  - BURN, Light Burn, 0 to 100, default 0. Towards 100 the ink floods the letters, like an overexposed print.
   - INKB, Ink Bleed, 0 to 100, default 0. Fatter, rounder letters, slightly tighter spacing.
   - WORN, Worn Print, 0 to 100, default 0. Eroded edges and small holes in the ink.
-- Character set: Basic Latin, Latin-1 Supplement, Latin Extended-A. Features: kern, case, ordn, ccmp, rvrn.
+- Character set: Basic Latin, Latin-1 Supplement, Latin Extended-A. Features: kern, case, ordn, ccmp.
 
 ## Files
 
 - Desktop: variable/SundaySerif[BURN,INKB,WORN,wght].ttf and SundaySerif-Italic[BURN,INKB,WORN,wght].ttf; static otf/ and ttf/ for Regular, Medium, SemiBold and italics (effects at 0).
-- Web (WOFF2, 1000 UPM): SundaySerifText-Variable.woff2 and SundaySerifText-Italic-Variable.woff2 (wght only, about 45 KB, for text); SundaySerif-Variable.woff2 and SundaySerif-Italic-Variable.woff2 (all four axes, about 1 MB, only where effects show).
+- Web (WOFF2, 1000 UPM): SundaySerifText-Variable.woff2 and SundaySerifText-Italic-Variable.woff2 (wght only, about 45 KB, for text); SundaySerif-Variable.woff2 and SundaySerif-Italic-Variable.woff2 (all four axes, about 500 KB, only where effects show).
 - Mobile (React Native, Expo): use the static TTFs; React Native cannot set custom variable axes.
 
 ## Use on the web

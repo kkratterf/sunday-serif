@@ -29,12 +29,12 @@ pnpm add sunday-serif
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset=".github/readme/effects-dark.png">
-  <img src=".github/readme/effects-light.png" alt="Light Burn from −100 to +100 across the letters of its own name; Ink Bleed and Worn Print at 0 and at 100." width="100%">
+  <img src=".github/readme/effects-light.png" alt="Light Burn from 0 to 100 across the letters of its own name; Ink Bleed and Worn Print at 0 and at 100." width="100%">
 </picture>
 
 | Axis | Tag | Range | |
 | --- | --- | --- | --- |
-| Light Burn | `BURN` | −100 to 100, default 0 | Exposure. Below zero the ink floods the counters; above, hairlines burn away and some letters break. |
+| Light Burn | `BURN` | 0 to 100, default 0 | Overexposure. The ink spreads until the counters fill in. |
 | Ink Bleed | `INKB` | 0 to 100, default 0 | Ink spreading into the paper. Rounder forms, slightly tighter spacing. |
 | Worn Print | `WORN` | 0 to 100, default 0 | The wear of an old press. Eroded edges, missing ink. |
 
@@ -63,7 +63,7 @@ A continuous `wght` axis from 400 to 600, with named instances at Regular, Mediu
   <img src=".github/readme/glyphs-light.png" alt="A selection of the character set: Latin capitals, lowercase, figures, accented letters and symbols" width="100%">
 </picture>
 
-Basic Latin, Latin-1 Supplement and Latin Extended-A. OpenType: kerning, `case`, `ordn`, `ccmp`, and `rvrn` for the Light Burn alternates.
+Basic Latin, Latin-1 Supplement and Latin Extended-A. OpenType: kerning, `case`, `ordn` and `ccmp`.
 
 ## Files
 
@@ -73,7 +73,7 @@ Each release ships `SundaySerif-X.Y.Z.zip`:
 | --- | --- | --- |
 | `variable/` | `SundaySerif[BURN,INKB,WORN,wght].ttf`, `SundaySerif-Italic[…].ttf` | Design apps, the desktop |
 | `otf/`, `ttf/` | Regular, Medium, SemiBold and italics, effects at 0 | Apps without variable fonts, mobile |
-| `webfonts/` | `SundaySerifText-*` (weight only, ~45 KB) and `SundaySerif-*` (all axes, ~1 MB), WOFF2 | The web |
+| `webfonts/` | `SundaySerifText-*` (weight only, ~45 KB) and `SundaySerif-*` (all axes, ~500 KB), WOFF2 | The web |
 
 ## Web
 
@@ -82,9 +82,9 @@ The [npm package](npm/README.md) carries the files, the CSS and a ready `next/fo
 | File | Axes | Size | |
 | --- | --- | --- | --- |
 | `SundaySerifText-Variable.woff2`, `SundaySerifText-Italic-Variable.woff2` | `wght` | ~45 KB | Running text. Preload it. |
-| `SundaySerif-Variable.woff2`, `SundaySerif-Italic-Variable.woff2` | `wght`, `BURN`, `INKB`, `WORN` | ~1 MB | Only where an effect shows. |
+| `SundaySerif-Variable.woff2`, `SundaySerif-Italic-Variable.woff2` | `wght`, `BURN`, `INKB`, `WORN` | ~500 KB | Only where an effect shows. |
 
-Nearly all of a variable font's weight is the variation data of its axes; the text cut leaves the effects out and is twenty times lighter. Declared under its own family name, the full cut is downloaded only by pages that use it.
+Nearly all of a variable font's weight is the variation data of its axes; the text cut leaves the effects out and is about ten times lighter. Declared under its own family name, the full cut is downloaded only by pages that use it.
 
 Weight is set with `font-weight`. The effects go through `font-variation-settings`, with their tags quoted and in capitals.
 
@@ -181,7 +181,7 @@ Add `${sundaySerif.variable} ${sundaySerifFx.variable}` to `<html>`, then use `v
 }
 ```
 
-From JavaScript: `element.style.setProperty("--burn", "-60")`. The broken letters of Light Burn come from the `rvrn` feature, which browsers apply on their own.
+From JavaScript: `element.style.setProperty("--burn", "60")`.
 
 ## Desktop and Figma
 
@@ -207,8 +207,8 @@ The version comes from [`VERSION`](VERSION).
 
 | Path | What it is |
 | --- | --- |
-| `sources/SundaySerif.designspace`, `sources/SundaySerif-Italic.designspace` | The two designspaces, with the axes, the masters and the Light Burn rules |
-| `sources/Roman/`, `sources/Italic/` | The UFO masters: for each weight, 21 Light Burn masters plus the Ink Bleed and Worn Print masters. They open in [Fontra](https://fontra.xyz), Glyphs, RoboFont or FontLab |
+| `sources/SundaySerif.designspace`, `sources/SundaySerif-Italic.designspace` | The two designspaces, with the axes and the masters |
+| `sources/Roman/`, `sources/Italic/` | The UFO masters: for each weight, 11 Light Burn masters plus the Ink Bleed and Worn Print masters. They open in [Fontra](https://fontra.xyz), Glyphs, RoboFont or FontLab |
 | `scripts/build.py` | The build: variable fonts, statics, WOFF2, and post-processing (names, STAT, version) |
 | `.github/readme/`, `scripts/readme_images.py` | The README specimens, light and dark, set in the built fonts and captured with headless Chrome |
 | `llms.txt` | A plain-text summary of the font for AI assistants and agents |
