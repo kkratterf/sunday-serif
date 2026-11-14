@@ -119,7 +119,7 @@
   </header>
 
   <main id="main">
-    <!-- Hero: the name, large. Light Burn follows the pointer across the page. -->
+    <!-- Hero: the name, large. It follows the print menu. -->
     <section class="hero wrap" aria-labelledby="hero-title">
       <h1 id="hero-title" class="hero-title" data-hero>Sunday <em>Serif</em></h1>
       <div class="hero-foot">
@@ -154,7 +154,7 @@
           </div>
           <div class="control" data-axis-control>
             <label class="label" for="ctl-burn">Light Burn <output data-out="burn">0</output></label>
-            <input id="ctl-burn" type="range" min="-100" max="100" value="0" data-ctl="burn">
+            <input id="ctl-burn" type="range" min="0" max="100" value="0" data-ctl="burn">
           </div>
           <div class="control" data-axis-control>
             <label class="label" for="ctl-inkb">Ink Bleed <output data-out="inkb">0</output></label>
@@ -182,7 +182,7 @@
       </div>
       <div class="effects">
         <figure class="effect">
-          <div class="effect-word" style="--burn:-100" aria-hidden="true">Sunday</div>
+          <div class="effect-word" style="--burn:100" aria-hidden="true">Sunday</div>
           <figcaption>Light Burn</figcaption>
         </figure>
         <figure class="effect">
