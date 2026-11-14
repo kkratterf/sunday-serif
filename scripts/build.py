@@ -3,7 +3,10 @@
 usage: python scripts/build.py [--only-variable]
 
   fonts/variable/  SundaySerif[BURN,INKB,WORN,wght].ttf, SundaySerif-Italic[...].ttf
-  fonts/webfonts/  the two variable fonts and Sunday Serif Blur as WOFF2
+  fonts/webfonts/  WOFF2 for the web, all at 1000 UPM:
+                   SundaySerifText-*.woff2  weight axis only, effects at 0 (~45 KB): body text
+                   SundaySerif-*.woff2      all four axes (~1 MB): load only where effects show
+                   SundaySerifBlur-*.woff2
   fonts/ttf/, fonts/otf/  static Regular, Medium, SemiBold and italics (effects at 0)
   fonts/blur/      Sunday Serif Blur Regular and Italic (COLRv0)
 
@@ -12,6 +15,7 @@ The version comes from the VERSION file: SemVer X.Y.Z becomes font version X.YYZ
 """
 import argparse
 import copy
+import io
 import shutil
 import subprocess
 import sys
@@ -24,7 +28,10 @@ from fontTools.pens.cu2quPen import Cu2QuPen
 from fontTools.pens.recordingPen import DecomposingRecordingPen
 from fontTools.pens.t2CharStringPen import T2CharStringPen
 from fontTools.pens.ttGlyphPen import TTGlyphPen
+from fontTools import subset
 from fontTools.ttLib import TTFont, newTable
+from fontTools.ttLib.scaleUpem import scale_upem
+from fontTools.ttLib.tables._g_l_y_f import GlyphCoordinates
 from fontTools.ttLib.tables import ttProgram
 from fontTools.varLib import instancer
 
@@ -106,8 +113,60 @@ def build_variable(ds, italic, raw, rev):
     return out
 
 
-def woff2(src, dst):
-    font = TTFont(src)
+def reload(font):
+    buf = io.BytesIO()
+    font.save(buf)
+    buf.seek(0)
+    return TTFont(buf, lazy=False)
+
+
+def strip_pores(font):
+    """Drop contours that stay a single point in every master (the Worn Print pores once WORN is pinned)."""
+    glyf, gvar = font["glyf"], font.get("gvar")
+    for gname in font.getGlyphOrder():
+        glyph = glyf[gname]
+        if glyph.numberOfContours <= 0:
+            continue
+        coords, ends, flags = glyph.getCoordinates(glyf)
+        variations = gvar.variations.get(gname, []) if gvar else []
+        keep, start = [], 0
+        for end in ends:
+            pts = list(range(start, end + 1))
+            start = end + 1
+            dead = len({tuple(coords[i]) for i in pts}) == 1 and all(
+                None not in (d := [tv.coordinates[i] for i in pts]) and len(set(d)) == 1 for tv in variations)
+            keep.append((pts, not dead))
+        if all(k for _, k in keep):
+            continue
+        idx = [i for pts, k in keep if k for i in pts]
+        ends2, n = [], 0
+        for pts, k in keep:
+            if k:
+                n += len(pts)
+                ends2.append(n - 1)
+        glyph.coordinates = GlyphCoordinates([coords[i] for i in idx])
+        glyph.flags = bytearray(flags[i] for i in idx)
+        glyph.endPtsOfContours = ends2
+        glyph.numberOfContours = len(ends2)
+        for tv in variations:  # the last four points are the phantom points
+            tv.coordinates = [tv.coordinates[i] for i in idx] + tv.coordinates[len(coords):]
+
+
+def woff2(src, dst, pin=None):
+    """WOFF2 at 1000 UPM (about 15% smaller, no visible change at text sizes); `pin` fixes axes."""
+    font = TTFont(src, lazy=False)
+    if pin:
+        font = reload(instancer.instantiateVariableFont(font, pin))
+        strip_pores(font)
+    font = reload(font)
+    opts = subset.Options()
+    opts.layout_features = ["*"]
+    opts.name_IDs = ["*"]
+    opts.notdef_outline = True
+    sub = subset.Subsetter(opts)
+    sub.populate(unicodes=font.getBestCmap().keys())
+    sub.subset(font)  # drops glyphs nothing can reach any more, e.g. the Light Burn alternates
+    scale_upem(font, 1000)
     font.flavor = "woff2"
     dst.parent.mkdir(parents=True, exist_ok=True)
     font.save(dst)
@@ -213,7 +272,9 @@ def main():
     web = FONTS / "webfonts"
     for ds, italic in STYLES:
         vf = build_variable(ds, italic, raw, rev)
-        woff2(vf, web / f"{PS_FAMILY}{'-Italic' if italic else ''}-Variable.woff2")
+        suffix = "-Italic" if italic else ""
+        woff2(vf, web / f"{PS_FAMILY}{suffix}-Variable.woff2")
+        woff2(vf, web / f"{PS_FAMILY}Text{suffix}-Variable.woff2", pin={"BURN": 0, "INKB": 0, "WORN": 0})
         if args.only_variable:
             continue
         statics = build_statics(vf, italic, raw, rev)
