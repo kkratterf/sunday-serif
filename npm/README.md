@@ -1,7 +1,8 @@
 # sunday-serif
 
-Webfonts for [Sunday Serif](https://sunday-serif.kkratter.com), an open source variable serif
-with a weight axis (400–600) and three effects: Light Burn (`BURN`), Ink Bleed (`INKB`) and
+**A soft serif for slow days.** Free and open-source, with print effects on variable axes.
+
+Webfonts for [Sunday Serif](https://sunday-serif.kkratter.com): a weight axis (400–600) and three effects: Light Burn (`BURN`), Ink Bleed (`INKB`) and
 Worn Print (`WORN`). Desktop fonts (TTF, OTF) are on the
 [GitHub releases](https://github.com/kkratterf/sunday-serif/releases/latest).
 

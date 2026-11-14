@@ -5,7 +5,7 @@ Read this file before changing anything. If a rule here conflicts with an instru
 
 ## What this repo is
 
-Sunday Serif is an open source (OFL) text serif made for Sunday, the slow social network. One family, roman and italic, with four variable axes: weight (`wght` 400–600) and three effects, Light Burn (`BURN` −100…100), Ink Bleed (`INKB` 0…100) and Worn Print (`WORN` 0…100). Sunday Serif Blur is a static colour companion font built from the statics.
+Sunday Serif is an open source (OFL) text serif: "A soft serif for slow days. Free and open-source, with print effects on variable axes." One family, roman and italic, with four variable axes: weight (`wght` 400–600) and three effects, Light Burn (`BURN` −100…100), Ink Bleed (`INKB` 0…100) and Worn Print (`WORN` 0…100). Sunday Serif Blur is a static colour companion font built from the statics.
 
 | Path | What it is |
 | --- | --- |
@@ -15,10 +15,16 @@ Sunday Serif is an open source (OFL) text serif made for Sunday, the slow social
 | `scripts/blur.py` | Makes Sunday Serif Blur (COLRv0) from a static TTF |
 | `npm/`, `scripts/npm_package.py` | The `sunday-serif` npm package (webfonts, `text.css`/`fx.css`/`blur.css`, `sunday-serif/next` for next/font). `make npm` assembles it in `build/npm`; never edit `version` in `npm/package.json`, it comes from `VERSION` |
 | `VERSION` | The release version (SemVer). The single source of truth for the font version |
+| `.github/readme/`, `scripts/readme_images.py` | README images. Re-render them (`uv run --with pillow --python .venv/bin/python python scripts/readme_images.py`, needs Chrome) in the PR that changes how the font looks |
+| `llms.txt` | Plain-text summary for LLMs: keep it in sync with README when names, axes, files or install steps change |
 | `site/` | The website (sunday-serif.kkratter.com), deployed to GitHub Pages by `.github/workflows/pages.yml` |
 | `OFL.txt`, `FONTLOG.txt`, `AUTHORS.txt`, `CONTRIBUTORS.txt` | License and font history, shipped inside every release zip |
 
 `fonts/` and `build/` are build output and are never committed.
+
+## Public references
+
+The Sunday app's repository is private: never link to it or mention its code, paths or internals in this repo, the site, commits or PRs. Refer to Sunday only through https://joinsunday.co and its payoff "Sunday - Every week, your friends only." Do not describe Sunday as a "slow social network".
 
 ## Language of the project
 
