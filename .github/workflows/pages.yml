@@ -7,7 +7,6 @@ on:
       - "site/**"
       - "sources/**"
       - "scripts/build.py"
-      - "scripts/blur.py"
       - "scripts/site-*"
       - ".github/workflows/pages.yml"
   release:
