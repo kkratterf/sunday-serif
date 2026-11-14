@@ -299,10 +299,20 @@ input[type="range"]::-moz-range-thumb { width: 14px; height: 14px; border-radius
 }
 .foot nav { display: flex; flex-wrap: wrap; gap: 18px; }
 .foot a { color: var(--muted); text-decoration: none; }
-.made { display: inline-flex; align-items: center; gap: 6px; }
-.foot .maker { display: inline-flex; align-items: center; gap: 6px; color: var(--ink); font: 400 17px/1 var(--serif); }
-.maker img { width: 22px; height: 22px; border-radius: 50%; object-fit: cover; filter: grayscale(1); }
-.maker:hover { text-decoration: underline; text-underline-offset: 3px; }
+.made { display: inline-flex; align-items: center; gap: 2px; white-space: nowrap; }
+/* The maker chip: same size as the text, a soft background on hover and the full name in a tooltip. */
+.foot .maker {
+  position: relative; display: inline-flex; align-items: center; gap: 4px; height: 26px; padding: 0 7px 0 5px;
+  border-radius: 6px; color: var(--ink); font: inherit; transition: background-color .15s;
+}
+.foot .maker:hover, .foot .maker:focus-visible { background: var(--raised); color: var(--ink); }
+.maker img { width: 16px; height: 16px; border-radius: 50%; object-fit: cover; }
+.maker::after {
+  content: attr(data-tip); position: absolute; left: 50%; bottom: calc(100% + 6px); transform: translate(-50%, 4px);
+  padding: 6px 10px; border-radius: 8px; background: var(--ink); color: var(--on-ink); font-size: 12px; white-space: nowrap;
+  opacity: 0; pointer-events: none; transition: opacity .15s, transform .15s var(--ease);
+}
+.maker:hover::after, .maker:focus-visible::after { opacity: 1; transform: translate(-50%, 0); }
 .foot a:hover { color: var(--ink); }
 
 /* ---------- Toast ---------- */
