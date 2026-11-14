@@ -152,6 +152,16 @@
 
     // Start smaller on phones so the sample fits.
     if (window.innerWidth < 600) { state.size = 56; ctl("size").value = 56; }
+    // Reset puts every control back where the page started.
+    var initial = JSON.parse(JSON.stringify(state));
+    $("[data-reset]", tester).addEventListener("click", function () {
+      Object.keys(initial).forEach(function (k) {
+        state[k] = initial[k];
+        var c = ctl(k);
+        if (c) { if (c.type === "checkbox") c.checked = state[k]; else c.value = state[k]; }
+      });
+      render();
+    });
     // Paste as plain text only.
     sample.addEventListener("paste", function (e) {
       e.preventDefault();

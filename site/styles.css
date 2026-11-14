@@ -169,6 +169,12 @@ input[type="range"]::-moz-range-thumb { width: 14px; height: 14px; border-radius
 .ticks { display: flex; justify-content: space-between; font-size: 11px; color: var(--faint); margin-top: -2px; }
 .label output { font-family: var(--mono); font-size: 12px; color: var(--ink); }
 .control.is-off { opacity: .4; pointer-events: none; }
+.control-reset { justify-items: start; }
+.chip {
+  border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer;
+  font: 500 13px/1 var(--ui); padding: 8px 14px; border-radius: 999px; transition: border-color .15s;
+}
+.chip:hover { border-color: var(--faint); color: var(--ink); }
 .stage {
   display: flex; align-items: center; min-height: 460px; padding: clamp(20px, 4vw, 48px);
   background: var(--surface); color: var(--ink); transition: background-color .25s, color .25s;
