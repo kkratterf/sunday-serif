@@ -45,9 +45,9 @@ Two virtualenvs on purpose: `.venv` (build, `requirements.txt`) and `.venv-qa` (
 ## How the sources work
 
 - Every weight has the same 15 master locations, and **all 45 masters of a style must stay point-compatible** (same glyphs, same contours, same point structure). fontmake fails the build otherwise.
-- The "pores" used by Worn Print are extra 8-point contours at the end of each glyph. Each weight has its own set, and every master carries the pores of all three weights: its own, plus the other weights' pores collapsed to a single point (invisible). Keep that order (base contours, Regular pores, Medium pores, SemiBold pores) when editing a glyph.
+- The "pores" used by Worn Print are extra 8-point contours at the end of each glyph. Each weight has its own set, and every master carries the pores of all three weights: its own, plus the other weights' pores collapsed to a single point (invisible). After them comes the Worn Print grain: small 4-point contours (all off-curve quadratic blobs) shared by all three weights, open only in the Worn100 masters and collapsed to a single point everywhere else. Keep that order (base contours, Regular pores, Medium pores, SemiBold pores, grain) when editing a glyph.
 - A design change to a glyph has to be made in every master where it shows. In practice: edit the Light Burn 0 master of each weight in Fontra (or another UFO editor), then check Light Burn 100 and the effect masters with `make variable`.
-- New glyphs need: an outline in every master, the same pore structure (or no pores), a Unicode value, and kerning groups when they relate to an existing letter.
+- New glyphs need: an outline in every master, the same pore and grain structure (or none), a Unicode value, and kerning groups when they relate to an existing letter.
 - Do not commit generated UFO instances, `.glyphs` exports or editor caches.
 
 ## The website

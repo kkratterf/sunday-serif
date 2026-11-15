@@ -51,7 +51,7 @@
   onScroll();
 
   // ---------- The FX font: loaded only when an effect is about to show ----------
-  // The text font is preloaded; the FX build (~1.3 MB a style) waits until the visitor moves the
+  // The text font is preloaded; the FX build (~1.8 MB a style) waits until the visitor moves the
   // mouse over the page or nears the tester or the effects. Until then var(--fx) is the text
   // font, which looks the same with every effect at 0.
   var fxState = 0; // 0 not asked, 1 loading, 2 ready

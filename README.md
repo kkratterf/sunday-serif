@@ -36,7 +36,7 @@ pnpm add sunday-serif
 | --- | --- | --- | --- |
 | Light Burn | `BURN` | 0 to 100, default 0 | Overexposure. The ink spreads until the counters fill in. |
 | Ink Bleed | `INKB` | 0 to 100, default 0 | Ink spreading into the paper. Puffy, organic letters; spacing never changes. |
-| Worn Print | `WORN` | 0 to 100, default 0 | The wear of an old press. Small flecks of missing ink, more of them towards 100. |
+| Worn Print | `WORN` | 0 to 100, default 0 | The wear of an old press. Grain eating the edges, dust and starved patches where the ink did not reach; spacing never changes. |
 
 The axes combine with one another and with weight, in both styles.
 
@@ -73,7 +73,7 @@ Each release ships `SundaySerif-X.Y.Z.zip`:
 | --- | --- | --- |
 | `variable/` | `SundaySerif[BURN,INKB,WORN,wght].ttf`, `SundaySerif-Italic[…].ttf` | Design apps, the desktop |
 | `otf/`, `ttf/` | Regular, Medium, SemiBold and italics, effects at 0 | Apps without variable fonts, mobile |
-| `webfonts/` | `SundaySerifText-*` (weight only, ~55 KB) and `SundaySerif-*` (all axes, ~1.3 MB), WOFF2 | The web |
+| `webfonts/` | `SundaySerifText-*` (weight only, ~55 KB) and `SundaySerif-*` (all axes, ~1.8 MB), WOFF2 | The web |
 
 ## Web
 
@@ -82,7 +82,7 @@ The [npm package](npm/README.md) carries the files, the CSS and a ready `next/fo
 | File | Axes | Size | |
 | --- | --- | --- | --- |
 | `SundaySerifText-Variable.woff2`, `SundaySerifText-Italic-Variable.woff2` | `wght` | ~55 KB | Running text. Preload it. |
-| `SundaySerif-Variable.woff2`, `SundaySerif-Italic-Variable.woff2` | `wght`, `BURN`, `INKB`, `WORN` | ~1.3 MB | Only where an effect shows. |
+| `SundaySerif-Variable.woff2`, `SundaySerif-Italic-Variable.woff2` | `wght`, `BURN`, `INKB`, `WORN` | ~1.8 MB | Only where an effect shows. |
 
 Nearly all of a variable font's weight is the variation data of its axes; the text cut leaves the effects out and is about ten times lighter. Declared under its own family name, the full cut is downloaded only by pages that use it.
 
