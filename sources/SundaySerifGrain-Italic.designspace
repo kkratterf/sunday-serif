@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<designspace format="5.0">
+  <axes>
+    <axis tag="GRAN" name="Grain Blur" minimum="0" maximum="100" default="0"/>
+  </axes>
+  <sources>
+    <source filename="Grain/SundaySerifGrain-Italic-G0.ufo" familyname="Sunday Serif Grain" stylename="Italic">
+      <location>
+        <dimension name="Grain Blur" xvalue="0"/>
+      </location>
+    </source>
+    <source filename="Grain/SundaySerifGrain-Italic-G100.ufo" familyname="Sunday Serif Grain" stylename="Grain 100 Italic">
+      <location>
+        <dimension name="Grain Blur" xvalue="100"/>
+      </location>
+    </source>
+  </sources>
+  <instances>
+    <instance familyname="Sunday Serif Grain" stylename="Italic" postscriptfontname="SundaySerifGrain-Italic">
+      <location>
+        <dimension name="Grain Blur" xvalue="0"/>
+      </location>
+    </instance>
+  </instances>
+</designspace>

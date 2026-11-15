@@ -1,0 +1,16 @@
+/* Sunday Serif Grain: the Grain Blur axis (GRAN 0...100), Regular and Italic (~1.5 MB per style).
+   A display cut: browsers download it only for text that uses the "Sunday Serif Grain" family. */
+@font-face {
+  font-family: "Sunday Serif Grain";
+  src: url("./fonts/SundaySerifGrain-Variable.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Sunday Serif Grain";
+  src: url("./fonts/SundaySerifGrain-Italic-Variable.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}

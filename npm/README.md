@@ -14,6 +14,7 @@ pnpm add sunday-serif
 | --- | --- | --- | --- |
 | `sunday-serif/text.css` | `Sunday Serif` | Weight only, effects at their default. For all text | ~45 KB per style |
 | `sunday-serif/fx.css` | `Sunday Serif FX` | Weight plus the three effect axes. Only where effects show | ~500 KB per style |
+| `sunday-serif/grain.css` | `Sunday Serif Grain` | Display cut with the Grain Blur axis (`GRAN`), Regular and Italic | ~1.5 MB per style |
 
 ## Next.js
 
@@ -49,9 +50,10 @@ on pages that use it.
 ```js
 import "sunday-serif/text.css";
 import "sunday-serif/fx.css"; // only if you use the effects
+import "sunday-serif/grain.css"; // only if you use Grain Blur
 ```
 
-Then use `font-family: "Sunday Serif"` and `"Sunday Serif FX"`.
+Then use `font-family: "Sunday Serif"`, `"Sunday Serif FX"` and `"Sunday Serif Grain"`.
 
 ## Effects
 
@@ -71,6 +73,21 @@ effects together, for example through custom properties:
 | Light Burn | `BURN` | 0–100 | 0 |
 | Ink Bleed | `INKB` | 0–100 | 0 |
 | Worn Print | `WORN` | 0–100 | 0 |
+
+## Grain Blur
+
+Sunday Serif Grain is a separate display cut: a blur made of grain, like a dithered photo.
+At 0 the letters are plain; towards 100 a cloud of ink dots spreads out from every edge.
+Spacing never changes.
+
+```css
+.grainy {
+  font-family: "Sunday Serif Grain", "Sunday Serif", serif;
+  font-variation-settings: "GRAN" 80;
+}
+```
+
+`SundaySerifGrain` in `sunday-serif/next` sets `--font-sunday-serif-grain`.
 
 ## License
 

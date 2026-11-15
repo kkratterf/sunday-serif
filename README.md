@@ -40,6 +40,19 @@ pnpm add sunday-serif
 
 The axes combine with one another and with weight, in both styles.
 
+## Grain Blur
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset=".github/readme/grain-dark.png">
+  <img src=".github/readme/grain-light.png" alt="Grain Blur from 0 to 100 across the letters of its own name, and a line at Grain Blur 100." width="100%">
+</picture>
+
+**Sunday Serif Grain** is a separate display cut with one axis: a blur made of grain, like a dithered photo. At 0 the letters are plain; towards 100 a cloud of ink dots spreads out from every edge. Spacing never changes. Regular and italic.
+
+| Axis | Tag | Range | |
+| --- | --- | --- | --- |
+| Grain Blur | `GRAN` | 0 to 100, default 0 | A halo of ink grain around the letters, dense at the edge and sparse further out. |
+
 ## Weights
 
 <picture>
@@ -71,9 +84,9 @@ Each release ships `SundaySerif-X.Y.Z.zip`:
 
 | Folder | Contents | For |
 | --- | --- | --- |
-| `variable/` | `SundaySerif[BURN,INKB,WORN,wght].ttf`, `SundaySerif-Italic[…].ttf` | Design apps, the desktop |
+| `variable/` | `SundaySerif[BURN,INKB,WORN,wght].ttf`, `SundaySerif-Italic[…].ttf`; `SundaySerifGrain[GRAN].ttf`, `SundaySerifGrain-Italic[GRAN].ttf` | Design apps, the desktop |
 | `otf/`, `ttf/` | Regular, Medium, SemiBold and italics, effects at 0 | Apps without variable fonts, mobile |
-| `webfonts/` | `SundaySerifText-*` (weight only, ~55 KB) and `SundaySerif-*` (all axes, ~1.3 MB), WOFF2 | The web |
+| `webfonts/` | `SundaySerifText-*` (weight only, ~55 KB), `SundaySerif-*` (all axes, ~1.3 MB) and `SundaySerifGrain-*` (Grain Blur, ~1.5 MB), WOFF2 | The web |
 
 ## Web
 
@@ -83,6 +96,7 @@ The [npm package](npm/README.md) carries the files, the CSS and a ready `next/fo
 | --- | --- | --- | --- |
 | `SundaySerifText-Variable.woff2`, `SundaySerifText-Italic-Variable.woff2` | `wght` | ~55 KB | Running text. Preload it. |
 | `SundaySerif-Variable.woff2`, `SundaySerif-Italic-Variable.woff2` | `wght`, `BURN`, `INKB`, `WORN` | ~1.3 MB | Only where an effect shows. |
+| `SundaySerifGrain-Variable.woff2`, `SundaySerifGrain-Italic-Variable.woff2` | `GRAN` | ~1.5 MB | Sunday Serif Grain, for display lines. |
 
 Nearly all of a variable font's weight is the variation data of its axes; the text cut leaves the effects out and is about ten times lighter. Declared under its own family name, the full cut is downloaded only by pages that use it.
 
@@ -183,6 +197,20 @@ Add `${sundaySerif.variable} ${sundaySerifFx.variable}` to `<html>`, then use `v
 
 From JavaScript: `element.style.setProperty("--burn", "60")`.
 
+Sunday Serif Grain has its own family and a single axis:
+
+```css
+@font-face {
+  font-family: "Sunday Serif Grain";
+  src: url("fonts/SundaySerifGrain-Variable.woff2") format("woff2");
+  font-display: swap;
+}
+.grainy {
+  font-family: "Sunday Serif Grain", "Sunday Serif", serif;
+  font-variation-settings: "GRAN" 80;
+}
+```
+
 ## Desktop and Figma
 
 Install `variable/` where variable fonts are supported: the axes appear as sliders (in Figma, under "Variable font axes"). Elsewhere install `otf/`. One or the other, not both. In Figma everyone editing a file needs the font installed, unless it is uploaded as a shared font (Organization and Enterprise plans).
@@ -209,6 +237,7 @@ The version comes from [`VERSION`](VERSION).
 | --- | --- |
 | `sources/SundaySerif.designspace`, `sources/SundaySerif-Italic.designspace` | The two designspaces, with the axes and the masters |
 | `sources/Roman/`, `sources/Italic/` | The UFO masters: for each weight, 11 Light Burn masters plus the Ink Bleed and Worn Print masters. They open in [Fontra](https://fontra.xyz), Glyphs, RoboFont or FontLab |
+| `sources/SundaySerifGrain*.designspace`, `sources/Grain/`, `scripts/grain_blur.py` | Sunday Serif Grain: two masters per style (Grain Blur 0 and 100), generated from the Regular masters by the script |
 | `scripts/build.py` | The build: variable fonts, statics, WOFF2, and post-processing (names, STAT, version) |
 | `.github/readme/`, `scripts/readme_images.py` | The README specimens, light and dark, set in the built fonts and captured with headless Chrome |
 | `llms.txt` | A plain-text summary of the font for AI assistants and agents |

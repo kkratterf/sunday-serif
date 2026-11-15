@@ -14,6 +14,8 @@ FONTS = [
     "SundaySerifText-Italic-Variable.woff2",
     "SundaySerif-Variable.woff2",
     "SundaySerif-Italic-Variable.woff2",
+    "SundaySerifGrain-Variable.woff2",
+    "SundaySerifGrain-Italic-Variable.woff2",
 ]
 
 

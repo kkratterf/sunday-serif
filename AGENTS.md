@@ -11,6 +11,7 @@ Sunday Serif is an open source (OFL) text serif: "A soft serif for slow days. Fr
 | --- | --- |
 | `sources/SundaySerif.designspace`, `sources/SundaySerif-Italic.designspace` | Axes, masters and named instances (Regular/Medium/SemiBold) |
 | `sources/Roman/`, `sources/Italic/` | UFO masters, 45 per style: for each weight (Regular, Medium, SemiBold), 11 Light Burn masters (0…100, step 10) plus Ink100 and Worn100 masters at Light Burn 0 and 100 |
+| `sources/SundaySerifGrain*.designspace`, `sources/Grain/`, `scripts/grain_blur.py` | Sunday Serif Grain, a separate display cut with one axis, Grain Blur (`GRAN` 0…100). Its two masters per style are generated from the Regular Light Burn 0 masters: rerun the script after a design change to them, never edit `sources/Grain/` by hand |
 | `scripts/build.py` | The whole build: fontmake → post-processing (names, STAT, version, gasp/prep) → statics (pathops, effects at 0) → WOFF2 (a light text cut with only `wght`, and the full cut) |
 | `npm/`, `scripts/npm_package.py` | The `sunday-serif` npm package (webfonts, `text.css`/`fx.css`, `sunday-serif/next` for next/font). `make npm` assembles it in `build/npm`; never edit `version` in `npm/package.json`, it comes from `VERSION` |
 | `VERSION` | The release version (SemVer). The single source of truth for the font version |
