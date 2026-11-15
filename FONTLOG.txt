@@ -19,6 +19,10 @@ Sunday Serif is a soft serif for slow days, made for Sunday
 - Worn Print (WORN, 0 to 100): eroded edges and small holes in the ink,
   like a worn letterpress.
 
+Sunday Serif Grain is a companion display family in roman and italic
+with one axis, Grain Blur (GRAN, 0 to 100): at 0 plain letters, at 100 a
+cloud of ink grain spreading out from every edge.
+
 The outlines are derived from Source Serif 4 by Adobe (SIL Open Font
 License 1.1, Reserved Font Name "Source"), reworked in shape, proportions,
 spacing and character set. The character set covers Basic Latin,
@@ -34,7 +38,13 @@ ChangeLog
 Detailed release notes are on the GitHub Releases page:
 https://github.com/kkratterf/sunday-serif/releases
 
+v0.2.0 (15 November 2026)
+- Worn Print: grain along the edges, dust and starved patches inside the
+  strokes, like a distressed print.
+
 v0.1.1 (15 November 2026)
+- New companion family, Sunday Serif Grain, with a Grain Blur axis (GRAN):
+  a cloud of ink grain that spreads out from every edge.
 - Webfonts: no more cuts inside letters at Light Burn 100.
 
 v0.1.0 (15 November 2026)
