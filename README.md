@@ -1,110 +1,92 @@
 <p align="center">
-  <a href="https://sunday-serif.kkratter.com/"><img src=".github/readme/banner.webp" alt="Sunday Serif, a soft serif for slow days. The title cycles through the Light Burn, Ink Bleed and Worn Print effects" width="100%"></a>
+  <a href="https://sunday-serif.kkratter.com/">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset=".github/readme/banner-dark.png">
+      <img src=".github/readme/banner-light.png" alt="Sunday Serif. A soft serif for slow days, with print effects on variable axes." width="100%">
+    </picture>
+  </a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/kkratterf/sunday-serif/actions/workflows/ci.yml"><img src="https://github.com/kkratterf/sunday-serif/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
-  <a href="https://github.com/kkratterf/sunday-serif/releases/latest"><img src="https://img.shields.io/github/v/release/kkratterf/sunday-serif?color=131313" alt="Latest release"></a>
-  <a href="https://www.npmjs.com/package/sunday-serif"><img src="https://img.shields.io/npm/v/sunday-serif?color=131313&label=npm" alt="npm"></a>
-  <img src="https://img.shields.io/badge/variable-wght%20·%20BURN%20·%20INKB%20·%20WORN-131313" alt="Variable axes: wght, BURN, INKB, WORN">
-  <a href="#license"><img src="https://img.shields.io/badge/license-OFL%201.1-131313" alt="SIL Open Font License 1.1"></a>
-</p>
-
-<p align="center">
-  <a href="https://github.com/kkratterf/sunday-serif/releases/latest"><b>Download the fonts</b></a>
+  <a href="https://github.com/kkratterf/sunday-serif/releases/latest"><b>Download</b></a>
   &nbsp;·&nbsp;
   <a href="https://sunday-serif.kkratter.com/">Website</a>
   &nbsp;·&nbsp;
-  <a href="#use-it-on-the-web">Use it on the web</a>
+  <a href="https://www.npmjs.com/package/sunday-serif">npm</a>
+  &nbsp;·&nbsp;
+  <a href="#license">OFL 1.1</a>
 </p>
 
 **A soft serif for slow days.** Free and open-source, with print effects on variable axes.
 
-Sunday Serif is a text serif in roman and italic, from Regular to SemiBold, with three effects you can dial in like a print run: **Light Burn** burns the thin strokes away or floods the letters with ink, **Ink Bleed** lets the ink soak into the paper, **Worn Print** wears the edges like an old letterpress. They are variable axes, so they combine, and they animate with a line of CSS.
-
-**Install** for the web:
+A text face in roman and italic, from Regular to SemiBold. Three further axes borrow from the print shop: exposure, ink and wear. Set them once for a look, or move them with a line of CSS.
 
 ```bash
 pnpm add sunday-serif
 ```
 
-or [download the zip](https://github.com/kkratterf/sunday-serif/releases/latest) with the desktop fonts (variable TTF, static OTF and TTF) and the webfonts.
+## Effects
 
----
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset=".github/readme/effects-dark.png">
+  <img src=".github/readme/effects-light.png" alt="Light Burn from 0 to 100 across the letters of its own name; Ink Bleed and Worn Print at 0 and at 100." width="100%">
+</picture>
 
-## The effects
-
-<img src=".github/readme/light-burn.png" alt="Sunday afternoon at Light Burn -100, -50, 0, +50 and +100: from letters flooded with ink to thin strokes that break" width="100%">
-
-#### 🔥 Light Burn · `BURN` −100 to 100
-
-Like a photo exposure. Towards −100 the ink spreads until the letters fill in; towards +100 the thin strokes burn away until they break. Past +55 some letters (c, f, h, o, A, B, K and others) switch to drawings with broken lines.
-
-<table>
-  <tr>
-    <td width="50%" valign="top">
-      <img src=".github/readme/ink-bleed.png" alt="Sunday afternoon at Ink Bleed 0, 50 and 100: letters get fatter and rounder" width="100%">
-      <h4>💧 Ink Bleed · <code>INKB</code> 0 to 100</h4>
-      Ink soaking into the paper: the letters get fatter and rounder, and the spacing tightens a little.
-    </td>
-    <td width="50%" valign="top">
-      <img src=".github/readme/worn-print.png" alt="Sunday afternoon at Worn Print 0, 50 and 100: eroded edges and small holes in the ink" width="100%">
-      <h4>🖨️ Worn Print · <code>WORN</code> 0 to 100</h4>
-      A worn letterpress: eroded edges and small holes inside the stems and bowls.
-    </td>
-  </tr>
-</table>
-
-The effects combine freely, Light Burn −100 with Ink Bleed 100 for example, at every weight and in the italic.
-
-## Weights and italics
-
-<img src=".github/readme/weights.png" alt="Regular 400, Medium 500 and SemiBold 600, each in roman and italic" width="100%">
-
-| Axis | Tag | Range | Default |
+| Axis | Tag | Range | |
 | --- | --- | --- | --- |
-| Weight | `wght` | 400 to 600 | 400: Regular, 500: Medium, 600: SemiBold, and everything in between |
-| Light Burn | `BURN` | −100 to 100 | 0 |
-| Ink Bleed | `INKB` | 0 to 100 | 0 |
-| Worn Print | `WORN` | 0 to 100 | 0 |
+| Light Burn | `BURN` | 0 to 100, default 0 | Overexposure. The ink spreads until the counters fill in. |
+| Ink Bleed | `INKB` | 0 to 100, default 0 | Ink spreading into the paper. Puffy, organic letters; spacing never changes. |
+| Worn Print | `WORN` | 0 to 100, default 0 | The wear of an old press. Small flecks of missing ink, more of them towards 100. |
 
-## Characters
+The axes combine with one another and with weight, in both styles.
 
-<img src=".github/readme/glyphs.png" alt="The character set: Latin capitals and lowercase, figures, accented letters of Latin-1 and Latin Extended-A, punctuation and symbols" width="100%">
+## Weights
 
-Basic Latin, Latin-1 Supplement and Latin Extended-A: the languages of Western, Central and Eastern Europe that use the Latin script. OpenType features: kerning, `case`, `ordn`, `ccmp`, and `rvrn` for Light Burn.
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset=".github/readme/weights-dark.png">
+  <img src=".github/readme/weights-light.png" alt="Regular 400, Medium 500 and SemiBold 600" width="100%">
+</picture>
 
-## What is in the release
+A continuous `wght` axis from 400 to 600, with named instances at Regular, Medium and SemiBold.
 
-Every release has a `SundaySerif-X.Y.Z.zip` with:
+## In use
 
-| Folder | What | Use it for |
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset=".github/readme/text-dark.png">
+  <img src=".github/readme/text-light.png" alt="A paragraph set at 22 pixels and a display line at 52 pixels, roman and italic" width="100%">
+</picture>
+
+## Character set
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset=".github/readme/glyphs-dark.png">
+  <img src=".github/readme/glyphs-light.png" alt="A selection of the character set: Latin capitals, lowercase, figures, accented letters and symbols" width="100%">
+</picture>
+
+Basic Latin, Latin-1 Supplement and Latin Extended-A. OpenType: kerning, `case`, `ordn` and `ccmp`.
+
+## Files
+
+Each release ships `SundaySerif-X.Y.Z.zip`:
+
+| Folder | Contents | For |
 | --- | --- | --- |
-| `variable/` | `SundaySerif[BURN,INKB,WORN,wght].ttf` and `SundaySerif-Italic[...].ttf` | Apps that support variable fonts (Figma, Adobe apps, macOS, browsers). All weights and effects in two files. |
-| `ttf/`, `otf/` | Regular, Medium, SemiBold and their italics | Apps without variable font support. Effects are at their default. |
-| `webfonts/` | WOFF2 at 1000 UPM: `SundaySerifText-*` (weight only, ~45 KB) and `SundaySerif-*` (all axes, ~1 MB) | The web. See below which one to load. |
+| `variable/` | `SundaySerif[BURN,INKB,WORN,wght].ttf`, `SundaySerif-Italic[…].ttf` | Design apps, the desktop |
+| `otf/`, `ttf/` | Regular, Medium, SemiBold and italics, effects at 0 | Apps without variable fonts, mobile |
+| `webfonts/` | `SundaySerifText-*` (weight only, ~55 KB) and `SundaySerif-*` (all axes, ~1.3 MB), WOFF2 | The web |
 
-## Use it on the web
+## Web
 
-The webfonts are also on npm, with the CSS and a ready-made `next/font` setup:
-`pnpm add sunday-serif`, then `import "sunday-serif/text.css"` or, in Next.js,
-`import { SundaySerif, SundaySerifFX } from "sunday-serif/next"`. See the
-[package README](npm/README.md). To host the files yourself, read on.
+The [npm package](npm/README.md) carries the files, the CSS and a ready `next/font` setup. To host the files yourself, use two cuts per style:
 
-There are two web cuts of each style:
-
-| File | Axes | Size | Use it for |
+| File | Axes | Size | |
 | --- | --- | --- | --- |
-| `SundaySerifText-Variable.woff2`, `SundaySerifText-Italic-Variable.woff2` | `wght` only, effects fixed at 0 | ~45 KB | All text. Preload it. |
-| `SundaySerif-Variable.woff2`, `SundaySerif-Italic-Variable.woff2` | `wght`, `BURN`, `INKB`, `WORN` | ~1 MB | Only the elements that show an effect. |
+| `SundaySerifText-Variable.woff2`, `SundaySerifText-Italic-Variable.woff2` | `wght` | ~55 KB | Running text. Preload it. |
+| `SundaySerif-Variable.woff2`, `SundaySerif-Italic-Variable.woff2` | `wght`, `BURN`, `INKB`, `WORN` | ~1.3 MB | Only where an effect shows. |
 
-Most of a variable font's weight is the variation data of its axes, and Light Burn alone has 21
-masters: dropping the effects makes the text cut about 20 times lighter. Give the two cuts different
-family names in CSS: the browser downloads a font file only when some text on the page uses it,
-so the full cut loads only on pages that show an effect.
+Nearly all of a variable font's weight is the variation data of its axes; the text cut leaves the effects out and is about ten times lighter. Declared under its own family name, the full cut is downloaded only by pages that use it.
 
-The weight works with the normal `font-weight`; the effects go through `font-variation-settings`
-with their four-letter tags (upper case, quoted).
+Weight is set with `font-weight`. The effects go through `font-variation-settings`, with their tags quoted and in capitals.
 
 ```css
 @font-face {
@@ -146,9 +128,7 @@ h1 {
 
 ### Next.js
 
-`next/font/local` self-hosts the files with hashed, cacheable names, preloads them and builds a
-size-matched fallback font so the layout does not jump when the font arrives. It does not subset
-local fonts, which is why the text cut exists.
+`next/font/local` serves the files under hashed, cacheable names, preloads them and derives a metric-matched fallback, so the layout holds while the font loads. It does not subset local fonts, hence the text cut.
 
 ```ts
 import localFont from "next/font/local";
@@ -176,15 +156,11 @@ export const sundaySerifFx = localFont({
 });
 ```
 
-Put `${sundaySerif.variable} ${sundaySerifFx.variable}` on `<html>` and use
-`font-family: var(--font-sunday-serif)` and `var(--font-sunday-serif-fx)` in CSS. It works with
-`output: "export"` as well.
+Add `${sundaySerif.variable} ${sundaySerifFx.variable}` to `<html>`, then use `var(--font-sunday-serif)` and `var(--font-sunday-serif-fx)`. Static export works too.
 
 ### Effects in CSS
 
-`font-variation-settings` replaces the whole list every time it is set, so a rule that sets only
-`"INKB"` resets `"BURN"` and `"WORN"` to their defaults. Keep each effect in a custom property and
-write all three together:
+`font-variation-settings` replaces the whole list each time it is set. Keep each effect in a custom property and always write the three together:
 
 ```css
 :root {
@@ -205,79 +181,51 @@ write all three together:
 }
 ```
 
-From JavaScript, change the same properties:
+From JavaScript: `element.style.setProperty("--burn", "60")`.
 
-```js
-element.style.setProperty("--burn", "-60");
-```
+## Desktop and Figma
 
-Notes:
+Install `variable/` where variable fonts are supported: the axes appear as sliders (in Figma, under "Variable font axes"). Elsewhere install `otf/`. One or the other, not both. In Figma everyone editing a file needs the font installed, unless it is uploaded as a shared font (Organization and Enterprise plans).
 
-- Light Burn swaps in its broken-line letters through the `rvrn` feature, which browsers apply
-  automatically. Do not turn off `font-feature-settings` for the text that uses it.
+## Mobile
 
-## Use it on the desktop and in Figma
-
-Install the files from `variable/` if your app supports variable fonts: the weight and effect
-sliders appear in its typography panel (Figma: "Variable font axes"; InDesign and Illustrator:
-the variable font button next to the style menu). Otherwise install `otf/`. Only install one of
-the two, or the app may show duplicate styles.
-
-Figma uses the fonts installed on your computer (in the browser through the Figma font installer).
-Everyone who edits a file needs them installed, unless the team uploads them as shared fonts
-(Organization and Enterprise plans).
-
-## Use it in a mobile app
-
-React Native has no style for custom variable axes, so apps use the static TTF files from `ttf/`
-(Regular, Medium, SemiBold and italics, effects at 0). With Expo, embed them at build time with the
-`expo-font` config plugin and refer to each style by its file name (for example
-`fontFamily: "SundaySerif-Medium"`), which is also its PostScript name, so the same name works on
-iOS and Android.
+React Native cannot set custom axes, so apps use the static files in `ttf/`. With Expo, embed them through the `expo-font` config plugin and refer to each style by its PostScript name, `SundaySerif-Medium` for instance, the same on iOS and Android.
 
 ## Build
 
-The fonts are built from the UFO sources with [fontmake](https://github.com/googlefonts/fontmake)
-and checked with [fontbakery](https://github.com/fonttools/fontbakery). You need
-[uv](https://docs.astral.sh/uv/) (`brew install uv`); it also fetches Python 3.12.
+Built from the UFO sources with [fontmake](https://github.com/googlefonts/fontmake), checked with [fontbakery](https://github.com/fonttools/fontbakery). Requires [uv](https://docs.astral.sh/uv/), which also provides Python 3.12.
 
 ```bash
-make          # builds everything into fonts/
-make variable # only the two variable fonts, faster
-make test     # fontbakery, reports in build/fontbakery/
+make            # everything, into fonts/
+make variable   # the two variable fonts only
+make test       # fontbakery, reports in build/fontbakery/
 ```
 
-The version of the build comes from the [`VERSION`](VERSION) file.
+The version comes from [`VERSION`](VERSION).
 
 ## Repository
 
 | Path | What it is |
 | --- | --- |
-| `sources/SundaySerif.designspace`, `sources/SundaySerif-Italic.designspace` | The two designspaces, with the axes, the masters and the Light Burn rules |
-| `sources/Roman/`, `sources/Italic/` | The UFO masters: for each weight, 21 Light Burn masters plus the Ink Bleed and Worn Print masters. They open in [Fontra](https://fontra.xyz), Glyphs, RoboFont or FontLab |
+| `sources/SundaySerif.designspace`, `sources/SundaySerif-Italic.designspace` | The two designspaces, with the axes and the masters |
+| `sources/Roman/`, `sources/Italic/` | The UFO masters: for each weight, 11 Light Burn masters plus the Ink Bleed and Worn Print masters. They open in [Fontra](https://fontra.xyz), Glyphs, RoboFont or FontLab |
 | `scripts/build.py` | The build: variable fonts, statics, WOFF2, and post-processing (names, STAT, version) |
-| `.github/readme/`, `scripts/readme_images.py` | The README images, rendered from the built fonts with headless Chrome |
+| `.github/readme/`, `scripts/readme_images.py` | The README specimens, light and dark, set in the built fonts and captured with headless Chrome |
 | `llms.txt` | A plain-text summary of the font for AI assistants and agents |
 | `npm/`, `scripts/npm_package.py` | The `sunday-serif` npm package: CSS, next/font helper and README; the script adds the webfonts and the version |
 | `site/` | The website, [sunday-serif.kkratter.com](https://sunday-serif.kkratter.com) |
 | `OFL.txt`, `FONTLOG.txt`, `AUTHORS.txt`, `CONTRIBUTORS.txt` | License and font history |
 
-Built fonts are not committed: CI builds them on every pull request and attaches them to each
-GitHub Release.
+Built fonts are not committed: CI builds them for every pull request and every release.
 
 ## Credits
 
-Made by [Federico Kratter Thaler](https://kkratter.com) for [Sunday](https://joinsunday.co): every week, your friends only. The outlines start from [Source Serif 4](https://github.com/adobe-fonts/source-serif) by Frank Grießhammer for Adobe, reworked in shape, proportions, spacing and character set.
+Designed by [Federico Kratter Thaler](https://kkratter.com) for [Sunday](https://joinsunday.co). The outlines start from [Source Serif 4](https://github.com/adobe-fonts/source-serif) by Frank Grießhammer for Adobe, reworked in shape, proportions, spacing and character set.
 
 ## Contributing
 
-Report a problem or ask for a character with an [issue](https://github.com/kkratterf/sunday-serif/issues/new/choose).
-Pull requests are welcome: read [AGENTS.md](AGENTS.md) first, it holds the rules for humans and
-AI agents alike.
+Problems and missing characters go in the [issues](https://github.com/kkratterf/sunday-serif/issues/new/choose). Before a pull request, read [AGENTS.md](AGENTS.md): the same rules apply to people and to AI agents.
 
 ## License
 
-Sunday Serif is licensed under the [SIL Open Font License 1.1](OFL.txt), with Reserved Font Name
-"Sunday Serif": you can use, modify and redistribute it freely, also commercially, but a modified
-version must be published under another name. Its outlines are derived from
-[Source Serif 4](https://github.com/adobe-fonts/source-serif) by Adobe, also under the OFL.
+[SIL Open Font License 1.1](OFL.txt), with Reserved Font Name "Sunday Serif". Free to use, modify and redistribute, commercially too; a modified version must carry another name. Derived from [Source Serif 4](https://github.com/adobe-fonts/source-serif) by Adobe, also under the OFL.

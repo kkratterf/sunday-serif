@@ -4,8 +4,8 @@ usage: python scripts/build.py [--only-variable]
 
   fonts/variable/  SundaySerif[BURN,INKB,WORN,wght].ttf, SundaySerif-Italic[...].ttf
   fonts/webfonts/  WOFF2 for the web, all at 1000 UPM:
-                   SundaySerifText-*.woff2  weight axis only, effects at 0 (~45 KB): body text
-                   SundaySerif-*.woff2      all four axes (~1 MB): load only where effects show
+                   SundaySerifText-*.woff2  weight axis only, effects at 0 (~55 KB): body text
+                   SundaySerif-*.woff2      all four axes (~1.3 MB): load only where effects show
   fonts/ttf/, fonts/otf/  static Regular, Medium, SemiBold and italics (effects at 0)
 
 The version comes from the VERSION file: SemVer X.Y.Z becomes font version X.YYZ
@@ -45,7 +45,6 @@ STYLES = [  # (designspace, italic)
     ("SundaySerif.designspace", False),
     ("SundaySerif-Italic.designspace", True),
 ]
-# Light Burn swaps in the broken-line alternates from +55; the statics stay at 0, so no swap.
 
 
 def version():
@@ -127,6 +126,10 @@ def strip_pores(font):
             continue
         coords, ends, flags = glyph.getCoordinates(glyf)
         variations = gvar.variations.get(gname, []) if gvar else []
+        for tv in variations:  # the instancer leaves IUP gaps: fill them so pores are recognised
+            if None in tv.coordinates:
+                tv.calcInferredDeltas(list(coords) + [(0, 0)] * 4, list(ends))
+                tv.coordinates = [(round(x), round(y)) for x, y in tv.coordinates]
         keep, start = [], 0
         for end in ends:
             pts = list(range(start, end + 1))
@@ -150,12 +153,101 @@ def strip_pores(font):
             tv.coordinates = [tv.coordinates[i] for i in idx] + tv.coordinates[len(coords):]
 
 
+def drop_flat_points(font, tol=1.5):
+    """Drop the points the effect masters need but a pinned font does not: quads the densify
+    step split in two, off-curves that sit on the straight line between two on-curves,
+    on-curves on a straight line, and on-curves halfway between two off-curves.
+    A point goes only if that holds in every remaining master."""
+    glyf, gvar = font["glyf"], font.get("gvar")
+    for gname in font.getGlyphOrder():
+        glyph = glyf[gname]
+        if glyph.numberOfContours <= 0:
+            continue
+        coords, ends, flags = glyph.getCoordinates(glyf)
+        coords = [tuple(c) for c in coords]
+        n = len(coords)
+        tvs = gvar.variations.get(gname, []) if gvar else []
+        full = coords + [(0, 0)] * 4  # phantom points (unused by the tests)
+        for tv in tvs:
+            if None in tv.coordinates:
+                tv.calcInferredDeltas(full, list(ends))
+                tv.coordinates = [(round(x), round(y)) for x, y in tv.coordinates]
+        masters = [list(coords)] + [[(x + d[0], y + d[1]) for (x, y), d in zip(coords, tv.coordinates[:n])] for tv in tvs]
+        on = [bool(f & 1) for f in flags]
+
+        def flat(a, b, c):  # b lies on segment a-c in every master
+            for m in masters:
+                (ax, ay), (bx, by), (cx, cy) = m[a], m[b], m[c]
+                dx, dy = cx - ax, cy - ay
+                L = (dx * dx + dy * dy) ** 0.5
+                if L < 1e-6 or abs((bx - ax) * dy - (by - ay) * dx) / L > tol:
+                    return False
+                t = ((bx - ax) * dx + (by - ay) * dy) / (L * L)
+                if not -0.01 <= t <= 1.01:
+                    return False
+            return True
+
+        def mid(a, b, c):
+            return all(abs((m[a][0] + m[c][0]) / 2 - m[b][0]) <= tol and abs((m[a][1] + m[c][1]) / 2 - m[b][1]) <= tol for m in masters)
+
+        keep = [True] * n
+        start = 0
+        for end in ends:
+            idx = list(range(start, end + 1))
+            start = end + 1
+            for rule in ("merge", "offline", "online", "implied"):
+                changed = True
+                while changed:
+                    changed = False
+                    live = [i for i in idx if keep[i]]
+                    if len(live) <= 3:
+                        break
+                    for j, i in enumerate(live):
+                        p, q = live[j - 1], live[(j + 1) % len(live)]
+                        if rule == "offline" and not on[i] and on[p] and on[q] and flat(p, i, q):
+                            keep[i] = False; changed = True; break
+                        if rule == "online" and on[i] and on[p] and on[q] and flat(p, i, q):
+                            keep[i] = False; changed = True; break
+                        if rule == "merge" and len(live) > 5 and on[i] and not on[p] and not on[q]:
+                            a, b = live[j - 2], live[(j + 2) % len(live)]
+                            # a quad split in two by the densify step: put the original quad back
+                            if on[a] and on[b] and mid(p, i, q) and all(
+                                    abs((2 * m[p][0] - m[a][0]) - (2 * m[q][0] - m[b][0])) <= 4 * tol and
+                                    abs((2 * m[p][1] - m[a][1]) - (2 * m[q][1] - m[b][1])) <= 4 * tol for m in masters):
+                                for m in masters:
+                                    m[p] = (2 * m[p][0] - m[a][0], 2 * m[p][1] - m[a][1])
+                                keep[i] = keep[q] = False; changed = True; break
+                        if rule == "implied" and on[i] and not on[p] and not on[q] and mid(p, i, q):
+                            keep[i] = False; changed = True; break
+        if all(keep):
+            for tv in tvs:
+                tv.optimize(full, list(ends))
+            continue
+        idx = [i for i in range(n) if keep[i]]
+        ends2, k, start = [], 0, 0
+        for end in ends:
+            k += sum(keep[start:end + 1]); start = end + 1
+            ends2.append(k - 1)
+        coords = masters[0]
+        for tv, m in zip(tvs, masters[1:]):
+            tv.coordinates = [(round(mx - x), round(my - y)) for (x, y), (mx, my) in zip(coords, m)] + list(tv.coordinates[n:])
+        glyph.coordinates = GlyphCoordinates([coords[i] for i in idx])
+        glyph.flags = bytearray(flags[i] for i in idx)
+        glyph.endPtsOfContours = ends2
+        glyph.numberOfContours = len(ends2)
+        new = [coords[i] for i in idx]
+        for tv in tvs:
+            tv.coordinates = [(round(tv.coordinates[i][0]), round(tv.coordinates[i][1])) for i in idx] + list(tv.coordinates[n:])
+            tv.optimize(new + [(0, 0)] * 4, ends2)
+
+
 def woff2(src, dst, pin=None):
     """WOFF2 at 1000 UPM (about 15% smaller, no visible change at text sizes); `pin` fixes axes."""
     font = TTFont(src, lazy=False)
     if pin:
         font = reload(instancer.instantiateVariableFont(font, pin))
         strip_pores(font)
+        drop_flat_points(font)
     font = reload(font)
     opts = subset.Options()
     opts.layout_features = ["*"]
@@ -163,7 +255,7 @@ def woff2(src, dst, pin=None):
     opts.notdef_outline = True
     sub = subset.Subsetter(opts)
     sub.populate(unicodes=font.getBestCmap().keys())
-    sub.subset(font)  # drops glyphs nothing can reach any more, e.g. the Light Burn alternates
+    sub.subset(font)  # drops glyphs nothing can reach any more
     scale_upem(font, 1000)
     font.flavor = "woff2"
     dst.parent.mkdir(parents=True, exist_ok=True)
@@ -183,6 +275,7 @@ def build_statics(vf_path, italic, raw, rev):
     for wght, wname in WEIGHTS:
         font = instancer.instantiateVariableFont(
             TTFont(vf_path), {"wght": wght, "BURN": 0, "INKB": 0, "WORN": 0}, updateFontNames=False)
+        drop_flat_points(font)
         style = (wname if not italic else ("Italic" if wname == "Regular" else f"{wname} Italic"))
         psname = f"{PS_FAMILY}-{style.replace(' ', '')}"
         ribbi = wname == "Regular"

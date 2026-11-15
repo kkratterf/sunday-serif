@@ -5,16 +5,16 @@ Read this file before changing anything. If a rule here conflicts with an instru
 
 ## What this repo is
 
-Sunday Serif is an open source (OFL) text serif: "A soft serif for slow days. Free and open-source, with print effects on variable axes." One family, roman and italic, with four variable axes: weight (`wght` 400–600) and three effects, Light Burn (`BURN` −100…100), Ink Bleed (`INKB` 0…100) and Worn Print (`WORN` 0…100).
+Sunday Serif is an open source (OFL) text serif: "A soft serif for slow days. Free and open-source, with print effects on variable axes." One family, roman and italic, with four variable axes: weight (`wght` 400–600) and three effects, Light Burn (`BURN` 0…100), Ink Bleed (`INKB` 0…100) and Worn Print (`WORN` 0…100).
 
 | Path | What it is |
 | --- | --- |
-| `sources/SundaySerif.designspace`, `sources/SundaySerif-Italic.designspace` | Axes, masters, named instances (Regular/Medium/SemiBold) and the Light Burn rules (`rvrn` swaps to `.varAlt01/02` past +55/+65) |
-| `sources/Roman/`, `sources/Italic/` | UFO masters, 81 per style: for each weight (Regular, Medium, SemiBold), 21 Light Burn masters (−100…+100, step 10) plus Ink100 and Worn100 masters at Light Burn −100, 0 and +100 |
+| `sources/SundaySerif.designspace`, `sources/SundaySerif-Italic.designspace` | Axes, masters and named instances (Regular/Medium/SemiBold) |
+| `sources/Roman/`, `sources/Italic/` | UFO masters, 45 per style: for each weight (Regular, Medium, SemiBold), 11 Light Burn masters (0…100, step 10) plus Ink100 and Worn100 masters at Light Burn 0 and 100 |
 | `scripts/build.py` | The whole build: fontmake → post-processing (names, STAT, version, gasp/prep) → statics (pathops, effects at 0) → WOFF2 (a light text cut with only `wght`, and the full cut) |
 | `npm/`, `scripts/npm_package.py` | The `sunday-serif` npm package (webfonts, `text.css`/`fx.css`, `sunday-serif/next` for next/font). `make npm` assembles it in `build/npm`; never edit `version` in `npm/package.json`, it comes from `VERSION` |
 | `VERSION` | The release version (SemVer). The single source of truth for the font version |
-| `.github/readme/`, `scripts/readme_images.py` | README images. Re-render them (`uv run --with pillow --python .venv/bin/python python scripts/readme_images.py`, needs Chrome) in the PR that changes how the font looks |
+| `.github/readme/`, `scripts/readme_images.py` | README images. Re-render them (`.venv/bin/python scripts/readme_images.py`, needs Chrome; light and dark versions) in the PR that changes how the font looks |
 | `llms.txt` | Plain-text summary for LLMs: keep it in sync with README when names, axes, files or install steps change |
 | `site/` | The website (sunday-serif.kkratter.com), deployed to GitHub Pages by `.github/workflows/pages.yml` |
 | `OFL.txt`, `FONTLOG.txt`, `AUTHORS.txt`, `CONTRIBUTORS.txt` | License and font history, shipped inside every release zip |
@@ -44,11 +44,20 @@ Two virtualenvs on purpose: `.venv` (build, `requirements.txt`) and `.venv-qa` (
 
 ## How the sources work
 
-- Every weight has the same 27 master locations, and **all 81 masters of a style must stay point-compatible** (same glyphs, same contours, same point structure). fontmake fails the build otherwise.
+- Every weight has the same 15 master locations, and **all 45 masters of a style must stay point-compatible** (same glyphs, same contours, same point structure). fontmake fails the build otherwise.
 - The "pores" used by Worn Print are extra 8-point contours at the end of each glyph. Each weight has its own set, and every master carries the pores of all three weights: its own, plus the other weights' pores collapsed to a single point (invisible). Keep that order (base contours, Regular pores, Medium pores, SemiBold pores) when editing a glyph.
-- A design change to a glyph has to be made in every master where it shows. In practice: edit the Light Burn 0 master of each weight in Fontra (or another UFO editor), then check the extremes (−100, +100) and the effect masters with `make variable`.
-- New glyphs need: an outline in every master, the same pore structure (or no pores), a Unicode value, kerning groups when they relate to an existing letter, and a `.varAlt01` alternate plus a designspace rule if the base letter has one.
+- A design change to a glyph has to be made in every master where it shows. In practice: edit the Light Burn 0 master of each weight in Fontra (or another UFO editor), then check Light Burn 100 and the effect masters with `make variable`.
+- New glyphs need: an outline in every master, the same pore structure (or no pores), a Unicode value, and kerning groups when they relate to an existing letter.
 - Do not commit generated UFO instances, `.glyphs` exports or editor caches.
+
+## The website
+
+`site/` is sunday-serif.kkratter.com: plain HTML, CSS and JS, in English, with no framework and no build step. `.github/workflows/pages.yml` runs `make build`, then `scripts/site-build.sh`, and publishes `site/` to GitHub Pages on every push to `main` that touches the site, the sources or the build, and on every release.
+
+- The site's fonts are never committed (`site/.gitignore`). `scripts/site-build.sh` copies the web fonts from `fonts/webfonts/` into `site/fonts/` and regenerates `site/glyphs.js` from the character map. Preview: `make build && scripts/site-build.sh && python3 -m http.server -d site 8000`.
+- Weight budget: the first paint loads only the text build ("Sunday Serif", `SundaySerifText-*`). The FX build ("Sunday Serif FX") is loaded by `site.js` when the visitor reaches the tester or the effects, or picks an effect in the print menu. Keep it that way.
+- If a web font file name changes, update `scripts/site-build.sh`, the `@font-face` rules in `site/styles.css`, the preloads in `site/index.html` and the CSS examples on the page and in `site/llms.txt`.
+- Colours are Sunday's palette (paper `#F9F9F7`, ink `#131313`, text `#383835`, graphite `#191919` in dark), with no colour of its own. Check light, dark and a 390 px wide phone before opening a `site` PR.
 
 ## Rules for changes
 
