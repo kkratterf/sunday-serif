@@ -26,6 +26,11 @@ build: .venv/.ok
 variable: .venv/.ok
 	$(PY) scripts/build.py --only-variable
 
+# interpolation_issues is left out of the variable fonts on purpose: it matches every
+# contour of every master pairwise, and the Worn Print grain (a few hundred small holes per
+# glyph) makes that run for hours. It only ever WARNs, and fontmake already refuses masters
+# that are not point-compatible.
+#
 # Sunday Serif Grain, with three checks left out on purpose:
 # - regular_coords_correct fails on any font whose only axis is unregistered (GRAN):
 #   it looks for the Regular instance through wght/wdth/slnt/ital and finds none.
@@ -34,7 +39,8 @@ variable: .venv/.ok
 #   by scripts/grain_blur.py and overlap on purpose.
 test: .venv-qa/.ok
 	mkdir -p build/fontbakery
-	$(QA) check-universal fonts/variable/SundaySerif\[*.ttf fonts/variable/SundaySerif-Italic\[*.ttf -l FAIL --succinct --html build/fontbakery/variable.html
+	$(QA) check-universal fonts/variable/SundaySerif\[*.ttf fonts/variable/SundaySerif-Italic\[*.ttf -l FAIL --succinct --html build/fontbakery/variable.html \
+		-x interpolation_issues
 	$(QA) check-universal fonts/variable/SundaySerifGrain*.ttf -l FAIL --succinct --html build/fontbakery/grain.html \
 		-x opentype/fvar/regular_coords_correct -x overlapping_path_segments -x interpolation_issues
 	$(QA) check-universal fonts/ttf/*.ttf -l FAIL --succinct --html build/fontbakery/static.html

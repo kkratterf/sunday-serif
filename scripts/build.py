@@ -5,8 +5,8 @@ usage: python scripts/build.py [--only-variable]
   fonts/variable/  SundaySerif[BURN,INKB,WORN,wght].ttf, SundaySerif-Italic[...].ttf
   fonts/webfonts/  WOFF2 for the web, all at 1000 UPM:
                    SundaySerifText-*.woff2  weight axis only, effects at 0 (~55 KB): body text
-                   SundaySerif-*.woff2      all four axes (~1.3 MB): load only where effects show
-                   SundaySerifGrain-*.woff2  Sunday Serif Grain, the Grain Blur axis (~1 MB)
+                   SundaySerif-*.woff2      all four axes (~1.8 MB): load only where effects show
+                   SundaySerifGrain-*.woff2  Sunday Serif Grain, the Grain Blur axis (~1.5 MB)
   fonts/ttf/, fonts/otf/  static Regular, Medium, SemiBold and italics (effects at 0)
 
 Sunday Serif Grain (SundaySerifGrain[GRAN].ttf and its italic in fonts/variable/) is a separate
