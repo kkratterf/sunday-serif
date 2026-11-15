@@ -26,9 +26,14 @@ build: .venv/.ok
 variable: .venv/.ok
 	$(PY) scripts/build.py --only-variable
 
+# interpolation_issues is left out of the variable fonts on purpose: it matches every
+# contour of every master pairwise, and the Worn Print grain (a few hundred small holes per
+# glyph) makes that run for hours. It only ever WARNs, and fontmake already refuses masters
+# that are not point-compatible.
 test: .venv-qa/.ok
 	mkdir -p build/fontbakery
-	$(QA) check-universal fonts/variable/*.ttf -l FAIL --succinct --html build/fontbakery/variable.html
+	$(QA) check-universal fonts/variable/*.ttf -l FAIL --succinct --html build/fontbakery/variable.html \
+		-x interpolation_issues
 	$(QA) check-universal fonts/ttf/*.ttf -l FAIL --succinct --html build/fontbakery/static.html
 
 # The `sunday-serif` npm package in build/npm (after `make build`).
