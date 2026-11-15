@@ -241,6 +241,40 @@ def drop_flat_points(font, tol=1.5):
             tv.optimize(new + [(0, 0)] * 4, ends2)
 
 
+def scale_upem_keep_iup(font, upem):
+    """scale_upem with gvar deltas made explicit first, then IUP-optimised again at the new size.
+
+    Scaling optimised deltas rounds the default outline, so reference points that were a few
+    units apart can land on the same coordinate and IUP infers the skipped points differently:
+    at high Light Burn that drew thin cuts through the letters. Optimising after the scale keeps
+    every inferred delta consistent with the rounded outline."""
+    glyf, gvar = font["glyf"], font.get("gvar")
+
+    def outline(gname):
+        glyph = glyf[gname]
+        if glyph.numberOfContours <= 0:
+            return None, None
+        coords, ends, _ = glyph.getCoordinates(glyf)
+        return list(coords) + [(0, 0)] * 4, list(ends)
+
+    if gvar:
+        for gname, tvs in gvar.variations.items():
+            coords, ends = outline(gname)
+            if coords is None:
+                continue
+            for tv in tvs:
+                if None in tv.coordinates:
+                    tv.calcInferredDeltas(coords, ends)
+    scale_upem(font, upem)
+    if gvar:
+        for gname, tvs in gvar.variations.items():
+            coords, ends = outline(gname)
+            if coords is None:
+                continue
+            for tv in tvs:
+                tv.optimize(coords, ends)
+
+
 def woff2(src, dst, pin=None):
     """WOFF2 at 1000 UPM (about 15% smaller, no visible change at text sizes); `pin` fixes axes."""
     font = TTFont(src, lazy=False)
@@ -256,7 +290,7 @@ def woff2(src, dst, pin=None):
     sub = subset.Subsetter(opts)
     sub.populate(unicodes=font.getBestCmap().keys())
     sub.subset(font)  # drops glyphs nothing can reach any more
-    scale_upem(font, 1000)
+    scale_upem_keep_iup(font, 1000)
     font.flavor = "woff2"
     dst.parent.mkdir(parents=True, exist_ok=True)
     font.save(dst)
