@@ -4,13 +4,14 @@
 
 - Weight axis `wght` 400 to 600, with named instances Regular (400), Medium (500) and SemiBold (600). Italic is a separate file per build.
 - Effect axes: `BURN` Light Burn (0 to 100, default 0: towards 100 the ink floods the letters, like an overexposed print), `INKB` Ink Bleed (0 to 100), `WORN` Worn Print (0 to 100). At 0 the type is the clean print.
-- Two web builds, each roman + italic variable WOFF2:
+- Three web builds, each roman + italic variable WOFF2:
   - Text, family "Sunday Serif": SundaySerifText-Variable.woff2, SundaySerifText-Italic-Variable.woff2, about 55 KB each, `wght` only. Use it for text and preload it.
   - FX, family "Sunday Serif FX": SundaySerif-Variable.woff2, SundaySerif-Italic-Variable.woff2, about 1.8 MB each, all four axes. Load it only where effects show.
+  - Grain, family "Sunday Serif Grain": SundaySerifGrain-Variable.woff2, SundaySerifGrain-Italic-Variable.woff2, about 1.5 MB each, one axis `GRAN` Grain Blur (0 to 100). A display cut: a blur made of grain, a cloud of ink dots spreading from every edge towards 100. Regular weight only.
 - Desktop formats: OTF and TTF statics (Regular, Italic, Medium, Medium Italic, SemiBold, SemiBold Italic) and variable TTF, for Figma, Keynote, Word, InDesign.
 - Character set: Basic Latin, Latin-1 Supplement, Latin Extended-A (Western and Central European languages).
 - Downloads: one zip per release (SundaySerif-X.Y.Z.zip) with SHA256SUMS.txt. Sources (designspace and UFO) are in the repository.
-- npm: the `sunday-serif` package ships the web fonts, `text.css`, `fx.css` and `sunday-serif/next` for next/font.
+- npm: the `sunday-serif` package ships the web fonts, `text.css`, `fx.css`, `grain.css` and `sunday-serif/next` for next/font.
 
 ## CSS
 
@@ -37,6 +38,7 @@ body { font-family: "Sunday Serif", Georgia, serif; }
 - Ink Bleed (`INKB`): ink soaking into cheap paper. Towards 100 the letters swell into soft, organic shapes; counters stay open and letters never touch. The spacing stays the same at every value.
 - Worn Print (`WORN`): a tired press and a dry roller. Grain eats the edges, dust specks and starved patches open up where the ink did not reach, growing towards 100; spacing never changes.
 - The axes mix freely with each other and with every weight and the italic. Leave an axis out and it stays at 0.
+- Grain Blur (`GRAN`, family "Sunday Serif Grain"): a separate display cut, Regular and Italic. A blur made of grain: towards 100 a cloud of ink dots spreads out from every edge, dense near the letter and sparse further out, like a dithered photo. The spacing stays the same at every value; it does not mix with the other axes.
 
 ## Loading on the web
 

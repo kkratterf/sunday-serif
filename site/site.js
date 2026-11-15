@@ -70,6 +70,25 @@
     $$("[data-stage], #effects").forEach(function (el) { fxObserver.observe(el); });
   } else { loadFx(); }
 
+  // ---------- The Grain font: Sunday Serif Grain, the Grain Blur axis ----------
+  // Same idea: ~1.5 MB a style, loaded when the effects come into view, when the tester moves
+  // Grain Blur, or when the print menu picks it. Until then var(--grain) is the text font.
+  var grainState = 0;
+  function loadGrain() {
+    if (grainState || !document.fonts || !document.fonts.load) return;
+    grainState = 1;
+    Promise.all([
+      document.fonts.load('400 1em "Sunday Serif Grain"'),
+      document.fonts.load('italic 400 1em "Sunday Serif Grain"'),
+    ]).then(function () { grainState = 2; root.classList.add("grain-ready"); }, function () { grainState = 0; });
+  }
+  if ("IntersectionObserver" in window) {
+    var grainObserver = new IntersectionObserver(function (entries) {
+      if (entries.some(function (e) { return e.isIntersecting; })) { loadGrain(); grainObserver.disconnect(); }
+    }, { rootMargin: "0px" });
+    $$("#effects").forEach(function (el) { grainObserver.observe(el); });
+  } else { loadGrain(); }
+
   // ---------- Print menu: one effect for the whole page ----------
   // "Serif" is the clean print. The others set data-print on <html>; the CSS then sets every
   // text on the page, interface included, in Sunday Serif FX with that effect.
@@ -77,7 +96,7 @@
   var printMenu = $("[data-print-menu]");
   if (printBtn && printMenu) {
     var setPrint = function (v) {
-      if (v && v !== "serif") { loadFx(); root.dataset.print = v; } else { delete root.dataset.print; v = "serif"; }
+      if (v && v !== "serif") { if (v === "grain") loadGrain(); else loadFx(); root.dataset.print = v; } else { delete root.dataset.print; v = "serif"; }
       $$("input", printMenu).forEach(function (i) { i.checked = i.value === v; });
       try { if (v === "serif") localStorage.removeItem("print"); else localStorage.setItem("print", v); } catch (e) {}
     };
@@ -114,22 +133,30 @@
     var stage = $("[data-stage]", tester);
     var ctl = function (name) { return $('[data-ctl="' + name + '"]', tester); };
     var out = function (name) { return $('[data-out="' + name + '"]', tester); };
-    var state = { wght: 400, italic: false, invert: false, size: 96, burn: 0, inkb: 0, worn: 0 };
+    var state = { wght: 400, italic: false, invert: false, size: 96, burn: 0, inkb: 0, worn: 0, gran: 0 };
     var weightNames = { 400: "Regular", 500: "Medium", 600: "SemiBold" };
-    var EFFECTS = ["burn", "inkb", "worn"];
+    var EFFECTS = ["burn", "inkb", "worn", "gran"];
     var weightLabel = function (w) { return weightNames[w] ? weightNames[w] + " " + w : String(w); };
 
     function render() {
       sample.style.fontWeight = String(state.wght);
       sample.style.fontStyle = state.italic ? "italic" : "normal";
       sample.style.fontSize = state.size + "px";
-      sample.style.fontVariationSettings = '"BURN" ' + state.burn + ', "INKB" ' + state.inkb + ', "WORN" ' + state.worn;
+      // Grain Blur lives in its own family (Regular only): the weight waits at 400 meanwhile.
+      var grain = state.gran !== 0;
+      sample.style.fontFamily = grain ? "var(--grain)" : "";
+      sample.style.fontWeight = grain ? "400" : String(state.wght);
+      sample.style.fontSynthesis = grain ? "none" : "";
+      sample.style.fontVariationSettings = grain ? '"GRAN" ' + state.gran
+        : '"BURN" ' + state.burn + ', "INKB" ' + state.inkb + ', "WORN" ' + state.worn;
+      $("[data-weight-control]", tester).classList.toggle("is-off", grain);
       stage.classList.toggle("inverted", state.invert);
       out("wght").textContent = weightLabel(state.wght);
       out("size").textContent = state.size;
       out("burn").textContent = state.burn;
       out("inkb").textContent = state.inkb;
       out("worn").textContent = state.worn;
+      out("gran").textContent = state.gran;
       // One effect at a time: while one is off its base, the other two wait at theirs.
       var on = EFFECTS.filter(function (n) { return state[n] !== 0; })[0];
       EFFECTS.forEach(function (n) { ctl(n).closest(".control").classList.toggle("is-off", !!on && on !== n); });
@@ -138,7 +165,7 @@
     ["italic", "invert"].forEach(function (name) {
       ctl(name).addEventListener("change", function (e) { state[name] = e.target.checked; render(); });
     });
-    ["wght", "size", "burn", "inkb", "worn"].forEach(function (name) {
+    ["wght", "size", "burn", "inkb", "worn", "gran"].forEach(function (name) {
       ctl(name).addEventListener("input", function (e) {
         var v = Number(e.target.value);
         // The weight slider clicks into Regular, Medium and SemiBold when it passes close by.
@@ -146,6 +173,7 @@
         if (EFFECTS.indexOf(name) >= 0) {
           EFFECTS.forEach(function (o) { if (o !== name && state[o] !== 0) { state[o] = 0; ctl(o).value = 0; } });
         }
+        if (name === "gran") loadGrain();
         state[name] = v; render();
       });
     });
