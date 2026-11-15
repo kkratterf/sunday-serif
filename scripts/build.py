@@ -129,6 +129,7 @@ def strip_pores(font):
         for tv in variations:  # the instancer leaves IUP gaps: fill them so pores are recognised
             if None in tv.coordinates:
                 tv.calcInferredDeltas(list(coords) + [(0, 0)] * 4, list(ends))
+                tv.coordinates = [(round(x), round(y)) for x, y in tv.coordinates]
         keep, start = [], 0
         for end in ends:
             pts = list(range(start, end + 1))
@@ -170,6 +171,7 @@ def drop_flat_points(font, tol=1.5):
         for tv in tvs:
             if None in tv.coordinates:
                 tv.calcInferredDeltas(full, list(ends))
+                tv.coordinates = [(round(x), round(y)) for x, y in tv.coordinates]
         masters = [list(coords)] + [[(x + d[0], y + d[1]) for (x, y), d in zip(coords, tv.coordinates[:n])] for tv in tvs]
         on = [bool(f & 1) for f in flags]
 
@@ -228,7 +230,7 @@ def drop_flat_points(font, tol=1.5):
             ends2.append(k - 1)
         coords = masters[0]
         for tv, m in zip(tvs, masters[1:]):
-            tv.coordinates = [(mx - x, my - y) for (x, y), (mx, my) in zip(coords, m)] + list(tv.coordinates[n:])
+            tv.coordinates = [(round(mx - x), round(my - y)) for (x, y), (mx, my) in zip(coords, m)] + list(tv.coordinates[n:])
         glyph.coordinates = GlyphCoordinates([coords[i] for i in idx])
         glyph.flags = bytearray(flags[i] for i in idx)
         glyph.endPtsOfContours = ends2
