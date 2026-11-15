@@ -4,8 +4,8 @@ usage: python scripts/build.py [--only-variable]
 
   fonts/variable/  SundaySerif[BURN,INKB,WORN,wght].ttf, SundaySerif-Italic[...].ttf
   fonts/webfonts/  WOFF2 for the web, all at 1000 UPM:
-                   SundaySerifText-*.woff2  weight axis only, effects at 0 (~45 KB): body text
-                   SundaySerif-*.woff2      all four axes (~1 MB): load only where effects show
+                   SundaySerifText-*.woff2  weight axis only, effects at 0 (~55 KB): body text
+                   SundaySerif-*.woff2      all four axes (~1.3 MB): load only where effects show
   fonts/ttf/, fonts/otf/  static Regular, Medium, SemiBold and italics (effects at 0)
 
 The version comes from the VERSION file: SemVer X.Y.Z becomes font version X.YYZ
