@@ -134,7 +134,7 @@
     var ctl = function (name) { return $('[data-ctl="' + name + '"]', tester); };
     var out = function (name) { return $('[data-out="' + name + '"]', tester); };
     var state = { wght: 400, italic: false, invert: false, size: 96, burn: 0, inkb: 0, worn: 0, gran: 0 };
-    var weightNames = { 400: "Regular", 500: "Medium", 600: "SemiBold" };
+    var weightNames = { 400: "Regular", 500: "Medium", 600: "SemiBold", 700: "Bold" };
     var EFFECTS = ["burn", "inkb", "worn", "gran"];
     var weightLabel = function (w) { return weightNames[w] ? weightNames[w] + " " + w : String(w); };
 
@@ -168,8 +168,8 @@
     ["wght", "size", "burn", "inkb", "worn", "gran"].forEach(function (name) {
       ctl(name).addEventListener("input", function (e) {
         var v = Number(e.target.value);
-        // The weight slider clicks into Regular, Medium and SemiBold when it passes close by.
-        if (name === "wght") { [400, 500, 600].forEach(function (s) { if (Math.abs(v - s) <= 6) v = s; }); }
+        // The weight slider clicks into Regular, Medium, SemiBold and Bold when it passes close by.
+        if (name === "wght") { [400, 500, 600, 700].forEach(function (s) { if (Math.abs(v - s) <= 6) v = s; }); }
         if (EFFECTS.indexOf(name) >= 0) {
           EFFECTS.forEach(function (o) { if (o !== name && state[o] !== 0) { state[o] = 0; ctl(o).value = 0; } });
         }

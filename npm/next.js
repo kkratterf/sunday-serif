@@ -3,8 +3,8 @@ import localFont from "next/font/local";
 
 export const SundaySerif = localFont({
   src: [
-    { path: "./fonts/SundaySerifText-Variable.woff2", weight: "400 600", style: "normal" },
-    { path: "./fonts/SundaySerifText-Italic-Variable.woff2", weight: "400 600", style: "italic" },
+    { path: "./fonts/SundaySerifText-Variable.woff2", weight: "400 700", style: "normal" },
+    { path: "./fonts/SundaySerifText-Italic-Variable.woff2", weight: "400 700", style: "italic" },
   ],
   variable: "--font-sunday-serif",
   display: "swap",
@@ -15,8 +15,8 @@ export const SundaySerif = localFont({
 // Not preloaded: only pages that render text in this family download it.
 export const SundaySerifFX = localFont({
   src: [
-    { path: "./fonts/SundaySerif-Variable.woff2", weight: "400 600", style: "normal" },
-    { path: "./fonts/SundaySerif-Italic-Variable.woff2", weight: "400 600", style: "italic" },
+    { path: "./fonts/SundaySerif-Variable.woff2", weight: "400 700", style: "normal" },
+    { path: "./fonts/SundaySerif-Italic-Variable.woff2", weight: "400 700", style: "italic" },
   ],
   variable: "--font-sunday-serif-fx",
   display: "swap",

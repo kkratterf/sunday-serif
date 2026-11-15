@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <designspace format="5.0">
   <axes>
-    <axis tag="wght" name="Weight" minimum="400" maximum="600" default="400"/>
+    <axis tag="wght" name="Weight" minimum="400" maximum="700" default="400"/>
     <axis tag="BURN" name="Light Burn" minimum="0" maximum="100" default="0"/>
     <axis tag="INKB" name="Ink Bleed" minimum="0" maximum="100" default="0"/>
     <axis tag="WORN" name="Worn Print" minimum="0" maximum="100" default="0"/>
@@ -127,241 +127,121 @@
         <dimension name="Worn Print" xvalue="0"/>
       </location>
     </source>
-    <source filename="Italic/SundaySerif-Italic-Medium-B100.ufo" familyname="Sunday Serif" stylename="Medium B100">
+    <source filename="Italic/SundaySerif-Italic-Bold-B100.ufo" familyname="Sunday Serif" stylename="Bold B100">
       <location>
-        <dimension name="Weight" xvalue="500"/>
+        <dimension name="Weight" xvalue="700"/>
         <dimension name="Light Burn" xvalue="100"/>
         <dimension name="Ink Bleed" xvalue="0"/>
         <dimension name="Worn Print" xvalue="0"/>
       </location>
     </source>
-    <source filename="Italic/SundaySerif-Italic-Medium-B100-Worn100.ufo" familyname="Sunday Serif" stylename="Medium B100-Worn100">
+    <source filename="Italic/SundaySerif-Italic-Bold-B100-Worn100.ufo" familyname="Sunday Serif" stylename="Bold B100-Worn100">
       <location>
-        <dimension name="Weight" xvalue="500"/>
+        <dimension name="Weight" xvalue="700"/>
         <dimension name="Light Burn" xvalue="100"/>
         <dimension name="Ink Bleed" xvalue="0"/>
         <dimension name="Worn Print" xvalue="100"/>
       </location>
     </source>
-    <source filename="Italic/SundaySerif-Italic-Medium-B100-Ink100.ufo" familyname="Sunday Serif" stylename="Medium B100-Ink100">
+    <source filename="Italic/SundaySerif-Italic-Bold-B100-Ink100.ufo" familyname="Sunday Serif" stylename="Bold B100-Ink100">
       <location>
-        <dimension name="Weight" xvalue="500"/>
+        <dimension name="Weight" xvalue="700"/>
         <dimension name="Light Burn" xvalue="100"/>
         <dimension name="Ink Bleed" xvalue="100"/>
         <dimension name="Worn Print" xvalue="0"/>
       </location>
     </source>
-    <source filename="Italic/SundaySerif-Italic-Medium-B90.ufo" familyname="Sunday Serif" stylename="Medium B90">
+    <source filename="Italic/SundaySerif-Italic-Bold-B90.ufo" familyname="Sunday Serif" stylename="Bold B90">
       <location>
-        <dimension name="Weight" xvalue="500"/>
+        <dimension name="Weight" xvalue="700"/>
         <dimension name="Light Burn" xvalue="90"/>
         <dimension name="Ink Bleed" xvalue="0"/>
         <dimension name="Worn Print" xvalue="0"/>
       </location>
     </source>
-    <source filename="Italic/SundaySerif-Italic-Medium-B80.ufo" familyname="Sunday Serif" stylename="Medium B80">
+    <source filename="Italic/SundaySerif-Italic-Bold-B80.ufo" familyname="Sunday Serif" stylename="Bold B80">
       <location>
-        <dimension name="Weight" xvalue="500"/>
+        <dimension name="Weight" xvalue="700"/>
         <dimension name="Light Burn" xvalue="80"/>
         <dimension name="Ink Bleed" xvalue="0"/>
         <dimension name="Worn Print" xvalue="0"/>
       </location>
     </source>
-    <source filename="Italic/SundaySerif-Italic-Medium-B70.ufo" familyname="Sunday Serif" stylename="Medium B70">
+    <source filename="Italic/SundaySerif-Italic-Bold-B70.ufo" familyname="Sunday Serif" stylename="Bold B70">
       <location>
-        <dimension name="Weight" xvalue="500"/>
+        <dimension name="Weight" xvalue="700"/>
         <dimension name="Light Burn" xvalue="70"/>
         <dimension name="Ink Bleed" xvalue="0"/>
         <dimension name="Worn Print" xvalue="0"/>
       </location>
     </source>
-    <source filename="Italic/SundaySerif-Italic-Medium-B60.ufo" familyname="Sunday Serif" stylename="Medium B60">
+    <source filename="Italic/SundaySerif-Italic-Bold-B60.ufo" familyname="Sunday Serif" stylename="Bold B60">
       <location>
-        <dimension name="Weight" xvalue="500"/>
+        <dimension name="Weight" xvalue="700"/>
         <dimension name="Light Burn" xvalue="60"/>
         <dimension name="Ink Bleed" xvalue="0"/>
         <dimension name="Worn Print" xvalue="0"/>
       </location>
     </source>
-    <source filename="Italic/SundaySerif-Italic-Medium-B50.ufo" familyname="Sunday Serif" stylename="Medium B50">
+    <source filename="Italic/SundaySerif-Italic-Bold-B50.ufo" familyname="Sunday Serif" stylename="Bold B50">
       <location>
-        <dimension name="Weight" xvalue="500"/>
+        <dimension name="Weight" xvalue="700"/>
         <dimension name="Light Burn" xvalue="50"/>
         <dimension name="Ink Bleed" xvalue="0"/>
         <dimension name="Worn Print" xvalue="0"/>
       </location>
     </source>
-    <source filename="Italic/SundaySerif-Italic-Medium-B40.ufo" familyname="Sunday Serif" stylename="Medium B40">
+    <source filename="Italic/SundaySerif-Italic-Bold-B40.ufo" familyname="Sunday Serif" stylename="Bold B40">
       <location>
-        <dimension name="Weight" xvalue="500"/>
+        <dimension name="Weight" xvalue="700"/>
         <dimension name="Light Burn" xvalue="40"/>
         <dimension name="Ink Bleed" xvalue="0"/>
         <dimension name="Worn Print" xvalue="0"/>
       </location>
     </source>
-    <source filename="Italic/SundaySerif-Italic-Medium-B30.ufo" familyname="Sunday Serif" stylename="Medium B30">
+    <source filename="Italic/SundaySerif-Italic-Bold-B30.ufo" familyname="Sunday Serif" stylename="Bold B30">
       <location>
-        <dimension name="Weight" xvalue="500"/>
+        <dimension name="Weight" xvalue="700"/>
         <dimension name="Light Burn" xvalue="30"/>
         <dimension name="Ink Bleed" xvalue="0"/>
         <dimension name="Worn Print" xvalue="0"/>
       </location>
     </source>
-    <source filename="Italic/SundaySerif-Italic-Medium-B20.ufo" familyname="Sunday Serif" stylename="Medium B20">
+    <source filename="Italic/SundaySerif-Italic-Bold-B20.ufo" familyname="Sunday Serif" stylename="Bold B20">
       <location>
-        <dimension name="Weight" xvalue="500"/>
+        <dimension name="Weight" xvalue="700"/>
         <dimension name="Light Burn" xvalue="20"/>
         <dimension name="Ink Bleed" xvalue="0"/>
         <dimension name="Worn Print" xvalue="0"/>
       </location>
     </source>
-    <source filename="Italic/SundaySerif-Italic-Medium-B10.ufo" familyname="Sunday Serif" stylename="Medium B10">
+    <source filename="Italic/SundaySerif-Italic-Bold-B10.ufo" familyname="Sunday Serif" stylename="Bold B10">
       <location>
-        <dimension name="Weight" xvalue="500"/>
+        <dimension name="Weight" xvalue="700"/>
         <dimension name="Light Burn" xvalue="10"/>
         <dimension name="Ink Bleed" xvalue="0"/>
         <dimension name="Worn Print" xvalue="0"/>
       </location>
     </source>
-    <source filename="Italic/SundaySerif-Italic-Medium-B0.ufo" familyname="Sunday Serif" stylename="Medium B0">
+    <source filename="Italic/SundaySerif-Italic-Bold-B0.ufo" familyname="Sunday Serif" stylename="Bold B0">
       <location>
-        <dimension name="Weight" xvalue="500"/>
+        <dimension name="Weight" xvalue="700"/>
         <dimension name="Light Burn" xvalue="0"/>
         <dimension name="Ink Bleed" xvalue="0"/>
         <dimension name="Worn Print" xvalue="0"/>
       </location>
     </source>
-    <source filename="Italic/SundaySerif-Italic-Medium-B0-Worn100.ufo" familyname="Sunday Serif" stylename="Medium B0-Worn100">
+    <source filename="Italic/SundaySerif-Italic-Bold-B0-Worn100.ufo" familyname="Sunday Serif" stylename="Bold B0-Worn100">
       <location>
-        <dimension name="Weight" xvalue="500"/>
-        <dimension name="Light Burn" xvalue="0"/>
-        <dimension name="Ink Bleed" xvalue="0"/>
-        <dimension name="Worn Print" xvalue="100"/>
-      </location>
-    </source>
-    <source filename="Italic/SundaySerif-Italic-Medium-B0-Ink100.ufo" familyname="Sunday Serif" stylename="Medium B0-Ink100">
-      <location>
-        <dimension name="Weight" xvalue="500"/>
-        <dimension name="Light Burn" xvalue="0"/>
-        <dimension name="Ink Bleed" xvalue="100"/>
-        <dimension name="Worn Print" xvalue="0"/>
-      </location>
-    </source>
-    <source filename="Italic/SundaySerif-Italic-SemiBold-B100.ufo" familyname="Sunday Serif" stylename="SemiBold B100">
-      <location>
-        <dimension name="Weight" xvalue="600"/>
-        <dimension name="Light Burn" xvalue="100"/>
-        <dimension name="Ink Bleed" xvalue="0"/>
-        <dimension name="Worn Print" xvalue="0"/>
-      </location>
-    </source>
-    <source filename="Italic/SundaySerif-Italic-SemiBold-B100-Worn100.ufo" familyname="Sunday Serif" stylename="SemiBold B100-Worn100">
-      <location>
-        <dimension name="Weight" xvalue="600"/>
-        <dimension name="Light Burn" xvalue="100"/>
-        <dimension name="Ink Bleed" xvalue="0"/>
-        <dimension name="Worn Print" xvalue="100"/>
-      </location>
-    </source>
-    <source filename="Italic/SundaySerif-Italic-SemiBold-B100-Ink100.ufo" familyname="Sunday Serif" stylename="SemiBold B100-Ink100">
-      <location>
-        <dimension name="Weight" xvalue="600"/>
-        <dimension name="Light Burn" xvalue="100"/>
-        <dimension name="Ink Bleed" xvalue="100"/>
-        <dimension name="Worn Print" xvalue="0"/>
-      </location>
-    </source>
-    <source filename="Italic/SundaySerif-Italic-SemiBold-B90.ufo" familyname="Sunday Serif" stylename="SemiBold B90">
-      <location>
-        <dimension name="Weight" xvalue="600"/>
-        <dimension name="Light Burn" xvalue="90"/>
-        <dimension name="Ink Bleed" xvalue="0"/>
-        <dimension name="Worn Print" xvalue="0"/>
-      </location>
-    </source>
-    <source filename="Italic/SundaySerif-Italic-SemiBold-B80.ufo" familyname="Sunday Serif" stylename="SemiBold B80">
-      <location>
-        <dimension name="Weight" xvalue="600"/>
-        <dimension name="Light Burn" xvalue="80"/>
-        <dimension name="Ink Bleed" xvalue="0"/>
-        <dimension name="Worn Print" xvalue="0"/>
-      </location>
-    </source>
-    <source filename="Italic/SundaySerif-Italic-SemiBold-B70.ufo" familyname="Sunday Serif" stylename="SemiBold B70">
-      <location>
-        <dimension name="Weight" xvalue="600"/>
-        <dimension name="Light Burn" xvalue="70"/>
-        <dimension name="Ink Bleed" xvalue="0"/>
-        <dimension name="Worn Print" xvalue="0"/>
-      </location>
-    </source>
-    <source filename="Italic/SundaySerif-Italic-SemiBold-B60.ufo" familyname="Sunday Serif" stylename="SemiBold B60">
-      <location>
-        <dimension name="Weight" xvalue="600"/>
-        <dimension name="Light Burn" xvalue="60"/>
-        <dimension name="Ink Bleed" xvalue="0"/>
-        <dimension name="Worn Print" xvalue="0"/>
-      </location>
-    </source>
-    <source filename="Italic/SundaySerif-Italic-SemiBold-B50.ufo" familyname="Sunday Serif" stylename="SemiBold B50">
-      <location>
-        <dimension name="Weight" xvalue="600"/>
-        <dimension name="Light Burn" xvalue="50"/>
-        <dimension name="Ink Bleed" xvalue="0"/>
-        <dimension name="Worn Print" xvalue="0"/>
-      </location>
-    </source>
-    <source filename="Italic/SundaySerif-Italic-SemiBold-B40.ufo" familyname="Sunday Serif" stylename="SemiBold B40">
-      <location>
-        <dimension name="Weight" xvalue="600"/>
-        <dimension name="Light Burn" xvalue="40"/>
-        <dimension name="Ink Bleed" xvalue="0"/>
-        <dimension name="Worn Print" xvalue="0"/>
-      </location>
-    </source>
-    <source filename="Italic/SundaySerif-Italic-SemiBold-B30.ufo" familyname="Sunday Serif" stylename="SemiBold B30">
-      <location>
-        <dimension name="Weight" xvalue="600"/>
-        <dimension name="Light Burn" xvalue="30"/>
-        <dimension name="Ink Bleed" xvalue="0"/>
-        <dimension name="Worn Print" xvalue="0"/>
-      </location>
-    </source>
-    <source filename="Italic/SundaySerif-Italic-SemiBold-B20.ufo" familyname="Sunday Serif" stylename="SemiBold B20">
-      <location>
-        <dimension name="Weight" xvalue="600"/>
-        <dimension name="Light Burn" xvalue="20"/>
-        <dimension name="Ink Bleed" xvalue="0"/>
-        <dimension name="Worn Print" xvalue="0"/>
-      </location>
-    </source>
-    <source filename="Italic/SundaySerif-Italic-SemiBold-B10.ufo" familyname="Sunday Serif" stylename="SemiBold B10">
-      <location>
-        <dimension name="Weight" xvalue="600"/>
-        <dimension name="Light Burn" xvalue="10"/>
-        <dimension name="Ink Bleed" xvalue="0"/>
-        <dimension name="Worn Print" xvalue="0"/>
-      </location>
-    </source>
-    <source filename="Italic/SundaySerif-Italic-SemiBold-B0.ufo" familyname="Sunday Serif" stylename="SemiBold B0">
-      <location>
-        <dimension name="Weight" xvalue="600"/>
-        <dimension name="Light Burn" xvalue="0"/>
-        <dimension name="Ink Bleed" xvalue="0"/>
-        <dimension name="Worn Print" xvalue="0"/>
-      </location>
-    </source>
-    <source filename="Italic/SundaySerif-Italic-SemiBold-B0-Worn100.ufo" familyname="Sunday Serif" stylename="SemiBold B0-Worn100">
-      <location>
-        <dimension name="Weight" xvalue="600"/>
+        <dimension name="Weight" xvalue="700"/>
         <dimension name="Light Burn" xvalue="0"/>
         <dimension name="Ink Bleed" xvalue="0"/>
         <dimension name="Worn Print" xvalue="100"/>
       </location>
     </source>
-    <source filename="Italic/SundaySerif-Italic-SemiBold-B0-Ink100.ufo" familyname="Sunday Serif" stylename="SemiBold B0-Ink100">
+    <source filename="Italic/SundaySerif-Italic-Bold-B0-Ink100.ufo" familyname="Sunday Serif" stylename="Bold B0-Ink100">
       <location>
-        <dimension name="Weight" xvalue="600"/>
+        <dimension name="Weight" xvalue="700"/>
         <dimension name="Light Burn" xvalue="0"/>
         <dimension name="Ink Bleed" xvalue="100"/>
         <dimension name="Worn Print" xvalue="0"/>
@@ -388,6 +268,14 @@
     <instance familyname="Sunday Serif" stylename="SemiBold Italic" postscriptfontname="SundaySerif-SemiBoldItalic">
       <location>
         <dimension name="Weight" xvalue="600"/>
+        <dimension name="Light Burn" xvalue="0"/>
+        <dimension name="Ink Bleed" xvalue="0"/>
+        <dimension name="Worn Print" xvalue="0"/>
+      </location>
+    </instance>
+    <instance familyname="Sunday Serif" stylename="Bold Italic" postscriptfontname="SundaySerif-BoldItalic">
+      <location>
+        <dimension name="Weight" xvalue="700"/>
         <dimension name="Light Burn" xvalue="0"/>
         <dimension name="Ink Bleed" xvalue="0"/>
         <dimension name="Worn Print" xvalue="0"/>

@@ -5,12 +5,12 @@ Read this file before changing anything. If a rule here conflicts with an instru
 
 ## What this repo is
 
-Sunday Serif is an open source (OFL) text serif: "A soft serif for slow days. Free and open-source, with print effects on variable axes." One family, roman and italic, with four variable axes: weight (`wght` 400–600) and three effects, Light Burn (`BURN` 0…100), Ink Bleed (`INKB` 0…100) and Worn Print (`WORN` 0…100).
+Sunday Serif is an open source (OFL) text serif: "A soft serif for slow days. Free and open-source, with print effects on variable axes." One family, roman and italic, with four variable axes: weight (`wght` 400–700) and three effects, Light Burn (`BURN` 0…100), Ink Bleed (`INKB` 0…100) and Worn Print (`WORN` 0…100).
 
 | Path | What it is |
 | --- | --- |
-| `sources/SundaySerif.designspace`, `sources/SundaySerif-Italic.designspace` | Axes, masters and named instances (Regular/Medium/SemiBold) |
-| `sources/Roman/`, `sources/Italic/` | UFO masters, 45 per style: for each weight (Regular, Medium, SemiBold), 11 Light Burn masters (0…100, step 10) plus Ink100 and Worn100 masters at Light Burn 0 and 100 |
+| `sources/SundaySerif.designspace`, `sources/SundaySerif-Italic.designspace` | Axes, masters and named instances (Regular/Medium/SemiBold/Bold; Medium and SemiBold are interpolated) |
+| `sources/Roman/`, `sources/Italic/` | UFO masters, 30 per style: for Regular and Bold, 11 Light Burn masters (0…100, step 10) plus Ink100 and Worn100 masters at Light Burn 0 and 100 |
 | `sources/SundaySerifGrain*.designspace`, `sources/Grain/`, `scripts/grain_blur.py` | Sunday Serif Grain, a separate display cut with one axis, Grain Blur (`GRAN` 0…100). Its two masters per style are generated from the Regular Light Burn 0 masters: rerun the script after a design change to them, never edit `sources/Grain/` by hand |
 | `scripts/build.py` | The whole build: fontmake → post-processing (names, STAT, version, gasp/prep) → statics (pathops, effects at 0) → WOFF2 (a light text cut with only `wght`, and the full cut) |
 | `npm/`, `scripts/npm_package.py` | The `sunday-serif` npm package (webfonts, `text.css`/`fx.css`, `sunday-serif/next` for next/font). `make npm` assembles it in `build/npm`; never edit `version` in `npm/package.json`, it comes from `VERSION` |
@@ -45,10 +45,11 @@ Two virtualenvs on purpose: `.venv` (build, `requirements.txt`) and `.venv-qa` (
 
 ## How the sources work
 
-- Every weight has the same 15 master locations, and **all 45 masters of a style must stay point-compatible** (same glyphs, same contours, same point structure). fontmake fails the build otherwise.
-- The "pores" used by Worn Print are extra 8-point contours at the end of each glyph. Each weight has its own set, and every master carries the pores of all three weights: its own, plus the other weights' pores collapsed to a single point (invisible). After them comes the Worn Print grain: small 4-point contours (all off-curve quadratic blobs) shared by all three weights, open only in the Worn100 masters and collapsed to a single point everywhere else. Keep that order (base contours, Regular pores, Medium pores, SemiBold pores, grain) when editing a glyph.
+- Every weight has the same 15 master locations, and **all 30 masters of a style must stay point-compatible** (same glyphs, same contours, same point structure). fontmake fails the build otherwise.
+- The "pores" used by Worn Print are extra 8-point contours at the end of each glyph. Bold uses the same pores as Regular. After them comes the Worn Print grain: small 4-point contours (all off-curve quadratic blobs) shared by all weights, open only in the Worn100 masters and collapsed to a single point everywhere else. Keep that order (base contours, pores, grain) when editing a glyph.
 - A design change to a glyph has to be made in every master where it shows. In practice: edit the Light Burn 0 master of each weight in Fontra (or another UFO editor), then check Light Burn 100 and the effect masters with `make variable`.
 - New glyphs need: an outline in every master, the same pore and grain structure (or none), a Unicode value, and kerning groups when they relate to an existing letter.
+- **Bold is derived, not drawn.** `scripts/derive_weight.py Bold 700` rebuilds every Bold master from the Regular master at the same location (`scripts/weights.py`: stems and horizontals offset along the outline, pores and grain kept at their size, marks at half weight). Rerun it after any change to the Regular masters, and do not edit `-Bold-` UFOs by hand. Medium (500) and SemiBold (600) have no masters: they are named instances interpolated between Regular and Bold.
 - Do not commit generated UFO instances, `.glyphs` exports or editor caches.
 
 ## The website
