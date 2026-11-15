@@ -28,6 +28,8 @@ def css(t):
     return f"""<!doctype html><html><head><meta charset="utf-8"><style>
 @font-face {{ font-family: S; src: url("{VF}/SundaySerif%5BBURN,INKB,WORN,wght%5D.ttf"); font-weight: 400 600; }}
 @font-face {{ font-family: S; src: url("{VF}/SundaySerif-Italic%5BBURN,INKB,WORN,wght%5D.ttf"); font-weight: 400 600; font-style: italic; }}
+@font-face {{ font-family: G; src: url("{VF}/SundaySerifGrain%5BGRAN%5D.ttf"); }}
+@font-face {{ font-family: G; src: url("{VF}/SundaySerifGrain-Italic%5BGRAN%5D.ttf"); font-style: italic; }}
 * {{ box-sizing: border-box; margin: 0; padding: 0; }}
 html, body {{ background: {t['paper']}; color: {t['ink']}; overflow: hidden; }}
 body {{ font-family: S; font-kerning: normal; -webkit-font-smoothing: antialiased; width: {WIDTH}px; }}
@@ -36,6 +38,7 @@ body {{ font-family: S; font-kerning: normal; -webkit-font-smoothing: antialiase
 .note {{ font-size: 21px; font-style: italic; color: {t['muted']}; }}
 .rule {{ border-top: 1px solid {t['rule']}; }}
 .fx {{ font-variation-settings: "BURN" var(--b, 0), "INKB" var(--i, 0), "WORN" var(--w, 0); }}
+.gr {{ font-family: G; font-variation-settings: "GRAN" var(--g, 0); }}
 </style></head><body>"""
 
 
@@ -58,7 +61,8 @@ def ramp(text, var, lo, hi):
             out.append(" ")
             continue
         v = lo + (hi - lo) * k / n
-        out.append(f'<span class="fx" style="--{var}:{v:.0f}">{c}</span>')
+        cls = "gr" if var == "g" else "fx"
+        out.append(f'<span class="{cls}" style="--{var}:{v:.0f}">{c}</span>')
         k += 1
     return "".join(out)
 
@@ -97,6 +101,16 @@ def effects(t):
     return 0, f'<div class="page">{body}<div class="rule"></div></div>'
 
 
+def grain(t):
+    return 0, f"""<div class="page"><div class="rule" style="padding:26px 0 34px">
+<div style="display:flex;justify-content:space-between;align-items:baseline">
+  <span class="cap">Sunday Serif Grain · GRAN &nbsp;0 → 100</span><span class="note">a blur made of grain</span>
+</div>
+<div style="font-size:150px;line-height:1.1;letter-spacing:-.02em;margin-top:8px">{ramp("Grain Blur", "g", 0, 100)}</div>
+<div style="font-size:64px;line-height:1.2;margin-top:18px"><span class="gr" style="--g:100">Every week, <i>your friends only.</i></span></div>
+</div><div class="rule"></div></div>"""
+
+
 def weights(t):
     cols = ""
     for w, name in ((400, "Regular"), (500, "Medium"), (600, "SemiBold")):
@@ -131,7 +145,7 @@ def glyphs(t):
 <div style="display:grid;grid-template-columns:repeat({cols},1fr);border-top:1px solid {t['rule']};border-left:1px solid {t['rule']}">{cells}</div></div>"""
 
 
-HEIGHTS = {"effects": 800, "weights": 380, "text": 380}
+HEIGHTS = {"effects": 800, "grain": 470, "weights": 380, "text": 380}
 
 
 def main():
@@ -144,7 +158,7 @@ def main():
     shutil.rmtree(OUT, ignore_errors=True)
     OUT.mkdir(parents=True)
     for theme, t in THEMES.items():
-        for name, fn in (("banner", banner), ("effects", effects), ("weights", weights),
+        for name, fn in (("banner", banner), ("effects", effects), ("grain", grain), ("weights", weights),
                          ("text", text), ("glyphs", glyphs)):
             h, body = fn(t)
             if name == "glyphs":

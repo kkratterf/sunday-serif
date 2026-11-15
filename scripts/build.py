@@ -6,7 +6,11 @@ usage: python scripts/build.py [--only-variable]
   fonts/webfonts/  WOFF2 for the web, all at 1000 UPM:
                    SundaySerifText-*.woff2  weight axis only, effects at 0 (~55 KB): body text
                    SundaySerif-*.woff2      all four axes (~1.3 MB): load only where effects show
+                   SundaySerifGrain-*.woff2  Sunday Serif Grain, the Grain Blur axis (~1 MB)
   fonts/ttf/, fonts/otf/  static Regular, Medium, SemiBold and italics (effects at 0)
+
+Sunday Serif Grain (SundaySerifGrain[GRAN].ttf and its italic in fonts/variable/) is a separate
+display cut with one axis, Grain Blur. Its masters come from scripts/grain_blur.py.
 
 The version comes from the VERSION file: SemVer X.Y.Z becomes font version X.YYZ
 (v0.1.0 -> 0.010, v0.12.3 -> 0.123, v1.0.0 -> 1.000).
@@ -44,6 +48,12 @@ WEIGHTS = [(400, "Regular"), (500, "Medium"), (600, "SemiBold")]
 STYLES = [  # (designspace, italic)
     ("SundaySerif.designspace", False),
     ("SundaySerif-Italic.designspace", True),
+]
+GRAIN_FAMILY = "Sunday Serif Grain"
+GRAIN_PS = "SundaySerifGrain"
+GRAIN_STYLES = [
+    ("SundaySerifGrain.designspace", False),
+    ("SundaySerifGrain-Italic.designspace", True),
 ]
 
 
@@ -89,6 +99,34 @@ def stat(font, italic):
              else [dict(value=0, name="Roman", flags=2, linkedValue=1)]),
     ]
     buildStatTable(font, axes, elidedFallbackName=2)
+
+
+def grain_stat(font, italic):
+    axes = [
+        dict(tag="GRAN", name="Grain Blur", values=[dict(value=0, name="Normal", flags=2)]),
+        dict(tag="ital", name="Italic", values=[dict(value=1, name="Italic")] if italic
+             else [dict(value=0, name="Roman", flags=2, linkedValue=1)]),
+    ]
+    buildStatTable(font, axes, elidedFallbackName=2)
+
+
+def build_grain(ds, italic, raw, rev):
+    """Sunday Serif Grain: one Grain Blur axis, Regular and Italic."""
+    BUILD.mkdir(exist_ok=True)
+    raw_path = BUILD / ds.replace(".designspace", ".ttf")
+    subprocess.run([sys.executable, "-m", "fontmake", "-m", str(SOURCES / ds), "-o", "variable",
+                    "--flatten-components", "--output-path", str(raw_path)], check=True)
+    font = TTFont(raw_path)
+    stem = GRAIN_PS + ("-Italic" if italic else "")
+    font["name"].setName(GRAIN_PS + ("Italic" if italic else ""), 25, 3, 1, 0x409)
+    set_version(font, raw, rev, stem if italic else f"{GRAIN_PS}-Regular")
+    grain_stat(font, italic)
+    smart_dropout(font)
+    font["name"].removeNames(platformID=1)
+    out = FONTS / "variable" / f"{stem}[GRAN].ttf"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    font.save(out)
+    return out
 
 
 def build_variable(ds, italic, raw, rev):
@@ -357,6 +395,9 @@ def main():
         if args.only_variable:
             continue
         build_statics(vf, italic, raw, rev)
+    for ds, italic in GRAIN_STYLES:
+        vf = build_grain(ds, italic, raw, rev)
+        woff2(vf, web / f"{GRAIN_PS}{'-Italic' if italic else ''}-Variable.woff2")
     print("done:", ", ".join(sorted(str(p.relative_to(ROOT)) for p in FONTS.rglob("*.*"))))
 
 

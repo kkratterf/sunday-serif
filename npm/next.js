@@ -24,3 +24,16 @@ export const SundaySerifFX = localFont({
   fallback: ["Georgia", "serif"],
   adjustFontFallback: "Times New Roman",
 });
+
+// Display cut with the Grain Blur axis (GRAN), not preloaded.
+export const SundaySerifGrain = localFont({
+  src: [
+    { path: "./fonts/SundaySerifGrain-Variable.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/SundaySerifGrain-Italic-Variable.woff2", weight: "400", style: "italic" },
+  ],
+  variable: "--font-sunday-serif-grain",
+  display: "swap",
+  preload: false,
+  fallback: ["Georgia", "serif"],
+  adjustFontFallback: "Times New Roman",
+});
