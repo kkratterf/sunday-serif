@@ -6,10 +6,10 @@
    "Sunday Serif" is the light text build (wght only, ~55 KB a style), preloaded and used everywhere.
    "Sunday Serif FX" is the full build with the effect axes (~1.8 MB a style): site.js loads it only
    when the visitor reaches something that moves an effect, then sets .fx-ready on <html>. */
-@font-face { font-family: "Sunday Serif"; src: url("fonts/SundaySerifText-Variable.woff2") format("woff2"); font-weight: 400 600; font-style: normal; font-display: swap; }
-@font-face { font-family: "Sunday Serif"; src: url("fonts/SundaySerifText-Italic-Variable.woff2") format("woff2"); font-weight: 400 600; font-style: italic; font-display: swap; }
-@font-face { font-family: "Sunday Serif FX"; src: url("fonts/SundaySerif-Variable.woff2") format("woff2"); font-weight: 400 600; font-style: normal; font-display: swap; }
-@font-face { font-family: "Sunday Serif FX"; src: url("fonts/SundaySerif-Italic-Variable.woff2") format("woff2"); font-weight: 400 600; font-style: italic; font-display: swap; }
+@font-face { font-family: "Sunday Serif"; src: url("fonts/SundaySerifText-Variable.woff2") format("woff2"); font-weight: 400 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Sunday Serif"; src: url("fonts/SundaySerifText-Italic-Variable.woff2") format("woff2"); font-weight: 400 700; font-style: italic; font-display: swap; }
+@font-face { font-family: "Sunday Serif FX"; src: url("fonts/SundaySerif-Variable.woff2") format("woff2"); font-weight: 400 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Sunday Serif FX"; src: url("fonts/SundaySerif-Italic-Variable.woff2") format("woff2"); font-weight: 400 700; font-style: italic; font-display: swap; }
 /* "Sunday Serif Grain" is the display cut with the Grain Blur axis (~1.5 MB a style): loaded the same
    way, when the visitor reaches the effects or moves Grain Blur, then .grain-ready is set. */
 @font-face { font-family: "Sunday Serif Grain"; src: url("fonts/SundaySerifGrain-Variable.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }

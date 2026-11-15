@@ -14,7 +14,7 @@
 
 **A soft serif for slow days.** Free and open-source, with print effects on variable axes.
 
-The webfonts of Sunday Serif, with ready `@font-face` rules and `next/font` objects. A text face in roman and italic, from Regular to SemiBold, with three axes borrowed from the print shop: exposure, ink and wear.
+The webfonts of Sunday Serif, with ready `@font-face` rules and `next/font` objects. A text face in roman and italic, from Regular to Bold, with three axes borrowed from the print shop: exposure, ink and wear.
 
 ```bash
 pnpm add sunday-serif
@@ -26,7 +26,7 @@ pnpm add sunday-serif
 
 | Axis | Tag | Range | |
 | --- | --- | --- | --- |
-| Weight | `wght` | 400 to 600, default 400 | Regular, Medium, SemiBold and everything between. |
+| Weight | `wght` | 400 to 700, default 400 | Regular, Medium, SemiBold, Bold and everything between. |
 | Light Burn | `BURN` | 0 to 100, default 0 | Overexposure. The ink spreads until the counters fill in. |
 | Ink Bleed | `INKB` | 0 to 100, default 0 | Ink spreading into the paper. Rounder forms, slightly tighter spacing. |
 | Worn Print | `WORN` | 0 to 100, default 0 | The wear of an old press: grain at the edges, dust, starved patches. |

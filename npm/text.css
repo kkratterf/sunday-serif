@@ -1,15 +1,15 @@
-/* Sunday Serif, text cut: weight 400-600 only, effects at their default (~45 KB per style). */
+/* Sunday Serif, text cut: weight 400-700 only, effects at their default (~45 KB per style). */
 @font-face {
   font-family: "Sunday Serif";
   src: url("./fonts/SundaySerifText-Variable.woff2") format("woff2");
-  font-weight: 400 600;
+  font-weight: 400 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Sunday Serif";
   src: url("./fonts/SundaySerifText-Italic-Variable.woff2") format("woff2");
-  font-weight: 400 600;
+  font-weight: 400 700;
   font-style: italic;
   font-display: swap;
 }

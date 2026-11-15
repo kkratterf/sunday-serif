@@ -7,7 +7,7 @@ usage: python scripts/build.py [--only-variable]
                    SundaySerifText-*.woff2  weight axis only, effects at 0 (~55 KB): body text
                    SundaySerif-*.woff2      all four axes (~1.8 MB): load only where effects show
                    SundaySerifGrain-*.woff2  Sunday Serif Grain, the Grain Blur axis (~1.5 MB)
-  fonts/ttf/, fonts/otf/  static Regular, Medium, SemiBold and italics (effects at 0)
+  fonts/ttf/, fonts/otf/  static Regular, Medium, SemiBold, Bold and italics (effects at 0)
 
 Sunday Serif Grain (SundaySerifGrain[GRAN].ttf and its italic in fonts/variable/) is a separate
 display cut with one axis, Grain Blur. Its masters come from scripts/grain_blur.py.
@@ -44,7 +44,7 @@ FONTS = ROOT / "fonts"
 FAMILY = "Sunday Serif"
 PS_FAMILY = "SundaySerif"
 AXES = "[BURN,INKB,WORN,wght]"
-WEIGHTS = [(400, "Regular"), (500, "Medium"), (600, "SemiBold")]
+WEIGHTS = [(400, "Regular"), (500, "Medium"), (600, "SemiBold"), (700, "Bold")]
 STYLES = [  # (designspace, italic)
     ("SundaySerif.designspace", False),
     ("SundaySerif-Italic.designspace", True),
@@ -89,6 +89,7 @@ def stat(font, italic):
             dict(value=400, name="Regular", flags=2, linkedValue=700),
             dict(value=500, name="Medium"),
             dict(value=600, name="SemiBold"),
+            dict(value=700, name="Bold"),
         ]),
         # Effect axes name only their default: with more entries Windows builds style
         # names longer than 32 characters (there are no named instances for them anyway).
@@ -350,13 +351,17 @@ def build_statics(vf_path, italic, raw, rev):
         drop_flat_points(font)
         style = (wname if not italic else ("Italic" if wname == "Regular" else f"{wname} Italic"))
         psname = f"{PS_FAMILY}-{style.replace(' ', '')}"
-        ribbi = wname == "Regular"
+        # Regular and Bold (and their italics) share one family name and style-link.
+        bold = wname == "Bold"
+        ribbi = wname in ("Regular", "Bold")
         fam = FAMILY if ribbi else f"{FAMILY} {wname}"
         name = font["name"]
         for nid in (1, 2, 3, 4, 6, 16, 17, 25):
             name.removeNames(nameID=nid)
         name.setName(fam, 1, 3, 1, 0x409)
-        name.setName("Italic" if italic else "Regular", 2, 3, 1, 0x409)
+        subfamily = {(False, False): "Regular", (False, True): "Italic",
+                     (True, False): "Bold", (True, True): "Bold Italic"}[(bold, italic)]
+        name.setName(subfamily, 2, 3, 1, 0x409)
         name.setName(f"{FAMILY} {style}", 4, 3, 1, 0x409)
         name.setName(psname, 6, 3, 1, 0x409)
         if not ribbi:
@@ -367,8 +372,8 @@ def build_statics(vf_path, italic, raw, rev):
         os2 = font["OS/2"]
         os2.usWeightClass = wght
         sel = os2.fsSelection & ~(1 | 32 | 64)
-        os2.fsSelection = sel | (1 if italic else 0) | (64 if not italic else 0)
-        font["head"].macStyle = 2 if italic else 0
+        os2.fsSelection = sel | (1 if italic else 0) | (32 if bold else 0) | (64 if not (italic or bold) else 0)
+        font["head"].macStyle = (2 if italic else 0) | (1 if bold else 0)
         order = font.getGlyphOrder()
         glyphset = font.getGlyphSet()
         paths = {g: clean_path(glyphset, g) for g in order}

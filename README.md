@@ -19,7 +19,7 @@
 
 **A soft serif for slow days.** Free and open-source, with print effects on variable axes.
 
-A text face in roman and italic, from Regular to SemiBold. Three further axes borrow from the print shop: exposure, ink and wear. Set them once for a look, or move them with a line of CSS.
+A text face in roman and italic, from Regular to Bold. Three further axes borrow from the print shop: exposure, ink and wear. Set them once for a look, or move them with a line of CSS.
 
 ```bash
 pnpm add sunday-serif
@@ -57,10 +57,10 @@ The axes combine with one another and with weight, in both styles.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset=".github/readme/weights-dark.png">
-  <img src=".github/readme/weights-light.png" alt="Regular 400, Medium 500 and SemiBold 600" width="100%">
+  <img src=".github/readme/weights-light.png" alt="Regular 400, Medium 500, SemiBold 600 and Bold 700" width="100%">
 </picture>
 
-A continuous `wght` axis from 400 to 600, with named instances at Regular, Medium and SemiBold.
+A continuous `wght` axis from 400 to 700, with named instances at Regular, Medium, SemiBold and Bold.
 
 ## In use
 
@@ -85,7 +85,7 @@ Each release ships `SundaySerif-X.Y.Z.zip`:
 | Folder | Contents | For |
 | --- | --- | --- |
 | `variable/` | `SundaySerif[BURN,INKB,WORN,wght].ttf`, `SundaySerif-Italic[…].ttf`; `SundaySerifGrain[GRAN].ttf`, `SundaySerifGrain-Italic[GRAN].ttf` | Design apps, the desktop |
-| `otf/`, `ttf/` | Regular, Medium, SemiBold and italics, effects at 0 | Apps without variable fonts, mobile |
+| `otf/`, `ttf/` | Regular, Medium, SemiBold, Bold and italics, effects at 0 | Apps without variable fonts, mobile |
 | `webfonts/` | `SundaySerifText-*` (weight only, ~55 KB), `SundaySerif-*` (all axes, ~1.8 MB) and `SundaySerifGrain-*` (Grain Blur, ~1.5 MB), WOFF2 | The web |
 
 ## Web
@@ -106,21 +106,21 @@ Weight is set with `font-weight`. The effects go through `font-variation-setting
 @font-face {
   font-family: "Sunday Serif";
   src: url("fonts/SundaySerifText-Variable.woff2") format("woff2");
-  font-weight: 400 600;
+  font-weight: 400 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Sunday Serif";
   src: url("fonts/SundaySerifText-Italic-Variable.woff2") format("woff2");
-  font-weight: 400 600;
+  font-weight: 400 700;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: "Sunday Serif FX";
   src: url("fonts/SundaySerif-Variable.woff2") format("woff2");
-  font-weight: 400 600;
+  font-weight: 400 700;
   font-style: normal;
   font-display: swap;
 }
@@ -149,8 +149,8 @@ import localFont from "next/font/local";
 
 export const sundaySerif = localFont({
   src: [
-    { path: "./fonts/SundaySerifText-Variable.woff2", weight: "400 600", style: "normal" },
-    { path: "./fonts/SundaySerifText-Italic-Variable.woff2", weight: "400 600", style: "italic" },
+    { path: "./fonts/SundaySerifText-Variable.woff2", weight: "400 700", style: "normal" },
+    { path: "./fonts/SundaySerifText-Italic-Variable.woff2", weight: "400 700", style: "italic" },
   ],
   variable: "--font-sunday-serif",
   display: "swap",
@@ -161,8 +161,8 @@ export const sundaySerif = localFont({
 // Only where effects show: not preloaded, so it costs nothing on pages that do not use it.
 export const sundaySerifFx = localFont({
   src: [
-    { path: "./fonts/SundaySerif-Variable.woff2", weight: "400 600", style: "normal" },
-    { path: "./fonts/SundaySerif-Italic-Variable.woff2", weight: "400 600", style: "italic" },
+    { path: "./fonts/SundaySerif-Variable.woff2", weight: "400 700", style: "normal" },
+    { path: "./fonts/SundaySerif-Italic-Variable.woff2", weight: "400 700", style: "italic" },
   ],
   variable: "--font-sunday-serif-fx",
   display: "swap",
@@ -236,7 +236,7 @@ The version comes from [`VERSION`](VERSION).
 | Path | What it is |
 | --- | --- |
 | `sources/SundaySerif.designspace`, `sources/SundaySerif-Italic.designspace` | The two designspaces, with the axes and the masters |
-| `sources/Roman/`, `sources/Italic/` | The UFO masters: for each weight, 11 Light Burn masters plus the Ink Bleed and Worn Print masters. They open in [Fontra](https://fontra.xyz), Glyphs, RoboFont or FontLab |
+| `sources/Roman/`, `sources/Italic/` | The UFO masters, Regular and Bold: 11 Light Burn masters each, plus the Ink Bleed and Worn Print masters. Bold is derived from Regular by `scripts/derive_weight.py`; Medium and SemiBold are interpolated. They open in [Fontra](https://fontra.xyz), Glyphs, RoboFont or FontLab |
 | `sources/SundaySerifGrain*.designspace`, `sources/Grain/`, `scripts/grain_blur.py` | Sunday Serif Grain: two masters per style (Grain Blur 0 and 100), generated from the Regular masters by the script |
 | `scripts/build.py` | The build: variable fonts, statics, WOFF2, and post-processing (names, STAT, version) |
 | `.github/readme/`, `scripts/readme_images.py` | The README specimens, light and dark, set in the built fonts and captured with headless Chrome |

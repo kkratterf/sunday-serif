@@ -10,7 +10,7 @@ Basic Font Information
 ----------------------
 
 Sunday Serif is a soft serif for slow days, made for Sunday
-(https://joinsunday.co). It comes in roman and italic, with a weight axis from Regular (400) to SemiBold (600) and three effect axes:
+(https://joinsunday.co). It comes in roman and italic, with a weight axis from Regular (400) to Bold (700) and three effect axes:
 
 - Light Burn (BURN, 0 to 100): like an overexposed photo. Towards 100 the
   ink spreads and fills the letters.
@@ -37,6 +37,13 @@ ChangeLog
 
 Detailed release notes are on the GitHub Releases page:
 https://github.com/kkratterf/sunday-serif/releases
+
+v0.3.0 (unreleased)
+- New weight: Bold (700) and Bold Italic. The weight axis now runs from
+  400 to 700; Medium and SemiBold are interpolated between Regular and
+  Bold, which makes every file smaller.
+- Medium and SemiBold: carons (č, š, ž, ě, ř) no longer crushed, and no
+  Worn Print grain when Worn Print is at 0.
 
 v0.2.1 (15 November 2026)
 - No change to the fonts. The npm package is now published by the

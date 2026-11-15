@@ -26,8 +26,8 @@ WIDTH = 1280
 
 def css(t):
     return f"""<!doctype html><html><head><meta charset="utf-8"><style>
-@font-face {{ font-family: S; src: url("{VF}/SundaySerif%5BBURN,INKB,WORN,wght%5D.ttf"); font-weight: 400 600; }}
-@font-face {{ font-family: S; src: url("{VF}/SundaySerif-Italic%5BBURN,INKB,WORN,wght%5D.ttf"); font-weight: 400 600; font-style: italic; }}
+@font-face {{ font-family: S; src: url("{VF}/SundaySerif%5BBURN,INKB,WORN,wght%5D.ttf"); font-weight: 400 700; }}
+@font-face {{ font-family: S; src: url("{VF}/SundaySerif-Italic%5BBURN,INKB,WORN,wght%5D.ttf"); font-weight: 400 700; font-style: italic; }}
 @font-face {{ font-family: G; src: url("{VF}/SundaySerifGrain%5BGRAN%5D.ttf"); }}
 @font-face {{ font-family: G; src: url("{VF}/SundaySerifGrain-Italic%5BGRAN%5D.ttf"); font-style: italic; }}
 * {{ box-sizing: border-box; margin: 0; padding: 0; }}
@@ -70,7 +70,7 @@ def ramp(text, var, lo, hi):
 def banner(t):
     return 640, f"""<div class="page" style="height:640px;display:flex;flex-direction:column;justify-content:space-between">
 <div class="rule" style="display:flex;justify-content:space-between;padding-top:18px">
-  <span class="cap">Type specimen</span><span class="cap">Roman &amp; Italic · 400–600</span><span class="cap">SIL Open Font License</span>
+  <span class="cap">Type specimen</span><span class="cap">Roman &amp; Italic · 400–700</span><span class="cap">SIL Open Font License</span>
 </div>
 <div style="font-size:190px;line-height:.86;letter-spacing:-.035em;margin:-10px 0 40px">Sunday<br><i style="padding-left:.62em">Serif</i></div>
 <div class="rule" style="display:flex;justify-content:space-between;align-items:baseline;padding-top:18px">
@@ -113,10 +113,10 @@ def grain(t):
 
 def weights(t):
     cols = ""
-    for w, name in ((400, "Regular"), (500, "Medium"), (600, "SemiBold")):
+    for w, name in ((400, "Regular"), (500, "Medium"), (600, "SemiBold"), (700, "Bold")):
         cols += f"""<div style="flex:1;padding-top:22px" class="rule">
 <div class="cap">{name} · {w}</div>
-<div style="font-size:160px;line-height:1;font-weight:{w};margin-top:18px;letter-spacing:-.01em">Aa</div>
+<div style="font-size:136px;line-height:1;font-weight:{w};margin-top:18px;letter-spacing:-.01em">Aa</div>
 </div>"""
     return 0, f'<div class="page"><div style="display:flex;gap:40px">{cols}</div></div>'
 
