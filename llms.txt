@@ -15,18 +15,19 @@
   - BURN, Light Burn, 0 to 100, default 0. Towards 100 the ink floods the letters, like an overexposed print.
   - INKB, Ink Bleed, 0 to 100, default 0. Puffy, organic letters as if the ink spread into the paper; spacing never changes.
   - WORN, Worn Print, 0 to 100, default 0. Grain eating the edges, dust specks and starved patches of missing ink, growing towards 100; spacing never changes.
+- Sunday Serif Grain: a separate display family (roman and italic, Regular only) with one axis, GRAN, Grain Blur, 0 to 100, default 0. A blur made of grain: towards 100 a cloud of ink dots spreads out from every edge; spacing never changes.
 - Character set: Basic Latin, Latin-1 Supplement, Latin Extended-A. Features: kern, case, ordn, ccmp.
 
 ## Files
 
-- Desktop: variable/SundaySerif[BURN,INKB,WORN,wght].ttf and SundaySerif-Italic[BURN,INKB,WORN,wght].ttf; static otf/ and ttf/ for Regular, Medium, SemiBold and italics (effects at 0).
-- Web (WOFF2, 1000 UPM): SundaySerifText-Variable.woff2 and SundaySerifText-Italic-Variable.woff2 (wght only, about 55 KB, for text); SundaySerif-Variable.woff2 and SundaySerif-Italic-Variable.woff2 (all four axes, about 1.8 MB, only where effects show).
+- Desktop: variable/SundaySerif[BURN,INKB,WORN,wght].ttf and SundaySerif-Italic[BURN,INKB,WORN,wght].ttf, plus SundaySerifGrain[GRAN].ttf and SundaySerifGrain-Italic[GRAN].ttf; static otf/ and ttf/ for Regular, Medium, SemiBold and italics (effects at 0).
+- Web (WOFF2, 1000 UPM): SundaySerifText-Variable.woff2 and SundaySerifText-Italic-Variable.woff2 (wght only, about 55 KB, for text); SundaySerif-Variable.woff2 and SundaySerif-Italic-Variable.woff2 (all four axes, about 1.8 MB, only where effects show); SundaySerifGrain-Variable.woff2 and SundaySerifGrain-Italic-Variable.woff2 (Grain Blur, about 1.5 MB, display only).
 - Mobile (React Native, Expo): use the static TTFs; React Native cannot set custom variable axes.
 
 ## Use on the web
 
-- npm: `pnpm add sunday-serif`, then `import "sunday-serif/text.css"` (family "Sunday Serif") and, only where effects show, `import "sunday-serif/fx.css"` (family "Sunday Serif FX").
-- Next.js: `import { SundaySerif, SundaySerifFX } from "sunday-serif/next"`, put `${SundaySerif.variable} ${SundaySerifFX.variable}` on <html>, then use `var(--font-sunday-serif)` and `var(--font-sunday-serif-fx)`.
+- npm: `pnpm add sunday-serif`, then `import "sunday-serif/text.css"` (family "Sunday Serif") and, only where effects show, `import "sunday-serif/fx.css"` (family "Sunday Serif FX"); for Grain Blur, `import "sunday-serif/grain.css"` (family "Sunday Serif Grain", axis "GRAN").
+- Next.js: `import { SundaySerif, SundaySerifFX } from "sunday-serif/next"`, put `${SundaySerif.variable} ${SundaySerifFX.variable}` on <html>, then use `var(--font-sunday-serif)` and `var(--font-sunday-serif-fx)`. `SundaySerifGrain` sets `var(--font-sunday-serif-grain)`.
 - Weight with `font-weight: 400` to `600`. Effects with `font-variation-settings: "BURN" 0, "INKB" 0, "WORN" 0;` (tags upper case and quoted). Setting font-variation-settings replaces the whole list, so always set all three effects together, e.g. through CSS custom properties.
 
 ## Working on the repository

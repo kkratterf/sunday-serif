@@ -6,7 +6,11 @@ usage: python scripts/build.py [--only-variable]
   fonts/webfonts/  WOFF2 for the web, all at 1000 UPM:
                    SundaySerifText-*.woff2  weight axis only, effects at 0 (~55 KB): body text
                    SundaySerif-*.woff2      all four axes (~1.8 MB): load only where effects show
+                   SundaySerifGrain-*.woff2  Sunday Serif Grain, the Grain Blur axis (~1.5 MB)
   fonts/ttf/, fonts/otf/  static Regular, Medium, SemiBold and italics (effects at 0)
+
+Sunday Serif Grain (SundaySerifGrain[GRAN].ttf and its italic in fonts/variable/) is a separate
+display cut with one axis, Grain Blur. Its masters come from scripts/grain_blur.py.
 
 The version comes from the VERSION file: SemVer X.Y.Z becomes font version X.YYZ
 (v0.1.0 -> 0.010, v0.12.3 -> 0.123, v1.0.0 -> 1.000).
@@ -44,6 +48,12 @@ WEIGHTS = [(400, "Regular"), (500, "Medium"), (600, "SemiBold")]
 STYLES = [  # (designspace, italic)
     ("SundaySerif.designspace", False),
     ("SundaySerif-Italic.designspace", True),
+]
+GRAIN_FAMILY = "Sunday Serif Grain"
+GRAIN_PS = "SundaySerifGrain"
+GRAIN_STYLES = [
+    ("SundaySerifGrain.designspace", False),
+    ("SundaySerifGrain-Italic.designspace", True),
 ]
 
 
@@ -89,6 +99,34 @@ def stat(font, italic):
              else [dict(value=0, name="Roman", flags=2, linkedValue=1)]),
     ]
     buildStatTable(font, axes, elidedFallbackName=2)
+
+
+def grain_stat(font, italic):
+    axes = [
+        dict(tag="GRAN", name="Grain Blur", values=[dict(value=0, name="Normal", flags=2)]),
+        dict(tag="ital", name="Italic", values=[dict(value=1, name="Italic")] if italic
+             else [dict(value=0, name="Roman", flags=2, linkedValue=1)]),
+    ]
+    buildStatTable(font, axes, elidedFallbackName=2)
+
+
+def build_grain(ds, italic, raw, rev):
+    """Sunday Serif Grain: one Grain Blur axis, Regular and Italic."""
+    BUILD.mkdir(exist_ok=True)
+    raw_path = BUILD / ds.replace(".designspace", ".ttf")
+    subprocess.run([sys.executable, "-m", "fontmake", "-m", str(SOURCES / ds), "-o", "variable",
+                    "--flatten-components", "--output-path", str(raw_path)], check=True)
+    font = TTFont(raw_path)
+    stem = GRAIN_PS + ("-Italic" if italic else "")
+    font["name"].setName(GRAIN_PS + ("Italic" if italic else ""), 25, 3, 1, 0x409)
+    set_version(font, raw, rev, stem if italic else f"{GRAIN_PS}-Regular")
+    grain_stat(font, italic)
+    smart_dropout(font)
+    font["name"].removeNames(platformID=1)
+    out = FONTS / "variable" / f"{stem}[GRAN].ttf"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    font.save(out)
+    return out
 
 
 def build_variable(ds, italic, raw, rev):
@@ -241,6 +279,40 @@ def drop_flat_points(font, tol=1.5):
             tv.optimize(new + [(0, 0)] * 4, ends2)
 
 
+def scale_upem_keep_iup(font, upem):
+    """scale_upem with gvar deltas made explicit first, then IUP-optimised again at the new size.
+
+    Scaling optimised deltas rounds the default outline, so reference points that were a few
+    units apart can land on the same coordinate and IUP infers the skipped points differently:
+    at high Light Burn that drew thin cuts through the letters. Optimising after the scale keeps
+    every inferred delta consistent with the rounded outline."""
+    glyf, gvar = font["glyf"], font.get("gvar")
+
+    def outline(gname):
+        glyph = glyf[gname]
+        if glyph.numberOfContours <= 0:
+            return None, None
+        coords, ends, _ = glyph.getCoordinates(glyf)
+        return list(coords) + [(0, 0)] * 4, list(ends)
+
+    if gvar:
+        for gname, tvs in gvar.variations.items():
+            coords, ends = outline(gname)
+            if coords is None:
+                continue
+            for tv in tvs:
+                if None in tv.coordinates:
+                    tv.calcInferredDeltas(coords, ends)
+    scale_upem(font, upem)
+    if gvar:
+        for gname, tvs in gvar.variations.items():
+            coords, ends = outline(gname)
+            if coords is None:
+                continue
+            for tv in tvs:
+                tv.optimize(coords, ends)
+
+
 def woff2(src, dst, pin=None):
     """WOFF2 at 1000 UPM (about 15% smaller, no visible change at text sizes); `pin` fixes axes."""
     font = TTFont(src, lazy=False)
@@ -256,7 +328,7 @@ def woff2(src, dst, pin=None):
     sub = subset.Subsetter(opts)
     sub.populate(unicodes=font.getBestCmap().keys())
     sub.subset(font)  # drops glyphs nothing can reach any more
-    scale_upem(font, 1000)
+    scale_upem_keep_iup(font, 1000)
     font.flavor = "woff2"
     dst.parent.mkdir(parents=True, exist_ok=True)
     font.save(dst)
@@ -357,6 +429,9 @@ def main():
         if args.only_variable:
             continue
         build_statics(vf, italic, raw, rev)
+    for ds, italic in GRAIN_STYLES:
+        vf = build_grain(ds, italic, raw, rev)
+        woff2(vf, web / f"{GRAIN_PS}{'-Italic' if italic else ''}-Variable.woff2")
     print("done:", ", ".join(sorted(str(p.relative_to(ROOT)) for p in FONTS.rglob("*.*"))))
 
 
