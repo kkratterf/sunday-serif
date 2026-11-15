@@ -10,6 +10,10 @@
 @font-face { font-family: "Sunday Serif"; src: url("fonts/SundaySerifText-Italic-Variable.woff2") format("woff2"); font-weight: 400 600; font-style: italic; font-display: swap; }
 @font-face { font-family: "Sunday Serif FX"; src: url("fonts/SundaySerif-Variable.woff2") format("woff2"); font-weight: 400 600; font-style: normal; font-display: swap; }
 @font-face { font-family: "Sunday Serif FX"; src: url("fonts/SundaySerif-Italic-Variable.woff2") format("woff2"); font-weight: 400 600; font-style: italic; font-display: swap; }
+/* "Sunday Serif Grain" is the display cut with the Grain Blur axis (~1.5 MB a style): loaded the same
+   way, when the visitor reaches the effects or moves Grain Blur, then .grain-ready is set. */
+@font-face { font-family: "Sunday Serif Grain"; src: url("fonts/SundaySerifGrain-Variable.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Sunday Serif Grain"; src: url("fonts/SundaySerifGrain-Italic-Variable.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
 /* ---------- Tokens ---------- */
 :root {
   --bg: #F9F9F7;
@@ -24,6 +28,7 @@
   --serif: "Sunday Serif", Georgia, "Times New Roman", serif;
   /* Where effects show: the text font until the FX font has loaded (same shapes at 0). */
   --fx: var(--serif);
+  --grain: var(--serif);
   --ui: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --radius: 20px;
@@ -43,18 +48,25 @@
 }
 
 .fx-ready { --fx: "Sunday Serif FX", "Sunday Serif", Georgia, serif; }
+.grain-ready { --grain: "Sunday Serif Grain", "Sunday Serif", Georgia, serif; }
 
 /* The print menu: one effect for the whole page, interface included. The values are the effect
    at a strength that still reads in a paragraph. Until the FX font is in, nothing changes. */
 :root[data-print="burn"] { --pb: 70; }
 :root[data-print="inkb"] { --pi: 100; }
 :root[data-print="worn"] { --pw: 100; }
-:root.fx-ready[data-print] { --serif: "Sunday Serif FX", "Sunday Serif", Georgia, serif; --ui: var(--serif); }
+:root.fx-ready[data-print]:not([data-print="grain"]) { --serif: "Sunday Serif FX", "Sunday Serif", Georgia, serif; --ui: var(--serif); }
 /* Set on every element: the font shorthand used across the page resets font-variation-settings,
    so it would not inherit. The tester sample and the effect cards keep their own settings. */
-:root.fx-ready[data-print] body, :root.fx-ready[data-print] body *:not(.sample):not(.effect-word) {
+:root.fx-ready[data-print]:not([data-print="grain"]) body, :root.fx-ready[data-print]:not([data-print="grain"]) body *:not(.sample):not(.effect-word) {
   font-variation-settings: "BURN" var(--pb, 0), "INKB" var(--pi, 0), "WORN" var(--pw, 0);
 }
+/* Grain Blur is its own family, Regular only: no faux bold where the page asks for 500 or 600. */
+:root.grain-ready[data-print="grain"] { --serif: var(--grain); --fx: var(--grain); --ui: var(--grain); }
+:root.grain-ready[data-print="grain"] body, :root.grain-ready[data-print="grain"] body *:not(.sample):not(.effect-word) {
+  font-variation-settings: "GRAN" 60; font-synthesis: none;
+}
+:root.grain-ready[data-print="grain"] .hero-title { font-variation-settings: "GRAN" 100; }
 
 /* ---------- Base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
@@ -231,7 +243,7 @@ input[type="range"]::-moz-range-thumb { width: 14px; height: 14px; border-radius
 
 /* ---------- Effects ---------- */
 /* Each card shows one effect at its full strength. */
-.effects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.effects { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
 @media (max-width: 860px) { .effects { grid-template-columns: 1fr; } }
 .effect {
   margin: 0; display: grid; gap: 8px; justify-items: center; padding: clamp(36px, 5vw, 64px) 16px 22px;
@@ -241,6 +253,7 @@ input[type="range"]::-moz-range-thumb { width: 14px; height: 14px; border-radius
   font: 400 clamp(64px, 7.2vw, 104px)/1 var(--fx); color: var(--ink); letter-spacing: -0.03em; white-space: nowrap;
   font-variation-settings: "BURN" var(--burn, 0), "INKB" var(--inkb, 0), "WORN" var(--worn, 0);
 }
+.effect-word.effect-grain { font-family: var(--grain); font-variation-settings: "GRAN" var(--gran, 0); }
 .effect figcaption { font: 500 13px/1 var(--ui); color: var(--muted); margin-top: clamp(20px, 3vw, 40px); }
 
 /* ---------- Specimen ---------- */

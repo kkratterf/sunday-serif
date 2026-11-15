@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sunday Serif, a soft serif for slow days</title>
-  <meta name="description" content="Sunday Serif is a free, open source serif typeface made for Sunday. Roman and italic, weights 400 to 600 and three print effects on variable axes: Light Burn, Ink Bleed and Worn Print. SIL Open Font License.">
+  <meta name="description" content="Sunday Serif is a free, open source serif typeface made for Sunday. Roman and italic, weights 400 to 600 and print effects on variable axes: Light Burn, Ink Bleed, Worn Print and Grain Blur. SIL Open Font License.">
   <meta name="author" content="Federico Kratter Thaler">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <link rel="canonical" href="https://sunday-serif.kkratter.com/">
@@ -69,7 +69,7 @@
         "name": "Sunday Serif",
         "alternateName": "Sunday Serif Italic",
         "genre": "Typeface",
-        "description": "A soft serif typeface made for Sunday, roman and italic, with a weight axis (400 to 600) and three print effects as variable axes: Light Burn (BURN), Ink Bleed (INKB) and Worn Print (WORN).",
+        "description": "A soft serif typeface made for Sunday, roman and italic, with a weight axis (400 to 600) and three print effects as variable axes: Light Burn (BURN), Ink Bleed (INKB) and Worn Print (WORN), plus Sunday Serif Grain, a display cut with a Grain Blur axis (GRAN).",
         "url": "https://sunday-serif.kkratter.com/",
         "image": "https://sunday-serif.kkratter.com/og.png",
         "author": { "@id": "https://kkratter.com/#person" },
@@ -108,6 +108,7 @@
             <label><input type="radio" name="print" value="burn"><span>Light Burn</span></label>
             <label><input type="radio" name="print" value="inkb"><span>Ink Bleed</span></label>
             <label><input type="radio" name="print" value="worn"><span>Worn Print</span></label>
+            <label><input type="radio" name="print" value="grain"><span>Grain Blur</span></label>
           </fieldset>
         </div>
         <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch light or dark">
@@ -164,6 +165,10 @@
             <label class="label" for="ctl-worn">Worn Print <output data-out="worn">0</output></label>
             <input id="ctl-worn" type="range" min="0" max="100" value="0" data-ctl="worn">
           </div>
+          <div class="control" data-axis-control>
+            <label class="label" for="ctl-gran">Grain Blur <output data-out="gran">0</output></label>
+            <input id="ctl-gran" type="range" min="0" max="100" value="0" data-ctl="gran">
+          </div>
           <div class="control control-reset">
             <button class="chip" type="button" data-reset>Reset</button>
           </div>
@@ -178,7 +183,7 @@
     <!-- Effects -->
     <section id="effects" class="section wrap" aria-labelledby="effects-title">
       <div class="section-head">
-        <h2 id="effects-title">Three ways to age a page</h2>
+        <h2 id="effects-title">Four ways to age a page</h2>
       </div>
       <div class="effects">
         <figure class="effect">
@@ -192,6 +197,10 @@
         <figure class="effect">
           <div class="effect-word" style="--worn:100" aria-hidden="true">Sunday</div>
           <figcaption>Worn Print</figcaption>
+        </figure>
+        <figure class="effect">
+          <div class="effect-word effect-grain" style="--gran:100" aria-hidden="true">Sunday</div>
+          <figcaption>Grain Blur</figcaption>
         </figure>
       </div>
     </section>
