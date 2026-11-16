@@ -17,3 +17,6 @@ feature case {
 feature ccmp {
   sub [dotlessi i] circumflexcomb' by circumflexcomb.i;
 } ccmp;
+feature liga {
+  sub colon s u n d a y colon by uni273F;
+} liga;

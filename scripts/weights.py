@@ -12,6 +12,8 @@ import numpy as np
 W = {"Medium": (84, 14, 11), "SemiBold": (159, 20, 21), "Bold": (235, 26, 31)}
 ITALIC_ANGLE = 16
 MARK_WEIGHT = 0.5
+# Pictograms keep the same shape and width in every weight: the Sunday flower (U+273F).
+SAME_IN_ALL_WEIGHTS = {"uni273F"}
 
 
 def embolden(glyph, dx, dy, s, cx, t, base=None):
@@ -46,7 +48,7 @@ def derive(font, weight, italic, stem, base_counts=None):
     k = 2048 / (2048 + 2 * dy)  # keeps the x-height where it was
     shift, widths = {}, {g.name: g.width for g in font}
     for g in font:
-        if not g.contours:
+        if not g.contours or g.name in SAME_IN_ALL_WEIGHTS:
             continue
         b = g.getBounds(font)
         if not b:
