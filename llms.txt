@@ -16,7 +16,7 @@
   - INKB, Ink Bleed, 0 to 100, default 0. Puffy, organic letters as if the ink spread into the paper; spacing never changes.
   - WORN, Worn Print, 0 to 100, default 0. Grain eating the edges, dust specks and starved patches of missing ink, growing towards 100; spacing never changes.
 - Sunday Serif Grain: a separate display family (roman and italic, Regular only) with one axis, GRAN, Grain Blur, 0 to 100, default 0. A blur made of grain: towards 100 a cloud of ink dots spreads out from every edge; spacing never changes.
-- Character set: Basic Latin, Latin-1 Supplement, Latin Extended-A. Features: kern, case, ordn, ccmp.
+- Character set: Basic Latin, Latin-1 Supplement, Latin Extended-A. Features: kern, case, ordn, ccmp, liga. The Sunday flower is at U+273F; the liga feature turns `:sunday:` into it.
 
 ## Files
 

@@ -76,7 +76,9 @@ A continuous `wght` axis from 400 to 700, with named instances at Regular, Mediu
   <img src=".github/readme/glyphs-light.png" alt="A selection of the character set: Latin capitals, lowercase, figures, accented letters and symbols" width="100%">
 </picture>
 
-Basic Latin, Latin-1 Supplement and Latin Extended-A. OpenType: kerning, `case`, `ordn` and `ccmp`.
+Basic Latin, Latin-1 Supplement and Latin Extended-A. OpenType: kerning, `case`, `ordn`, `ccmp` and `liga`.
+
+The Sunday flower is in the font too, at U+273F (✿). Type `:sunday:` and the ligature turns it into the flower. It keeps the same shape in every weight and works with every effect.
 
 ## Files
 
