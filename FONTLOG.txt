@@ -38,6 +38,13 @@ ChangeLog
 Detailed release notes are on the GitHub Releases page:
 https://github.com/kkratterf/sunday-serif/releases
 
+v0.4.0 (16 November 2026)
+- New glyph: the Sunday flower at U+273F. Type :sunday: and the liga
+  feature turns it into the flower. Same shape in every weight, and it
+  works with every effect.
+- Bold is heavier, and Regular, Medium, SemiBold and Bold are now
+  evenly spaced.
+
 v0.3.0 (15 November 2026)
 - New weight: Bold (700) and Bold Italic. The weight axis now runs from
   400 to 700; Medium and SemiBold are interpolated between Regular and
