@@ -8,8 +8,10 @@ import math
 import numpy as np
 
 # Total extra stem, extra horizontal thickness, extra width, in units of 4096 UPM.
-# Medium and SemiBold follow Source Serif 4's ratios; Bold extends the same steps.
-W = {"Medium": (84, 14, 11), "SemiBold": (159, 20, 21), "Bold": (235, 26, 31)}
+# Only Bold has masters: its stem is about 1.7 times Regular's (353 -> 600 on the l), so it
+# reads as a real bold next to SemiBold. Medium and SemiBold are placed on the weight axis by
+# the designspace axis map, so the stems grow by the same ratio at every step.
+W = {"Bold": (300, 34, 50)}
 ITALIC_ANGLE = 16
 MARK_WEIGHT = 0.5
 
