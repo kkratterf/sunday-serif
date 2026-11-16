@@ -1,7 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <designspace format="5.0">
   <axes>
-    <axis tag="wght" name="Weight" minimum="400" maximum="700" default="400"/>
+    <axis tag="wght" name="Weight" minimum="400" maximum="700" default="400">
+      <map input="400" output="400"/>
+      <map input="500" output="482.5"/>
+      <map input="600" output="581"/>
+      <map input="700" output="700"/>
+    </axis>
     <axis tag="BURN" name="Light Burn" minimum="0" maximum="100" default="0"/>
     <axis tag="INKB" name="Ink Bleed" minimum="0" maximum="100" default="0"/>
     <axis tag="WORN" name="Worn Print" minimum="0" maximum="100" default="0"/>
@@ -259,7 +264,7 @@
     </instance>
     <instance familyname="Sunday Serif" stylename="Medium Italic" postscriptfontname="SundaySerif-MediumItalic">
       <location>
-        <dimension name="Weight" xvalue="500"/>
+        <dimension name="Weight" xvalue="482.5"/>
         <dimension name="Light Burn" xvalue="0"/>
         <dimension name="Ink Bleed" xvalue="0"/>
         <dimension name="Worn Print" xvalue="0"/>
@@ -267,7 +272,7 @@
     </instance>
     <instance familyname="Sunday Serif" stylename="SemiBold Italic" postscriptfontname="SundaySerif-SemiBoldItalic">
       <location>
-        <dimension name="Weight" xvalue="600"/>
+        <dimension name="Weight" xvalue="581"/>
         <dimension name="Light Burn" xvalue="0"/>
         <dimension name="Ink Bleed" xvalue="0"/>
         <dimension name="Worn Print" xvalue="0"/>
