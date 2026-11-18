@@ -1,0 +1,9 @@
+# Effect master generators in scripts/effects/ (Ink Bleed and Worn Print), pinned to the
+# versions that made the masters on main. Separate from requirements.txt on purpose.
+fonttools==4.68.0
+freetype-py==2.5.1
+numpy==2.5.4
+pillow==13.0.0
+scikit-image==0.26.0
+scipy==1.18.1
+ufolib2==0.19.1
